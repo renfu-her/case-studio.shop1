@@ -83,6 +83,7 @@ class UserResource extends Resource
                     ->dateTime('Y-m-d H:i:s')
                     ->sortable(),
             ])
+            ->emptyStateHeading('尚無使用者')
             ->filters([
                 Tables\Filters\TernaryFilter::make('is_admin')
                     ->label('管理員')

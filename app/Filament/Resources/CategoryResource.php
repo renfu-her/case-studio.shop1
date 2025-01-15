@@ -137,6 +137,7 @@ class CategoryResource extends Resource
 
                 return $query;
             })
+            ->emptyStateHeading('尚無分類')
             ->filters([
                 Tables\Filters\TernaryFilter::make('is_active')
                     ->label('啟用狀態'),

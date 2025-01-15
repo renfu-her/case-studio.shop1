@@ -54,6 +54,7 @@ class PermissionResource extends Resource
             ->filters([
                 //
             ])
+            ->emptyStateHeading('尚無權限')
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),

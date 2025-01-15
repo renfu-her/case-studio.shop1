@@ -132,10 +132,6 @@ class ProductResource extends Resource
             ])
             ->emptyStateHeading('尚無商品')
             ->emptyStateDescription('開始建立您的第一個商品')
-            ->emptyStateActions([
-                Tables\Actions\CreateAction::make()
-                    ->label('新增商品'),
-            ])
             ->defaultSort('created_at', 'desc')
             ->searchPlaceholder('搜尋商品')
             ->filtersTriggerAction(

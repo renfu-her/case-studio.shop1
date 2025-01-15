@@ -73,10 +73,6 @@ class RoleResource extends Resource
             ])
             ->emptyStateHeading('尚無角色')
             ->emptyStateDescription('建立角色來管理使用者權限')
-            ->emptyStateActions([
-                Tables\Actions\CreateAction::make()
-                    ->label('新增角色'),
-            ])
             ->defaultSort('created_at', 'desc')
             ->searchPlaceholder('搜尋角色')
             ->filtersTriggerAction(

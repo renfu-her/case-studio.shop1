@@ -71,7 +71,8 @@ class CategoryResource extends Resource
                 Forms\Components\Toggle::make('is_active')
                     ->label('啟用狀態')
                     ->default(true),
-            ]);
+            ])
+            ->redirectRoute('filament.resources.categories.index');
     }
 
     public static function table(Table $table): Table

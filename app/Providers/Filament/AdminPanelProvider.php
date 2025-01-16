@@ -30,7 +30,7 @@ class AdminPanelProvider extends PanelProvider
             ->brandName('購物網站管理 DEMO')
             ->darkModeBrandLogo(asset('images/purchase.png'))
             ->brandLogoHeight('50px')
-            ->favicon(asset('images/favicon.ico'))
+            ->favicon(asset('images/purchase.png'))
             ->login()
             ->colors([
                 'primary' => Color::Amber,

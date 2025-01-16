@@ -36,4 +36,9 @@ class Product extends Model
     {
         return $this->hasMany(ProductImage::class)->orderBy('sort');
     }
+
+    public function specs()
+    {
+        return $this->hasMany(ProductSpec::class);
+    }
 }

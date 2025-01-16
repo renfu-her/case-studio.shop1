@@ -15,6 +15,7 @@ use Rawilk\FilamentQuill\Filament\Forms\Components\QuillEditor;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Support\Str;
+use App\Filament\Resources\ProductResource\RelationManagers\ProductSpecsRelationManager;
 
 class ProductResource extends Resource
 {
@@ -55,8 +56,8 @@ class ProductResource extends Resource
                         // 生成唯一的檔案名
                         $filename = Str::uuid()->toString() . '.webp';
 
-                         // 確保目錄存在
-                         if (!file_exists(storage_path('app/public/products'))) {
+                        // 確保目錄存在
+                        if (!file_exists(storage_path('app/public/products'))) {
                             mkdir(storage_path('app/public/products'), 0755, true);
                         }
 
@@ -158,6 +159,7 @@ class ProductResource extends Resource
     {
         return [
             ImagesRelationManager::class,
+            ProductSpecsRelationManager::class,
         ];
     }
 }

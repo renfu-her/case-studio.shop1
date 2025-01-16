@@ -45,7 +45,7 @@ class CategoryResource extends Resource
                             $options = [];
                             foreach ($items as $category) {
                                 $prefix = str_repeat('　', $depth);
-                                $options[$category->id] = $prefix . '∟' . $category->name;
+                                $options[$category->id] = $prefix . ($depth > 0 ? '|-' : '') . $category->name;
 
                                 // 找出此分類的子分類
                                 $children = $categories->where('parent_id', $category->id);
@@ -96,7 +96,7 @@ class CategoryResource extends Resource
                         }
 
                         $prefix = str_repeat('　', $depth);
-                        return $prefix . '∟' . $record->name;
+                        return $prefix . ($depth > 0 ? '|-' : '') . $record->name;
                     }),
                 Tables\Columns\TextColumn::make('sort')
                     ->label('排序'),

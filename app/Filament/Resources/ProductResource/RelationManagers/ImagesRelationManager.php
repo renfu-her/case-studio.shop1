@@ -29,7 +29,7 @@ class ImagesRelationManager extends RelationManager
                     ->imageEditor()
                     ->directory('product-images')
                     ->required()
-                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                    ->acceptedFileTypes(['image/jpeg', 'image/png'])
                     ->imageResizeMode('cover')
                     ->imageResizeTargetWidth('1024')
                     ->imageResizeTargetHeight('1024')

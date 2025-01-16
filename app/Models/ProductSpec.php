@@ -13,6 +13,7 @@ class ProductSpec extends Model
         'price',
         'stock',
         'is_active',
+        'sort',
     ];
 
     protected $casts = [

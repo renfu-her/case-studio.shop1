@@ -35,6 +35,11 @@ class ProductSpecsRelationManager extends RelationManager
                     ->numeric()
                     ->default(0)
                     ->minValue(0),
+                Forms\Components\TextInput::make('sort')
+                    ->label('排序')
+                    ->numeric()
+                    ->default(0)
+                    ->helperText('數字越小越靠前'),
                 Forms\Components\Toggle::make('is_active')
                     ->label('啟用狀態')
                     ->default(true),
@@ -45,6 +50,9 @@ class ProductSpecsRelationManager extends RelationManager
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('sort')
+                    ->label('排序')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->label('規格名稱')
                     ->searchable()
@@ -65,6 +73,8 @@ class ProductSpecsRelationManager extends RelationManager
                     ->dateTime('Y-m-d H:i')
                     ->sortable(),
             ])
+            ->defaultSort('sort', 'asc')
+            ->reorderable('sort')
             ->filters([
                 Tables\Filters\TernaryFilter::make('is_active')
                     ->label('規格狀態')

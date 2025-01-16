@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: create-directory
+    - name: 拉取最新程式碼
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }}

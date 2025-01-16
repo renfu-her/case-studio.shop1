@@ -88,7 +88,7 @@ class ProductResource extends Resource
                     ->label('啟用狀態')
                     ->default(true),
             ])
-            ->redirectRoute('filament.resources.products.index');
+            ->redirect('index');
     }
 
     public static function table(Table $table): Table

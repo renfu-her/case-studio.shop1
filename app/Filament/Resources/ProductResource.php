@@ -36,6 +36,77 @@ class ProductResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\Select::make('category_id')
+                    ->relationship('category', 'name')
+                    ->label('商品分類')
+                    ->required()
+                    ->searchable()
+                    ->preload()
+                    ->options(function () {
+                        // 獲取所有分類並組織成階層結構
+                        $categories = \App\Models\Category::all();
+                        $options = [];
+
+                        // 先找出頂層分類
+                        $topCategories = $categories->whereNull('parent_id');
+
+                        // 遞迴函數來建立階層結構
+                        $buildOptions = function ($items, $depth = 0) use (&$buildOptions, $categories) {
+                            $options = [];
+                            foreach ($items as $category) {
+                                $prefix = str_repeat('　', $depth);
+                                $options[$category->id] = $prefix . ($depth > 0 ? '|-' : '') . $category->name;
+
+                                // 找出此分類的子分類
+                                $children = $categories->where('parent_id', $category->id);
+                                if ($children->count() > 0) {
+                                    $options += $buildOptions($children, $depth + 1);
+                                }
+                            }
+                            return $options;
+                        };
+
+                        return $buildOptions($topCategories);
+                    })
+                    ->createOptionForm([
+                        Forms\Components\Select::make('parent_id')
+                            ->relationship('parent', 'name')
+                            ->label('上層分類')
+                            ->searchable()
+                            ->preload()
+                            ->options(function () {
+                                // 在創建新分類時也使用相同的階層結構
+                                $categories = \App\Models\Category::all();
+                                $topCategories = $categories->whereNull('parent_id');
+
+                                $buildOptions = function ($items, $depth = 0) use (&$buildOptions, $categories) {
+                                    $options = [];
+                                    foreach ($items as $category) {
+                                        $prefix = str_repeat('　', $depth);
+                                        $options[$category->id] = $prefix . ($depth > 0 ? '|-' : '') . $category->name;
+
+                                        $children = $categories->where('parent_id', $category->id);
+                                        if ($children->count() > 0) {
+                                            $options += $buildOptions($children, $depth + 1);
+                                        }
+                                    }
+                                    return $options;
+                                };
+
+                                return $buildOptions($topCategories);
+                            }),
+                        Forms\Components\TextInput::make('name')
+                            ->label('分類名稱')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('sort')
+                            ->label('排序')
+                            ->numeric()
+                            ->default(0),
+                        Forms\Components\Toggle::make('is_active')
+                            ->label('啟用狀態')
+                            ->default(true),
+                    ]),
                 FileUpload::make('image')
                     ->label('主圖片')
                     ->image()
@@ -98,6 +169,28 @@ class ProductResource extends Resource
             ->columns([
                 Tables\Columns\ImageColumn::make('image')
                     ->label('主圖片'),
+                Tables\Columns\TextColumn::make('category.name')
+                    ->label('商品分類')
+                    ->formatStateUsing(function ($record): string {
+                        if (!$record->category) {
+                            return '';
+                        }
+
+                        // 建立分類路徑
+                        $path = [];
+                        $category = $record->category;
+
+                        // 遞迴向上查找父級分類
+                        while ($category) {
+                            array_unshift($path, $category->name);
+                            $category = $category->parent;
+                        }
+
+                        // 用箭頭連接分類名稱
+                        return implode(' -> ', $path);
+                    })
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->label('商品名稱')
                     ->searchable()
@@ -112,10 +205,6 @@ class ProductResource extends Resource
                 Tables\Columns\IconColumn::make('is_active')
                     ->label('啟用狀態')
                     ->boolean()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->label('建立時間')
-                    ->dateTime('Y-m-d H:i:s')
                     ->sortable(),
             ])
             ->filters([

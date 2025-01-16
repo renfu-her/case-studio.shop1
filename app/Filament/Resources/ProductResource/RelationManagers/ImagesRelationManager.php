@@ -58,7 +58,7 @@ class ImagesRelationManager extends RelationManager
                     ->label('排序')
                     ->numeric()
                     ->default(0),
-            ]);
+                ]);
     }
 
     public function table(Table $table): Table

@@ -27,20 +27,15 @@ class ListFreeShippings extends ListRecords
 
             TextColumn::make('start_at')
                 ->label('開始時間')
-                ->dateTime('Y-m-d H:i'),
+                ->dateTime('Y-m-d H:i:s'),
 
             TextColumn::make('end_at')
                 ->label('結束時間')
-                ->dateTime('Y-m-d H:i'),
+                ->dateTime('Y-m-d H:i:s'),
 
             TextColumn::make('is_active')
                 ->label('啟用狀態')
                 ->boolean(),
-
-            TextColumn::make('created_at')
-                ->label('建立時間')
-                ->dateTime('Y-m-d H:i')
-                ->sortable(),
         ];
     }
 }

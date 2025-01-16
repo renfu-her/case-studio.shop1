@@ -26,7 +26,11 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->favicon(asset('images/purchase.png'))
+            ->brandLogo(asset('images/purchase.png'))
+            ->brandName('購物網站管理 DEMO')
+            ->darkModeBrandLogo(asset('images/purchase.png'))
+            ->brandLogoHeight('50px')
+            ->favicon(asset('images/favicon.ico'))
             ->login()
             ->colors([
                 'primary' => Color::Amber,

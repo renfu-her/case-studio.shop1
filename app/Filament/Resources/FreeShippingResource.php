@@ -31,11 +31,13 @@ class FreeShippingResource extends Resource
                     ->minValue(0),
 
                 Forms\Components\DateTimePicker::make('start_at')
-                    ->label('開始時間'),
+                    ->label('開始時間')
+                    ->format('Y-m-d H:i:s'),
 
                 Forms\Components\DateTimePicker::make('end_at')
                     ->label('結束時間')
-                    ->after('start_at'),
+                    ->after('start_at')
+                    ->format('Y-m-d H:i:s'),
 
                 Forms\Components\Toggle::make('is_active')
                     ->label('啟用')
@@ -53,11 +55,11 @@ class FreeShippingResource extends Resource
 
                 Tables\Columns\TextColumn::make('start_at')
                     ->label('開始時間')
-                    ->dateTime(),
+                    ->dateTime('Y-m-d H:i:s'),
 
                 Tables\Columns\TextColumn::make('end_at')
                     ->label('結束時間')
-                    ->dateTime(),
+                    ->dateTime('Y-m-d H:i:s'),
 
                 Tables\Columns\IconColumn::make('is_active')
                     ->label('啟用狀態')
@@ -65,7 +67,7 @@ class FreeShippingResource extends Resource
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('建立時間')
-                    ->dateTime()
+                    ->dateTime('Y-m-d H:i')
                     ->sortable(),
             ])
             ->filters([

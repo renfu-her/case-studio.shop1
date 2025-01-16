@@ -17,11 +17,13 @@ class PermissionResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-key';
 
     protected static ?string $navigationGroup = '系統管理';
+    protected static ?int $navigationGroupSort = 3; 
 
     protected static ?string $navigationLabel = '權限';
 
     protected static ?string $modelLabel = '權限';
 
+    protected static ?int $navigationSort = 2;
 
 
     public static function form(Form $form): Form

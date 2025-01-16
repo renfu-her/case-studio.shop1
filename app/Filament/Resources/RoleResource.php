@@ -17,12 +17,13 @@ class RoleResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
     protected static ?string $navigationGroup = '系統管理';
-
     protected static ?string $navigationLabel = '角色管理';
 
     protected static ?string $modelLabel = '角色';
 
     protected static ?string $pluralModelLabel = '角色';
+
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {

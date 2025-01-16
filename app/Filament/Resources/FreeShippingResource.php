@@ -17,6 +17,8 @@ class FreeShippingResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-truck';
 
     protected static ?string $navigationGroup = '設定';
+    
+    protected static ?int $navigationSort  = 1;
 
     protected static ?string $modelLabel = '免運費設定';
 

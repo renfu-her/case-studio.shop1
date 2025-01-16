@@ -32,6 +32,11 @@ class AdminPanelProvider extends PanelProvider
             ->brandLogoHeight('50px')
             ->favicon(asset('images/purchase.png'))
             ->login()
+            ->navigationGroups([
+                '商品管理',
+                '設定',
+                '系統管理',
+            ])
             ->colors([
                 'primary' => Color::Amber,
                 'danger' => Color::Rose,

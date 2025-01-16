@@ -50,9 +50,6 @@ class ProductSpecsRelationManager extends RelationManager
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('sort')
-                    ->label('排序')
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->label('規格名稱')
                     ->searchable()
@@ -64,14 +61,15 @@ class ProductSpecsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('stock')
                     ->label('庫存')
                     ->sortable(),
+                Tables\Columns\TextColumn::make('sort')
+                    ->label('排序')
+                    ->sortable(),
                 Tables\Columns\IconColumn::make('is_active')
                     ->label('啟用狀態')
-                    ->boolean()
-                    ->sortable(),
+                    ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('建立時間')
-                    ->dateTime('Y-m-d H:i')
-                    ->sortable(),
+                    ->dateTime('Y-m-d H:i:s'),
             ])
             ->defaultSort('sort', 'asc')
             ->reorderable('sort')

@@ -9,4 +9,10 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateFreeShipping extends CreateRecord
 {
     protected static string $resource = FreeShippingResource::class;
+
+    public function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }
+

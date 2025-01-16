@@ -44,6 +44,11 @@ class ImagesRelationManager extends RelationManager
                         // 生成唯一的檔案名
                         $filename = Str::uuid()->toString() . '.webp';
 
+                        // 確保目錄存在
+                        if (!file_exists(storage_path('app/public/product-images'))) {
+                            mkdir(storage_path('app/public/product-images'), 0755, true);
+                        }
+
                         // 轉換並保存為 WebP
                         $image->toWebp(80)->save(storage_path('app/public/product-images/' . $filename));
 

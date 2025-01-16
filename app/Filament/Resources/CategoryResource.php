@@ -71,8 +71,7 @@ class CategoryResource extends Resource
                 Forms\Components\Toggle::make('is_active')
                     ->label('啟用狀態')
                     ->default(true),
-            ])
-            ->redirect('index');
+            ]);
     }
 
     public static function table(Table $table): Table

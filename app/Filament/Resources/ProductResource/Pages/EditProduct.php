@@ -17,4 +17,9 @@ class EditProduct extends EditRecord
                 ->label('刪除'),
         ];
     }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }

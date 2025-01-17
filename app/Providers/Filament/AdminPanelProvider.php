@@ -34,7 +34,7 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->navigationGroups([
                 '商品管理',
-                '設定',
+                '網站管理',
                 '系統管理',
             ])
             ->colors([

@@ -15,7 +15,7 @@ class SeoSettingResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-cog';
 
-    protected static ?string $navigationGroup = '設定';
+    protected static ?string $navigationGroup = '網站管理';
 
     protected static ?int $navigationSort = 2;
     protected static ?string $modelLabel = 'SEO 設定';

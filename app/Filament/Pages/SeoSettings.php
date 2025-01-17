@@ -17,7 +17,9 @@ class SeoSettings extends Page
 {
     protected static ?string $navigationIcon = 'heroicon-o-cog';
 
-    protected static ?string $navigationGroup = '設定';
+    protected static ?string $navigationGroup = '網站管理';
+
+    protected static ?int $navigationSort = 2;
 
     protected static ?string $title = 'SEO 設定';
 

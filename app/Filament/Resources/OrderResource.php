@@ -20,7 +20,7 @@ class OrderResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationGroup = '訂單管理';
-    
+
     protected static ?int $navigationSort  = 2;
 
     protected static ?string $modelLabel = '訂單';
@@ -29,6 +29,11 @@ class OrderResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\TextInput::make('order_id')
+                    ->label('訂單編號')
+                    ->default(fn() => Order::generateOrderId())
+                    ->disabled()
+                    ->dehydrated(false),
                 Forms\Components\Select::make('user_id')
                     ->label('會員')
                     ->relationship('member', 'name')
@@ -66,21 +71,27 @@ class OrderResource extends Resource
                 Forms\Components\TextInput::make('tracking_number')
                     ->label('追蹤號碼'),
             ]);
-
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('order_id')
+                    ->label('訂單編號')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('user.name')
+                    ->label('會員')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('total_amount')
+                    ->label('訂單金額')
                     ->money('TWD')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
+                    ->label('訂單狀態')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'pending' => 'gray',
                         'processing' => 'info',
                         'shipped' => 'warning',
@@ -88,15 +99,25 @@ class OrderResource extends Resource
                         'cancelled' => 'danger',
                     }),
                 Tables\Columns\TextColumn::make('payment_method')
+                    ->label('付款方式')
                     ->badge(),
                 Tables\Columns\TextColumn::make('tracking_number')
+                    ->label('追蹤號碼')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('建立時間')
                     ->dateTime()
                     ->sortable(),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('status')
+                    ->options([
+                        'pending' => '待付款',
+                        'processing' => '處理中',
+                        'shipped' => '已出貨',
+                        'delivered' => '已送達',
+                        'cancelled' => '已取消',
+                    ]),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

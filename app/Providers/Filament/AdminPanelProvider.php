@@ -34,6 +34,7 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->navigationGroups([
                 '商品管理',
+                '訂單管理',
                 '網站管理',
                 '系統管理',
             ])

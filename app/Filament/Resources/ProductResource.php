@@ -113,7 +113,7 @@ class ProductResource extends Resource
                     ->imageEditor()
                     ->directory('products')
                     ->columnSpanFull()
-                    ->acceptedFileTypes(['image/jpeg', 'image/png'])
+                    ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png'])
                     ->imageResizeMode('cover')
                     ->imageResizeTargetWidth('1024')
                     ->imageResizeTargetHeight('1024')

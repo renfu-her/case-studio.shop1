@@ -52,12 +52,24 @@ class OrderItemsRelationManager extends RelationManager
                     ->label('單價')
                     ->numeric()
                     ->required()
-                    ->disabled(),
+                    ->readOnly()
+                    ->dehydrated(),
                 Forms\Components\TextInput::make('total_price')
                     ->label('總價')
                     ->numeric()
-                    ->disabled(),
+                    ->readOnly()
+                    ->dehydrated(),
             ]);
+    }
+
+    protected function mutateFormDataBeforeCreate(array $data): array
+    {
+        if (isset($data['product_id'])) {
+            $product = \App\Models\Product::find($data['product_id']);
+            $data['unit_price'] = $product->price;
+            $data['total_price'] = $data['unit_price'] * $data['quantity'];
+        }
+        return $data;
     }
 
     public function table(Table $table): Table

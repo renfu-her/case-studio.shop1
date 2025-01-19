@@ -56,8 +56,9 @@ class OrderResource extends Resource
                     ->label('付款方式')
                     ->options([
                         'credit_card' => '信用卡',
-                        'paypal' => 'PayPal',
                         'bank_transfer' => '銀行轉帳',
+                        'convenience_store' => '超商付款',
+                        'line_pay' => 'Line Pay',
                     ])
                     ->required(),
                 Forms\Components\Textarea::make('shipping_address')
@@ -92,14 +93,29 @@ class OrderResource extends Resource
                     ->label('訂單狀態')
                     ->badge()
                     ->color(fn(string $state): string => match ($state) {
-                        'pending' => 'gray',
+                        'pending' => 'warning',
                         'processing' => 'info',
-                        'shipped' => 'warning',
+                        'shipped' => 'primary',
                         'delivered' => 'success',
                         'cancelled' => 'danger',
+                    })
+                    ->formatStateUsing(fn(string $state): string => match ($state) {
+                        'pending' => '待付款',
+                        'processing' => '處理中',
+                        'shipped' => '已出貨',
+                        'delivered' => '已送達',
+                        'cancelled' => '已取消',
+                        default => $state,
                     }),
                 Tables\Columns\TextColumn::make('payment_method')
                     ->label('付款方式')
+                    ->formatStateUsing(fn(string $state): string => match ($state) {
+                        'credit_card' => '信用卡',
+                        'bank_transfer' => '銀行轉帳',
+                        'convenience_store' => '超商付款',
+                        'line_pay' => 'Line Pay',
+                        default => $state,
+                    })
                     ->badge(),
                 Tables\Columns\TextColumn::make('tracking_number')
                     ->label('追蹤號碼')

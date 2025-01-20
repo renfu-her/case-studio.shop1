@@ -42,7 +42,8 @@ class FaqService extends BaseService
         return Forms\Components\Textarea::make('question')
             ->label('問題')
             ->required()
-            ->rows(3);
+            ->rows(3)
+            ->columnSpanFull();
     }
 
     private function getAnswerEditor()
@@ -51,19 +52,7 @@ class FaqService extends BaseService
             'answer',
             '回答',
             '請輸入回答內容...'
-        )->toolbarButtons([
-            'bold',
-            'italic',
-            'underline',
-            'strike',
-            'link',
-            'blockquote',
-            'h2',
-            'h3',
-            'orderedList',
-            'bulletList',
-            'clean',
-        ]);
+        );
     }
 
     private function getSortInput()
@@ -160,6 +149,31 @@ class FaqService extends BaseService
                 Tables\Actions\DeleteBulkAction::make()
                     ->label('刪除所選'),
             ]),
+        ];
+    }
+
+    /**
+     * 獲取關聯表單架構
+     */
+    public function getRelationFormSchema(): array
+    {
+        return [
+            $this->getQuestionInput(),
+            $this->getAnswerEditor(),
+            $this->getSortInput(),
+            $this->getStatusToggle(),
+        ];
+    }
+
+    /**
+     * 獲取關聯表格列
+     */
+    public function getRelationTableColumns(): array
+    {
+        return [
+            $this->getQuestionColumn(),
+            $this->getSortColumn(),
+            $this->getStatusColumn(),
         ];
     }
 }

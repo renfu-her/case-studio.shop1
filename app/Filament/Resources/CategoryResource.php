@@ -4,13 +4,11 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\CategoryResource\Pages;
 use App\Models\Category;
-use Filament\Forms;
+use App\Services\CategoryService;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\DB;
 
 class CategoryResource extends Resource
 {
@@ -19,95 +17,27 @@ class CategoryResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationGroup = '商品管理';
-
     protected static ?string $navigationLabel = '商品分類';
-
     protected static ?string $modelLabel = '分類';
-
     protected static ?string $pluralModelLabel = '分類';
-
     protected static ?int $navigationSort = 0;
-
-    
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                Forms\Components\Select::make('parent_id')
-                    ->label('上層分類')
-                    ->options(function () {
-                        // 獲取所有分類並組織成階層結構
-                        $categories = Category::all();
-                        $options = [];
-
-                        // 先找出頂層分類
-                        $topCategories = $categories->whereNull('parent_id');
-
-                        // 遞迴函數來建立階層結構
-                        $buildOptions = function ($items, $depth = 0) use (&$buildOptions, $categories) {
-                            $options = [];
-                            foreach ($items as $category) {
-                                $prefix = str_repeat('　', $depth);
-                                $options[$category->id] = $prefix . ($depth > 0 ? '|-' : '') . $category->name;
-
-                                // 找出此分類的子分類
-                                $children = $categories->where('parent_id', $category->id);
-                                if ($children->count() > 0) {
-                                    $options += $buildOptions($children, $depth + 1);
-                                }
-                            }
-                            return $options;
-                        };
-
-                        return $buildOptions($topCategories);
-                    })
-                    ->searchable()
-                    ->placeholder('選擇上層分類'),
-                Forms\Components\TextInput::make('name')
-                    ->label('分類名稱')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('sort')
-                    ->label('排序')
-                    ->numeric()
-                    ->default(0),
-                Forms\Components\Toggle::make('is_active')
-                    ->label('啟用狀態')
-                    ->default(true),
-            ]);
+        return $form->schema(
+            app(CategoryService::class)->getFormSchema()
+        );
     }
 
     public static function table(Table $table): Table
     {
+        $service = app(CategoryService::class);
+
         return $table
-            ->columns([
-                Tables\Columns\TextColumn::make('name')
-                    ->label('分類名稱')
-                    ->searchable()
-                    ->getStateUsing(function (Category $record): string {
-                        // 手動查詢父級分類來確定深度
-                        $depth = 0;
-                        $parent_id = $record->parent_id;
-
-                        while ($parent_id) {
-                            $depth++;
-                            $parent = DB::table('categories')
-                                ->where('id', $parent_id)
-                                ->first();
-                            if (!$parent) break;
-                            $parent_id = $parent->parent_id;
-                        }
-
-                        $prefix = str_repeat('　', $depth);
-                        return $prefix . ($depth > 0 ? '|-' : '') . $record->name;
-                    }),
-                Tables\Columns\TextColumn::make('sort')
-                    ->label('排序'),
-                Tables\Columns\IconColumn::make('is_active')
-                    ->label('啟用狀態')
-                    ->boolean(),
-            ])
+            ->columns($service->getTableColumns())
+            ->filters($service->getTableFilters())
+            ->actions($service->getTableActions())
+            ->bulkActions($service->getTableBulkActions())
             ->modifyQueryUsing(function (Builder $query) {
                 // 先獲取所有分類
                 $categories = Category::all();
@@ -140,25 +70,7 @@ class CategoryResource extends Resource
                 }
 
                 return $query;
-            })
-            ->emptyStateHeading('尚無分類')
-            ->filters([
-                Tables\Filters\TernaryFilter::make('is_active')
-                    ->label('啟用狀態'),
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make()
-                    ->label('編輯'),
-                Tables\Actions\DeleteAction::make()
-                    ->label('刪除'),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make()
-                        ->label('刪除所選'),
-                ]),
-            ])
-            ->paginated(false);
+            });
     }
 
     public static function getPages(): array

@@ -10,6 +10,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Rawilk\FilamentQuill\Filament\Forms\Components\QuillEditor;
+use App\Services\FaqService;
 
 class FaqResource extends Resource
 {
@@ -25,100 +26,20 @@ class FaqResource extends Resource
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                Forms\Components\Select::make('category_id')
-                    ->relationship('category', 'name')
-                    ->label('問題分類')
-                    ->required()
-                    ->searchable()
-                    ->preload()
-                    ->createOptionForm([
-                        Forms\Components\TextInput::make('name')
-                            ->label('分類名稱')
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('sort')
-                            ->label('排序')
-                            ->numeric()
-                            ->default(0),
-                        Forms\Components\Toggle::make('is_active')
-                            ->label('啟用狀態')
-                            ->default(true),
-                    ]),
-
-                Forms\Components\Textarea::make('question')
-                    ->label('問題')
-                    ->required()
-                    ->rows(3),
-
-                QuillEditor::make('answer')
-                    ->label('回答')
-                    ->required()
-                    ->toolbarButtons([
-                        'bold',
-                        'italic',
-                        'underline',
-                        'strike',
-                        'link',
-                        'blockquote',
-                        'h2',
-                        'h3',
-                        'orderedList',
-                        'bulletList',
-                        'clean',
-                    ])
-                    ->columnSpanFull(),
-
-                Forms\Components\TextInput::make('sort')
-                    ->label('排序')
-                    ->numeric()
-                    ->default(0),
-
-                Forms\Components\Toggle::make('is_active')
-                    ->label('啟用狀態')
-                    ->default(true),
-            ]);
+        return $form->schema(
+            app(FaqService::class)->getFormSchema()
+        );
     }
 
     public static function table(Table $table): Table
     {
+        $service = app(FaqService::class);
+
         return $table
-            ->columns([
-                Tables\Columns\TextColumn::make('category.name')
-                    ->label('分類')
-                    ->sortable(),
-
-                Tables\Columns\TextColumn::make('question')
-                    ->label('問題')
-                    ->searchable()
-                    ->limit(50),
-
-                Tables\Columns\TextColumn::make('sort')
-                    ->label('排序')
-                    ->sortable(),
-
-                Tables\Columns\IconColumn::make('is_active')
-                    ->label('啟用狀態')
-                    ->boolean()
-                    ->sortable(),
-            ])
-            ->filters([
-                Tables\Filters\SelectFilter::make('category_id')
-                    ->relationship('category', 'name')
-                    ->label('分類'),
-                Tables\Filters\TernaryFilter::make('is_active')
-                    ->label('啟用狀態'),
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make()->label('編輯'),
-                Tables\Actions\DeleteAction::make()->label('刪除'),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make()->label('刪除所選'),
-                ]),
-            ])
+            ->columns($service->getTableColumns())
+            ->filters($service->getTableFilters())
+            ->actions($service->getTableActions())
+            ->bulkActions($service->getTableBulkActions())
             ->defaultSort('sort', 'asc');
     }
 

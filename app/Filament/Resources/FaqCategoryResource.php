@@ -10,6 +10,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use App\Services\FaqCategoryService;
 
 class FaqCategoryResource extends Resource
 {
@@ -25,60 +26,20 @@ class FaqCategoryResource extends Resource
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->label('分類名稱')
-                    ->required()
-                    ->maxLength(255),
-
-                Forms\Components\TextInput::make('sort')
-                    ->label('排序')
-                    ->numeric()
-                    ->default(0),
-
-                Forms\Components\Toggle::make('is_active')
-                    ->label('啟用狀態')
-                    ->default(true),
-            ]);
+        return $form->schema(
+            app(FaqCategoryService::class)->getFormSchema()
+        );
     }
 
     public static function table(Table $table): Table
     {
+        $service = app(FaqCategoryService::class);
+
         return $table
-            ->columns([
-                Tables\Columns\TextColumn::make('name')
-                    ->label('分類名稱')
-                    ->searchable()
-                    ->sortable(),
-
-                Tables\Columns\TextColumn::make('faqs_count')
-                    ->label('問題數量')
-                    ->counts('faqs')
-                    ->sortable(),
-
-                Tables\Columns\TextColumn::make('sort')
-                    ->label('排序')
-                    ->sortable(),
-
-                Tables\Columns\IconColumn::make('is_active')
-                    ->label('啟用狀態')
-                    ->boolean()
-                    ->sortable(),
-            ])
-            ->filters([
-                Tables\Filters\TernaryFilter::make('is_active')
-                    ->label('啟用狀態'),
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make()->label('編輯'),
-                Tables\Actions\DeleteAction::make()->label('刪除'),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make()->label('刪除所選'),
-                ]),
-            ])
+            ->columns($service->getTableColumns())
+            ->filters($service->getTableFilters())
+            ->actions($service->getTableActions())
+            ->bulkActions($service->getTableBulkActions())
             ->defaultSort('sort', 'asc');
     }
 

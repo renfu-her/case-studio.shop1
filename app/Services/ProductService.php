@@ -5,13 +5,13 @@ namespace App\Services;
 use App\Models\Category;
 use Filament\Forms;
 use Filament\Tables;
-use Filament\Forms\Components\FileUpload;
-use Rawilk\FilamentQuill\Filament\Forms\Components\QuillEditor;
+// use Filament\Forms\Components\FileUpload;
+// use Rawilk\FilamentQuill\Filament\Forms\Components\QuillEditor;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Support\Str;
 
-class ProductService
+class ProductService extends BaseService
 {
     public function getFormSchema(): array
     {
@@ -28,89 +28,59 @@ class ProductService
 
     private function getCategorySelect()
     {
-        return Forms\Components\Select::make('category_id')
-            ->relationship('category', 'name')
-            ->label('商品分類')
-            ->required()
-            ->searchable()
-            ->preload()
-            ->options(fn() => $this->getCategoryOptions())
-            ->createOptionForm([
-                Forms\Components\Select::make('parent_id')
-                    ->relationship('parent', 'name')
-                    ->label('上層分類')
-                    ->searchable()
-                    ->preload()
-                    ->options(fn() => $this->getCategoryOptions()),
-                Forms\Components\TextInput::make('name')
-                    ->label('分類名稱')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('sort')
-                    ->label('排序')
-                    ->numeric()
-                    ->default(0),
-                Forms\Components\Toggle::make('is_active')
-                    ->label('啟用狀態')
-                    ->default(true),
-            ]);
+        return $this->createRelationSelect(
+            'category_id',
+            '商品分類',
+            'category',
+            'name',
+            true,
+            true,
+            true,
+            fn() => $this->getCategoryOptions(),
+            [
+                $this->createRelationSelect('parent_id', '上層分類', 'parent', 'name', false, true, true, fn() => $this->getCategoryOptions()),
+                $this->createTextInput('name', '分類名稱', true, 255),
+                $this->createNumberInput('sort', '排序', false, 0),
+                $this->createToggle('is_active', '啟用狀態'),
+            ]
+        );
     }
 
     private function getImageUpload()
     {
-        return FileUpload::make('image')
-            ->label('主圖片')
-            ->image()
-            ->imageEditor()
-            ->directory('products')
-            ->columnSpanFull()
-            ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png'])
-            ->imageResizeMode('cover')
-            ->imageResizeTargetWidth('1024')
-            ->imageResizeTargetHeight('1024')
-            ->saveUploadedFileUsing(fn($file) => $this->handleImageUpload($file));
+        return $this->createImageUpload(
+            'image',
+            '主圖片',
+            'products',
+            true,
+            ['image/jpeg', 'image/jpg', 'image/png'],
+            fn($file) => $this->handleImageUpload($file)
+        );
     }
 
     private function getNameInput()
     {
-        return Forms\Components\TextInput::make('name')
-            ->label('商品名稱')
-            ->required()
-            ->maxLength(255);
+        return $this->createTextInput('name', '商品名稱', true, 255);
     }
 
     private function getDescriptionEditor()
     {
-        return QuillEditor::make('description')
-            ->label('商品描述')
-            ->placeholder('請輸入商品描述...')
-            ->columnSpanFull();
+        return $this->createQuillEditor('description', '商品描述', '請輸入商品描述...');
     }
 
     private function getPriceInput()
     {
-        return Forms\Components\TextInput::make('price')
-            ->label('價格')
-            ->required()
-            ->numeric()
-            ->prefix('NT$');
+        return $this->createNumberInput('price', '價格', true, null, null, 'NT$');
     }
 
     private function getStockInput()
     {
-        return Forms\Components\TextInput::make('stock')
-            ->label('庫存')
-            ->required()
-            ->numeric()
-            ->default(0)
-            ->minValue(0);
+        return $this->createNumberInput('stock', '庫存', true, 0);
     }
 
     private function getStatusToggle()
     {
-        return Forms\Components\Toggle::make('is_active')
-            ->label('啟用狀態')
-            ->default(true);
+        return $this->createToggle('is_active', '啟用狀態');
     }
 
     public function getTableColumns(): array
@@ -127,48 +97,38 @@ class ProductService
 
     private function getImageColumn()
     {
-        return Tables\Columns\ImageColumn::make('image')
-            ->label('主圖片');
+        return $this->createImageColumn('image', '主圖片');
     }
 
     private function getCategoryColumn()
     {
-        return Tables\Columns\TextColumn::make('category.name')
-            ->label('商品分類')
-            ->formatStateUsing(fn($record) => $this->formatCategoryPath($record))
-            ->searchable()
-            ->sortable();
+        return $this->createTextColumn(
+            'category.name',
+            '商品分類',
+            true,
+            true,
+            fn($record) => $this->formatCategoryPath($record)
+        );
     }
 
     private function getNameColumn()
     {
-        return Tables\Columns\TextColumn::make('name')
-            ->label('商品名稱')
-            ->searchable()
-            ->sortable();
+        return $this->createTextColumn('name', '商品名稱', true, true);
     }
 
     private function getPriceColumn()
     {
-        return Tables\Columns\TextColumn::make('price')
-            ->label('價格')
-            ->money('TWD')
-            ->sortable();
+        return $this->createMoneyColumn('price', '價格');
     }
 
     private function getStockColumn()
     {
-        return Tables\Columns\TextColumn::make('stock')
-            ->label('庫存')
-            ->sortable();
+        return $this->createTextColumn('stock', '庫存', false, true);
     }
 
     private function getStatusColumn()
     {
-        return Tables\Columns\IconColumn::make('is_active')
-            ->label('啟用狀態')
-            ->boolean()
-            ->sortable();
+        return $this->createBooleanColumn('is_active', '啟用狀態');
     }
 
     public function getTableFilters(): array

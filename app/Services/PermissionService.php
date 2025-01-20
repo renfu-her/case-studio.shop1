@@ -5,14 +5,13 @@ namespace App\Services;
 use Filament\Forms;
 use Filament\Tables;
 
-class FaqCategoryService extends BaseService
+class PermissionService extends BaseService
 {
     public function getFormSchema(): array
     {
         return [
             $this->getNameInput(),
-            $this->getSortInput(),
-            $this->getStatusToggle(),
+            $this->getDescriptionInput(),
         ];
     }
 
@@ -20,27 +19,19 @@ class FaqCategoryService extends BaseService
     {
         return $this->createTextInput(
             'name',
-            '分類名稱',
+            '權限名稱',
             true,
             255
         );
     }
 
-    private function getSortInput()
+    private function getDescriptionInput()
     {
-        return $this->createNumberInput(
-            'sort',
-            '排序',
+        return $this->createTextInput(
+            'description',
+            '描述',
             false,
-            0
-        );
-    }
-
-    private function getStatusToggle()
-    {
-        return $this->createToggle(
-            'is_active',
-            '啟用狀態'
+            255
         );
     }
 
@@ -48,9 +39,8 @@ class FaqCategoryService extends BaseService
     {
         return [
             $this->getNameColumn(),
-            $this->getFaqsCountColumn(),
-            $this->getSortColumn(),
-            $this->getStatusColumn(),
+            $this->getDescriptionColumn(),
+            $this->getRolesColumn(),
         ];
     }
 
@@ -58,44 +48,30 @@ class FaqCategoryService extends BaseService
     {
         return $this->createTextColumn(
             'name',
-            '分類名稱',
+            '權限名稱',
             true,
             true
         );
     }
 
-    private function getFaqsCountColumn()
-    {
-        return Tables\Columns\TextColumn::make('faqs_count')
-            ->label('問題數量')
-            ->counts('faqs')
-            ->sortable();
-    }
-
-    private function getSortColumn()
+    private function getDescriptionColumn()
     {
         return $this->createTextColumn(
-            'sort',
-            '排序',
-            false,
-            true
+            'description',
+            '描述'
         );
     }
 
-    private function getStatusColumn()
+    private function getRolesColumn()
     {
-        return $this->createBooleanColumn(
-            'is_active',
-            '啟用狀態'
-        );
+        return Tables\Columns\TextColumn::make('roles.name')
+            ->label('角色')
+            ->badge();
     }
 
     public function getTableFilters(): array
     {
-        return [
-            Tables\Filters\TernaryFilter::make('is_active')
-                ->label('啟用狀態'),
-        ];
+        return [];
     }
 
     public function getTableActions(): array

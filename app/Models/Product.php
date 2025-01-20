@@ -19,12 +19,16 @@ class Product extends Model
         'price',
         'stock',
         'is_active',
+        'is_hot',
+        'is_new',
     ];
 
     protected $casts = [
         'price' => 'decimal:2',
         'stock' => 'integer',
         'is_active' => 'boolean',
+        'is_hot' => 'boolean',
+        'is_new' => 'boolean',
     ];
 
     public function category(): BelongsTo

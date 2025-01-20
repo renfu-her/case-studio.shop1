@@ -22,7 +22,12 @@ class ProductService extends BaseService
             $this->getDescriptionEditor(),
             $this->getPriceInput(),
             $this->getStockInput(),
-            $this->getStatusToggle(),
+            Forms\Components\Section::make('商品狀態')
+                ->schema([
+                    $this->getStatusToggle(),
+                    $this->getHotToggle(),
+                    $this->getNewToggle(),
+                ]),
         ];
     }
 
@@ -83,6 +88,16 @@ class ProductService extends BaseService
         return $this->createToggle('is_active', '啟用狀態');
     }
 
+    private function getHotToggle()
+    {
+        return $this->createToggle('is_hot', '熱銷商品');
+    }
+
+    private function getNewToggle()
+    {
+        return $this->createToggle('is_new', '新上架');
+    }
+
     public function getTableColumns(): array
     {
         return [
@@ -92,6 +107,8 @@ class ProductService extends BaseService
             $this->getPriceColumn(),
             $this->getStockColumn(),
             $this->getStatusColumn(),
+            $this->getHotColumn(),
+            $this->getNewColumn(),
         ];
     }
 
@@ -131,6 +148,16 @@ class ProductService extends BaseService
         return $this->createBooleanColumn('is_active', '啟用狀態');
     }
 
+    private function getHotColumn()
+    {
+        return $this->createBooleanColumn('is_hot', '熱銷商品');
+    }
+
+    private function getNewColumn()
+    {
+        return $this->createBooleanColumn('is_new', '新上架');
+    }
+
     public function getTableFilters(): array
     {
         return [
@@ -139,6 +166,16 @@ class ProductService extends BaseService
                 ->placeholder('全部商品')
                 ->trueLabel('已啟用')
                 ->falseLabel('已停用'),
+            Tables\Filters\TernaryFilter::make('is_hot')
+                ->label('熱銷商品')
+                ->placeholder('全部商品')
+                ->trueLabel('是')
+                ->falseLabel('否'),
+            Tables\Filters\TernaryFilter::make('is_new')
+                ->label('新上架')
+                ->placeholder('全部商品')
+                ->trueLabel('是')
+                ->falseLabel('否'),
         ];
     }
 

@@ -115,11 +115,11 @@ class BaseService extends Service
         string $name,
         string $label,
         bool $sortable = true
-    ): Tables\Columns\IconColumn {
-        return Tables\Columns\IconColumn::make($name)
+    ): Tables\Columns\ToggleColumn {
+        return Tables\Columns\ToggleColumn::make($name)
             ->label($label)
-            ->boolean()
-            ->sortable($sortable);
+            ->sortable($sortable)
+            ->alignCenter();
     }
 
     /**

@@ -14,7 +14,7 @@ class BannerService extends BaseService
     {
         return [
             $this->getTypeSelect(),
-            $this->getImageUpload(),
+            $this->getImageUpload('上傳圖片長寬：1920px x 600px'),
             $this->getTitleInput(),
             $this->getLinkInput(),
             $this->getSortInput(),
@@ -35,15 +35,16 @@ class BannerService extends BaseService
         );
     }
 
-    private function getImageUpload()
+    private function getImageUpload(string $placeholder = null)
     {
         return $this->createImageUpload(
-            'image',
-            '廣告圖片',
-            'banners',
-            true,
-            ['image/jpeg', 'image/png'],
-            fn($file, $get) => $this->handleImageUpload($file, $get)
+            name: 'image',
+            label: '廣告圖片',
+            directory: 'banners',
+            placeholder: $placeholder,
+            columnSpanFull: true,
+            acceptedFileTypes: ['image/jpeg', 'image/png'],
+            saveUploadedFileUsing: fn($file, $get) => $this->handleImageUpload($file, $get)
         );
     }
 

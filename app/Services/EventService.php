@@ -14,7 +14,7 @@ class EventService extends BaseService
     {
         return [
             $this->getTitleInput(),
-            $this->getImageUpload(),
+            $this->getImageUpload('上傳圖片長寬：1200px x 630px'),
             $this->getContentEditor(),
             $this->getStartDatePicker(),
             $this->getEndDatePicker(),
@@ -33,15 +33,16 @@ class EventService extends BaseService
         );
     }
 
-    private function getImageUpload()
+    private function getImageUpload(string $placeholder = null)
     {
         return $this->createImageUpload(
-            'image',
-            '活動圖片',
-            'events',
-            true,
-            ['image/jpeg', 'image/png'],
-            fn($file) => $this->handleImageUpload($file)
+            name: 'image',
+            label: '活動圖片',
+            directory: 'events',
+            columnSpanFull: true,
+            placeholder: $placeholder,
+            acceptedFileTypes: ['image/jpeg', 'image/png'],
+            saveUploadedFileUsing: fn($file) => $this->handleImageUpload($file)
         );
     }
 

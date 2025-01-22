@@ -17,7 +17,7 @@ class ProductService extends BaseService
     {
         return [
             $this->getCategorySelect(),
-            $this->getImageUpload(),
+            $this->getImageUpload('上傳圖片長寬：1024px x 1024px'),
             $this->getNameInput(),
             $this->getDescriptionEditor(),
             $this->getPriceInput(),
@@ -51,15 +51,16 @@ class ProductService extends BaseService
         );
     }
 
-    private function getImageUpload()
+    private function getImageUpload(string $placeholder = null)
     {
         return $this->createImageUpload(
-            'image',
-            '主圖片',
-            'products',
-            true,
-            ['image/jpeg', 'image/jpg', 'image/png'],
-            fn($file) => $this->handleImageUpload($file)
+            name: 'image',
+            label: '主圖片',
+            directory: 'products',
+            columnSpanFull: true,
+            placeholder: $placeholder,
+            acceptedFileTypes: ['image/jpeg', 'image/jpg', 'image/png'],
+            saveUploadedFileUsing: fn($file) => $this->handleImageUpload($file)
         );
     }
 
@@ -70,7 +71,7 @@ class ProductService extends BaseService
 
     private function getDescriptionEditor()
     {
-        return $this->createQuillEditor('description', '商品描述', '請輸入商品描述...');
+        return $this->createQuillEditor(name: 'description', label: '商品描述', placeholder: '請輸入商品描述...');
     }
 
     private function getPriceInput()

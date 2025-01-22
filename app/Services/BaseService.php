@@ -6,6 +6,8 @@ use Filament\Forms;
 use Filament\Tables;
 use App\Services\Service;
 use Rawilk\FilamentQuill\Filament\Forms\Components\QuillEditor;
+use FilamentTiptapEditor\TiptapEditor;
+use Awcodes\FilamentTiptapEditor\TiptapEditor as AwcodesTiptapEditor;
 
 class BaseService extends Service
 {
@@ -46,7 +48,8 @@ class BaseService extends Service
         ?int $minValue = null,
         ?int $maxValue = null,
         ?string $prefix = null,
-        ?string $suffix = null
+        ?string $suffix = null,
+        ?bool $default = false
     ): Forms\Components\TextInput {
         return Forms\Components\TextInput::make($name)
             ->label($label)
@@ -55,7 +58,8 @@ class BaseService extends Service
             ->minValue($minValue)
             ->maxValue($maxValue)
             ->prefix($prefix)
-            ->suffix($suffix);
+            ->suffix($suffix)
+            ->default($default);
     }
 
     /**
@@ -174,9 +178,12 @@ class BaseService extends Service
         string $name,
         string $label,
         string $directory,
+        ?string $placeholder = null,
         bool $columnSpanFull = true,
         array $acceptedFileTypes = ['image/jpeg', 'image/jpg', 'image/png'],
-        ?callable $saveUploadedFileUsing = null
+        ?callable $saveUploadedFileUsing = null,
+        bool $required = false
+
     ): Forms\Components\FileUpload {
         $upload = Forms\Components\FileUpload::make($name)
             ->label($label)
@@ -184,6 +191,14 @@ class BaseService extends Service
             ->imageEditor()
             ->directory($directory)
             ->acceptedFileTypes($acceptedFileTypes);
+
+        if ($placeholder) {
+            $upload->placeholder($placeholder);
+        }
+
+        if ($required == true) {
+            $upload->required();
+        }
 
         if ($columnSpanFull) {
             $upload->columnSpanFull();
@@ -257,5 +272,32 @@ class BaseService extends Service
         }
 
         return $select;
+    }
+
+    /**
+     * 創建基礎的 CKEditor 編輯器
+     */
+    protected function createCkeditor(
+        string $name,
+        string $label,
+        bool $required = false,
+        bool $columnSpanFull = true,
+        ?string $placeholder = null,
+        string $profile = 'default'
+    ): TiptapEditor {
+        $editor = TiptapEditor::make($name)
+            ->label($label)
+            ->required($required)
+            ->profile($profile);
+
+        if ($placeholder) {
+            $editor->placeholder($placeholder);
+        }
+
+        if ($columnSpanFull) {
+            $editor->columnSpanFull();
+        }
+
+        return $editor;
     }
 }

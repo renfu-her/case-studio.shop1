@@ -13,6 +13,12 @@ use Filament\Http\Responses\Auth\Contracts\LoginResponse;
 
 class Login extends BaseLogin
 {
+    public ?array $data = [
+        'email' => null,
+        'password' => null,
+        'captcha' => null,
+    ];
+
     protected static string $view = 'filament.pages.auth.login';
 
     public function getTitle(): string
@@ -48,14 +54,14 @@ class Login extends BaseLogin
                     ->schema([
                         Section::make()
                             ->schema([
-                                TextInput::make('data.email')
+                                TextInput::make('email')
                                     ->label('電子郵件')
                                     ->email()
                                     ->required()
                                     ->autocomplete()
                                     ->placeholder('請輸入電子郵件')
                                     ->columnSpan('full'),
-                                TextInput::make('data.password')
+                                TextInput::make('password')
                                     ->label('密碼')
                                     ->password()
                                     ->required()
@@ -78,7 +84,6 @@ class Login extends BaseLogin
                                     ->alignEnd(),
                             ])
                     ])
-                    ->statePath('data')
             ),
         ];
     }
@@ -98,19 +103,20 @@ class Login extends BaseLogin
         $data = $this->form->getState();
 
         // 驗證驗證碼
-        if (!$this->validateCaptcha($data['data']['captcha'])) {
+        if (!$this->validateCaptcha($data['captcha'] ?? null)) {
             throw ValidationException::withMessages([
-                'data.captcha' => '驗證碼不正確',
+                'captcha' => '驗證碼不正確',
             ]);
         }
 
-        // 呼叫父類的驗證方法
         return parent::authenticate();
     }
 
     protected function validateCaptcha($input): bool
     {
-        // 這裡實現您的驗證碼驗證邏輯
+        if (empty($input)) {
+            return false;
+        }
         $captcha = session('captcha');
         return $input === $captcha;
     }

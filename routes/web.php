@@ -36,7 +36,7 @@ Route::get('/captcha/generate', function () {
     }
 
     // 寫入驗證碼
-    imagettftext($image, 20, 0, 15, 30, $textColor, public_path('fonts/arial.ttf'), $captcha);
+    imagettftext($image, 20, 0, 15, 30, $textColor, public_path('fonts/Arial.ttf'), $captcha);
 
     ob_start();
     imagepng($image);

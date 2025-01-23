@@ -13,14 +13,6 @@ use Filament\Http\Responses\Auth\Contracts\LoginResponse;
 
 class Login extends BaseLogin
 {
-    public ?array $data = [
-        'email' => null,
-        'password' => null,
-        'captcha' => null,
-    ];
-
-    protected static string $view = 'filament.pages.auth.login';
-
     public function getTitle(): string
     {
         return '後台管理系統';
@@ -54,20 +46,18 @@ class Login extends BaseLogin
                     ->schema([
                         Section::make()
                             ->schema([
-                                TextInput::make('data.email')
+                                TextInput::make('email')
                                     ->label('電子郵件')
                                     ->email()
                                     ->required()
                                     ->autocomplete()
                                     ->placeholder('請輸入電子郵件')
                                     ->columnSpan('full'),
-                                TextInput::make('data.password')
+                                TextInput::make('password')
                                     ->label('密碼')
                                     ->password()
                                     ->required()
                                     ->placeholder('請輸入密碼')
-                                    ->columnSpan('full'),
-                                View::make('components.captcha-input')
                                     ->columnSpan('full'),
                                 \Filament\Forms\Components\Actions::make([
                                     \Filament\Forms\Components\Actions\Action::make('login')
@@ -84,6 +74,7 @@ class Login extends BaseLogin
                                     ->alignEnd(),
                             ])
                     ])
+                    ->statePath('data')
             ),
         ];
     }
@@ -96,28 +87,5 @@ class Login extends BaseLogin
     protected function hasFullWidthFormActions(): bool
     {
         return false;
-    }
-
-    public function authenticate(): ?LoginResponse
-    {
-        $data = $this->form->getState();
-
-        // 驗證驗證碼
-        if (!$this->validateCaptcha($data['captcha'] ?? null)) {
-            throw ValidationException::withMessages([
-                'captcha' => '驗證碼不正確',
-            ]);
-        }
-
-        return parent::authenticate();
-    }
-
-    protected function validateCaptcha($input): bool
-    {
-        if (empty($input)) {
-            return false;
-        }
-        $captcha = session('captcha');
-        return $input === $captcha;
     }
 }

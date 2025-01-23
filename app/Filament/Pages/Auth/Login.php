@@ -54,14 +54,14 @@ class Login extends BaseLogin
                     ->schema([
                         Section::make()
                             ->schema([
-                                TextInput::make('email')
+                                TextInput::make('data.email')
                                     ->label('電子郵件')
                                     ->email()
                                     ->required()
                                     ->autocomplete()
                                     ->placeholder('請輸入電子郵件')
                                     ->columnSpan('full'),
-                                TextInput::make('password')
+                                TextInput::make('data.password')
                                     ->label('密碼')
                                     ->password()
                                     ->required()

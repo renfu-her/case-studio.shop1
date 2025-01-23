@@ -5,11 +5,13 @@ namespace App\Filament\Pages\Auth;
 use Filament\Pages\Auth\Login as BaseLogin;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Button;
+use Filament\Forms\Components\Actions\Action;
 use Illuminate\Validation\ValidationException;
 
 class Login extends BaseLogin
 {
+    // protected static string $view = 'filament.pages.auth.login';  // 自定義視圖
+
     public function getTitle(): string
     {
         return '後台管理系統';
@@ -35,7 +37,7 @@ class Login extends BaseLogin
         return '50px';
     }
 
-    public function getForms(): array
+    protected function getForms(): array
     {
         return [
             'form' => $this->form(
@@ -61,16 +63,26 @@ class Login extends BaseLogin
                                 ->color('primary')
                                 ->icon('heroicon-m-arrow-right-on-rectangle')
                                 ->size('lg')
-                                ->buttonAttribute('type', 'submit')
                                 ->extraAttributes([
                                     'class' => 'w-full justify-center'
                                 ]),
                         ])
                             ->columnSpan('full')
-                            ->alignEnd()
+                            ->alignEnd(),
                     ])
+                    ->statePath('data')
             ),
         ];
+    }
+
+    protected function getFormActions(): array
+    {
+        return [];
+    }
+
+    protected function hasFullWidthFormActions(): bool
+    {
+        return false;
     }
 
     protected function getCredentialsFromFormData(array $data): array

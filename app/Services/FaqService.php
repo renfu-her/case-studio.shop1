@@ -126,7 +126,10 @@ class FaqService extends BaseService
         return [
             Tables\Filters\SelectFilter::make('category_id')
                 ->relationship('category', 'name')
-                ->label('分類'),
+                ->label('分類')
+                ->placeholder('全部')
+                ->multiple(false)
+                ->searchable(),
             Tables\Filters\TernaryFilter::make('is_active')
                 ->label('啟用狀態'),
         ];

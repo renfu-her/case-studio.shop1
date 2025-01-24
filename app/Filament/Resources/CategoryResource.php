@@ -70,7 +70,8 @@ class CategoryResource extends Resource
                 }
 
                 return $query;
-            });
+            })
+            ->paginated(false); // 關閉分頁
     }
 
     public static function getPages(): array

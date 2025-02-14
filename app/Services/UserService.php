@@ -144,9 +144,10 @@ class UserService extends BaseService
     public function getTableActions(): array
     {
         return [
-            Tables\Actions\EditAction::make(),
+            Tables\Actions\EditAction::make()
+                ->hidden(fn(User $record) => $record->email === 'demo@demo.com'),
             Tables\Actions\DeleteAction::make()
-                ->hidden(fn(User $record) => $record->email === 'admin@admin.com'),
+                ->hidden(fn(User $record) => $record->email === 'demo@demo.com'),
         ];
     }
 
@@ -156,7 +157,7 @@ class UserService extends BaseService
             Tables\Actions\BulkActionGroup::make([
                 Tables\Actions\DeleteBulkAction::make()
                     ->action(function (Collection $records) {
-                        if ($records->contains('email', 'admin@admin.com')) {
+                        if ($records->contains('email', 'demo@demo.com')) {
                             return;
                         }
                         $records->each->delete();

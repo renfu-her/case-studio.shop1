@@ -40,19 +40,9 @@ class UserResource extends Resource
             ->filters($service->getTableFilters())
             ->actions([
                 ...$service->getTableActions(),
-                DeleteAction::make()
-                    ->hidden(fn(User $record) => $record->email === 'admin@admin.com')
             ])
             ->bulkActions([
                 ...$service->getTableBulkActions(),
-                BulkAction::make('delete')
-                    ->action(function (Collection $records) {
-                        if ($records->contains('email', 'admin@admin.com')) {
-                            return;
-                        }
-                        $records->each->delete();
-                    })
-                    ->deselectRecordsAfterCompletion()
             ])
             ->emptyStateHeading('尚無使用者');
     }

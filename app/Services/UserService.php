@@ -5,6 +5,8 @@ namespace App\Services;
 use Filament\Forms;
 use Filament\Tables;
 use Illuminate\Support\Facades\Hash;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 
 class UserService extends BaseService
 {
@@ -142,10 +144,9 @@ class UserService extends BaseService
     public function getTableActions(): array
     {
         return [
-            Tables\Actions\EditAction::make()
-                ->label('編輯'),
+            Tables\Actions\EditAction::make(),
             Tables\Actions\DeleteAction::make()
-                ->label('刪除'),
+                ->hidden(fn(User $record) => $record->email === 'admin@admin.com'),
         ];
     }
 
@@ -154,7 +155,7 @@ class UserService extends BaseService
         return [
             Tables\Actions\BulkActionGroup::make([
                 Tables\Actions\DeleteBulkAction::make()
-                    ->label('刪除所選'),
+                    ->hidden(fn(Collection $records) => $records->contains('email', 'admin@admin.com')),
             ]),
         ];
     }

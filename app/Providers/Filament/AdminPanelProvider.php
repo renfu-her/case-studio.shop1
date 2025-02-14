@@ -33,7 +33,6 @@ class AdminPanelProvider extends PanelProvider
             ->darkModeBrandLogo(asset('images/purchase.png'))
             ->brandLogoHeight('50px')
             ->favicon(asset('images/purchase.png'))
-            ->login()
             ->navigationGroups([
                 '商品管理',
                 '訂單管理',
@@ -74,7 +73,6 @@ class AdminPanelProvider extends PanelProvider
             ->login(Login::class)
             ->plugins([
                 ApiServicePlugin::make(),
-
             ]);
     }
 }

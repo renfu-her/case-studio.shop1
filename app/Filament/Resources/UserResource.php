@@ -8,6 +8,9 @@ use App\Services\UserService;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Collection;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\BulkAction;
 
 class UserResource extends Resource
 {
@@ -35,8 +38,26 @@ class UserResource extends Resource
         return $table
             ->columns($service->getTableColumns())
             ->filters($service->getTableFilters())
-            ->actions($service->getTableActions())
-            ->bulkActions($service->getTableBulkActions())
+            ->actions([
+                ...$service->getTableActions(),
+                DeleteAction::make()
+                    ->before(function (User $record) {
+                        if ($record->email === 'admin@admin.com') {
+                            return false;
+                        }
+                    })
+            ])
+            ->bulkActions([
+                ...$service->getTableBulkActions(),
+                BulkAction::make('delete')
+                    ->action(fn(Collection $records) => $records->each->delete())
+                    ->deselectRecordsAfterCompletion()
+                    ->before(function (Collection $records) {
+                        if ($records->contains('email', 'admin@admin.com')) {
+                            return false;
+                        }
+                    })
+            ])
             ->emptyStateHeading('尚無使用者');
     }
 

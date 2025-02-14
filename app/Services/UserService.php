@@ -155,7 +155,13 @@ class UserService extends BaseService
         return [
             Tables\Actions\BulkActionGroup::make([
                 Tables\Actions\DeleteBulkAction::make()
-                    ->hidden(fn(Collection $records) => $records->contains('email', 'admin@admin.com')),
+                    ->action(function (Collection $records) {
+                        if ($records->contains('email', 'admin@admin.com')) {
+                            return;
+                        }
+                        $records->each->delete();
+                    })
+                    ->deselectRecordsAfterCompletion()
             ]),
         ];
     }

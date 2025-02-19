@@ -1,0 +1,39 @@
+{
+    "_id": "d071122f-1a3b-4246-a087-f93535a48604",
+    "colName": "API",
+    "created": "2025-02-19T07:13:40.707Z",
+    "sortNum": 10000,
+    "folders": [
+        {
+            "_id": "f17c19d3-e145-40ff-81af-89478b6d30e1",
+            "name": "商品",
+            "containerId": "",
+            "created": "2025-02-19T07:14:32.117Z",
+            "sortNum": 10000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "13e02341-da21-4d0c-ade7-f560cb23a170",
+            "colId": "d071122f-1a3b-4246-a087-f93535a48604",
+            "containerId": "f17c19d3-e145-40ff-81af-89478b6d30e1",
+            "name": "商品列表",
+            "url": "/products",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2025-02-19T07:14:43.992Z",
+            "modified": "2025-02-19T07:14:51.343Z",
+            "headers": [
+                {
+                    "name": "User-Agent",
+                    "value": "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10136"
+                }
+            ]
+        }
+    ],
+    "settings": {
+        "options": {
+            "baseUrl": "https://shop-admin.test/api"
+        }
+    }
+}

@@ -18,6 +18,11 @@ class Category extends Model
         'is_active',
     ];
 
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
+    }
+
     public function parent(): BelongsTo
     {
         return $this->belongsTo(static::class, 'parent_id');

@@ -29,4 +29,9 @@ class Coupon extends Model
         'end_at' => 'datetime',
         'is_active' => 'boolean',
     ];
+
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
 }

@@ -7,6 +7,7 @@ use Filament\Tables;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class UserService extends BaseService
 {
@@ -16,8 +17,6 @@ class UserService extends BaseService
             $this->getNameInput(),
             $this->getEmailInput(),
             $this->getPasswordInput(),
-            $this->getAdminToggle(),
-            $this->getRolesSelect(),
         ];
     }
 
@@ -53,35 +52,11 @@ class UserService extends BaseService
             ->dehydrated(fn($state) => filled($state));
     }
 
-    private function getAdminToggle()
-    {
-        return $this->createToggle(
-            'is_admin',
-            '管理員',
-            false
-        );
-    }
-
-    private function getRolesSelect()
-    {
-        return $this->createRelationSelect(
-            'roles',
-            '角色',
-            'roles',
-            'name',
-            false,
-            true,
-            true
-        )->multiple();
-    }
-
     public function getTableColumns(): array
     {
         return [
             $this->getNameColumn(),
             $this->getEmailColumn(),
-            $this->getAdminColumn(),
-            $this->getRolesColumn(),
             $this->getCreatedAtColumn(),
         ];
     }
@@ -106,21 +81,6 @@ class UserService extends BaseService
         );
     }
 
-    private function getAdminColumn()
-    {
-        return $this->createBooleanColumn(
-            'is_admin',
-            '管理員'
-        );
-    }
-
-    private function getRolesColumn()
-    {
-        return Tables\Columns\TextColumn::make('roles.name')
-            ->label('角色')
-            ->badge();
-    }
-
     private function getCreatedAtColumn()
     {
         return $this->createDateTimeColumn(
@@ -131,14 +91,7 @@ class UserService extends BaseService
 
     public function getTableFilters(): array
     {
-        return [
-            Tables\Filters\TernaryFilter::make('is_admin')
-                ->label('管理員')
-                ->boolean()
-                ->trueLabel('是')
-                ->falseLabel('否')
-                ->placeholder('全部'),
-        ];
+        return [];
     }
 
     public function getTableActions(): array

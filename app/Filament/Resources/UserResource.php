@@ -11,6 +11,8 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Collection;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\BulkAction;
+use Filament\Tables\Enums\RecordCheckboxPosition;
+use Illuminate\Database\Eloquent\Model;
 
 class UserResource extends Resource
 {
@@ -44,7 +46,10 @@ class UserResource extends Resource
             ->bulkActions([
                 ...$service->getTableBulkActions(),
             ])
-            ->emptyStateHeading('尚無使用者');
+            ->emptyStateHeading('尚無使用者')
+            ->selectable(function (User $record): bool {
+                return $record->email !== 'admin@admin.com';
+            });
     }
 
     public static function getPages(): array

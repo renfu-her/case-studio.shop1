@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
+use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Enums\RecordCheckboxPosition;
 
 class UserService extends BaseService
 {
@@ -98,9 +100,9 @@ class UserService extends BaseService
     {
         return [
             Tables\Actions\EditAction::make()
-                ->hidden(fn(User $record) => $record->email === 'demo@demo.com'),
+                ->hidden(fn(User $record) => $record->email === 'admin@admin.com'),
             Tables\Actions\DeleteAction::make()
-                ->hidden(fn(User $record) => $record->email === 'demo@demo.com'),
+                ->hidden(fn(User $record) => $record->email === 'admin@admin.com'),
         ];
     }
 
@@ -110,13 +112,28 @@ class UserService extends BaseService
             Tables\Actions\BulkActionGroup::make([
                 Tables\Actions\DeleteBulkAction::make()
                     ->action(function (Collection $records) {
-                        if ($records->contains('email', 'demo@demo.com')) {
-                            return;
-                        }
-                        $records->each->delete();
+                        $records->each(function ($record) {
+                            if ($record->email !== 'admin@admin.com') {
+                                $record->delete();
+                            }
+                        });
                     })
                     ->deselectRecordsAfterCompletion()
+                    ->hidden(function (?Collection $records) {
+                        if (!$records) return false;
+                        return $records->contains('email', 'admin@admin.com');
+                    })
             ]),
         ];
+    }
+
+    public function getTableRecordCheckboxPosition(): ?string
+    {
+        return 'before';
+    }
+
+    public function isTableRecordSelectable(): ?\Closure
+    {
+        return fn (User $record): bool => $record->email !== 'admin@admin.com';
     }
 }

@@ -69,7 +69,7 @@ class ProductSpecsRelationManager extends RelationManager
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('建立時間')
-                    ->dateTime('Y-m-d H:i:s'),
+                    ->dateTime('Y-m-d H:i'),
             ])
             ->defaultSort('sort', 'asc')
             ->reorderable('sort')

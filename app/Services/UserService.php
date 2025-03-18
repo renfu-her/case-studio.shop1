@@ -57,6 +57,15 @@ class UserService extends BaseService
     public function getTableColumns(): array
     {
         return [
+            Tables\Columns\TextColumn::make('checkbox')
+                ->label('')
+                ->formatStateUsing(function (User $record) {
+                    if ($record->email === 'admin@admin.com') {
+                        return '';
+                    }
+                    return view('components.checkbox');
+                })
+                ->html(),
             $this->getNameColumn(),
             $this->getEmailColumn(),
             $this->getCreatedAtColumn(),

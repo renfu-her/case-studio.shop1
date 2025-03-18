@@ -43,13 +43,8 @@ class UserResource extends Resource
             ->actions([
                 ...$service->getTableActions(),
             ])
-            ->bulkActions([
-                ...$service->getTableBulkActions(),
-            ])
-            ->emptyStateHeading('尚無使用者')
-            ->selectable(function (User $record): bool {
-                return $record->email !== 'admin@admin.com';
-            });
+            ->bulkActions([])
+            ->emptyStateHeading('尚無使用者');
     }
 
     public static function getPages(): array

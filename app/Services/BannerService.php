@@ -19,13 +19,10 @@ class BannerService extends BaseService
             $this->getTitleInput(),
             $this->getLinkInput(),
             $this->getSortInput(),
-            Forms\Components\Section::make('是否啟用')
-                ->schema([
-                    Toggle::make('is_active')
-                        ->label('啟用狀態')
-                        ->inline(false)
-                        ->default(true),
-                ]),
+            Toggle::make('is_active')
+                ->label('啟用狀態')
+                ->inline(false)
+                ->default(true),
         ];
     }
 

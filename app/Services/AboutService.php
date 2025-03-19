@@ -22,19 +22,20 @@ class AboutService
                 ->required()
                 ->columnSpanFull()
                 ->maxLength(255),
-            
+
             QuillEditor::make('content')
                 ->label('內容')
                 ->required()
                 ->columnSpanFull(),
-            
+
             TextInput::make('sort')
                 ->label('排序')
                 ->numeric()
                 ->default(0),
-            
-            Toggle::make('is_active')
-                ->label('是否啟用')
+
+            Forms\Components\Section::make('是否啟用')
+                ->label('啟用')
+                ->inline(false)
                 ->default(true),
         ];
     }
@@ -46,20 +47,20 @@ class AboutService
                 ->label('標題')
                 ->searchable()
                 ->sortable(),
-            
+
             TextColumn::make('sort')
                 ->label('排序')
                 ->sortable(),
-            
+
             ToggleColumn::make('is_active')
                 ->label('是否啟用'),
-            
+
             TextColumn::make('created_at')
                 ->label('建立時間')
                 ->dateTime('Y-m-d H:i:s')
                 ->sortable()
                 ->toggleable(isToggledHiddenByDefault: true),
-            
+
             TextColumn::make('updated_at')
                 ->label('更新時間')
                 ->dateTime('Y-m-d H:i:s')
@@ -92,4 +93,4 @@ class AboutService
             ]),
         ];
     }
-} 
+}

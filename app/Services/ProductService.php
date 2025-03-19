@@ -10,6 +10,7 @@ use Filament\Tables;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Support\Str;
+use Filament\Forms\Components\Toggle;
 
 class ProductService extends BaseService
 {
@@ -27,6 +28,13 @@ class ProductService extends BaseService
                     $this->getStatusToggle(),
                     $this->getHotToggle(),
                     $this->getNewToggle(),
+                ]),
+            Forms\Components\Section::make('是否啟用')
+                ->schema([
+                    Toggle::make('is_active')
+                        ->label('啟用狀態')
+                        ->inline(false)
+                        ->default(true),
                 ]),
         ];
     }

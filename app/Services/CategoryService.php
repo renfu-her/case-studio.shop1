@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Category;
 use Filament\Forms;
 use Filament\Tables;
+use Filament\Forms\Components\Toggle;
 
 class CategoryService extends BaseService
 {
@@ -14,7 +15,13 @@ class CategoryService extends BaseService
             $this->getParentSelect(),
             $this->getNameInput(),
             $this->getSortInput(),
-            $this->getStatusToggle(),
+            Forms\Components\Section::make('是否啟用')
+                ->schema([
+                    Toggle::make('is_active')
+                        ->label('啟用狀態')
+                        ->inline(false)
+                        ->default(true),
+                ]),
         ];
     }
 
@@ -70,14 +77,6 @@ class CategoryService extends BaseService
             false,
             0
         )->default(0);
-    }
-
-    private function getStatusToggle()
-    {
-        return $this->createToggle(
-            'is_active',
-            '啟用狀態'
-        );
     }
 
     public function getTableColumns(): array

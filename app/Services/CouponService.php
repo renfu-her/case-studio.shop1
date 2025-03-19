@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Filament\Forms;
 use Filament\Tables;
+use Filament\Forms\Components\Toggle;
 
 class CouponService extends BaseService
 {
@@ -143,10 +144,13 @@ class CouponService extends BaseService
 
     private function getStatusToggle()
     {
-        return $this->createToggle(
-            'is_active',
-            '啟用狀態'
-        );
+        return Forms\Components\Section::make('是否啟用')
+            ->schema([
+                Toggle::make('is_active')
+                    ->label('啟用狀態')
+                    ->inline(false)
+                    ->default(true),
+            ]);
     }
 
     public function getTableColumns(): array

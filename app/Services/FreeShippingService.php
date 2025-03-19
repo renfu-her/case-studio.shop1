@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Filament\Forms;
 use Filament\Tables;
+use Filament\Forms\Components\Toggle;
 
 class FreeShippingService extends BaseService
 {
@@ -13,7 +14,13 @@ class FreeShippingService extends BaseService
             $this->getMinAmountInput(),
             $this->getStartAtPicker(),
             $this->getEndAtPicker(),
-            $this->getStatusToggle(),
+            Forms\Components\Section::make('是否啟用')
+                ->schema([
+                    Toggle::make('is_active')
+                        ->label('啟用狀態')
+                        ->inline(false)
+                        ->default(true),
+                ]),
         ];
     }
 
@@ -42,14 +49,6 @@ class FreeShippingService extends BaseService
         return $this->createDateTimePicker(
             'end_at',
             '結束時間'
-        );
-    }
-
-    private function getStatusToggle()
-    {
-        return $this->createToggle(
-            'is_active',
-            '啟用'
         );
     }
 

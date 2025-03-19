@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Filament\Forms;
 use Filament\Tables;
+use Filament\Forms\Components\Toggle;
 
 class FaqService extends BaseService
 {
@@ -14,7 +15,13 @@ class FaqService extends BaseService
             $this->getQuestionInput(),
             $this->getAnswerEditor(),
             $this->getSortInput(),
-            $this->getStatusToggle(),
+            Forms\Components\Section::make('是否啟用')
+                ->schema([
+                    Toggle::make('is_active')
+                        ->label('啟用狀態')
+                        ->inline(false)
+                        ->default(true),
+                ]),
         ];
     }
 

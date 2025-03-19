@@ -7,6 +7,7 @@ use Filament\Tables;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Support\Str;
+use Filament\Forms\Components\Toggle;
 
 class BannerService extends BaseService
 {
@@ -18,7 +19,13 @@ class BannerService extends BaseService
             $this->getTitleInput(),
             $this->getLinkInput(),
             $this->getSortInput(),
-            $this->getStatusToggle(),
+            Forms\Components\Section::make('是否啟用')
+                ->schema([
+                    Toggle::make('is_active')
+                        ->label('啟用狀態')
+                        ->inline(false)
+                        ->default(true),
+                ]),
         ];
     }
 
@@ -76,14 +83,6 @@ class BannerService extends BaseService
             false,
             0
         )->default(0);
-    }
-
-    private function getStatusToggle()
-    {
-        return $this->createToggle(
-            'is_active',
-            '啟用狀態'
-        );
     }
 
     public function getTableColumns(): array

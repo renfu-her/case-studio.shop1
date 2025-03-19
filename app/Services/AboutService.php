@@ -33,7 +33,7 @@ class AboutService
                 ->numeric()
                 ->default(0),
 
-            Forms\Components\Section::make('是否啟用')
+            Forms\Components\Toggle::make('是否啟用')
                 ->label('啟用')
                 ->inline(false)
                 ->default(true),

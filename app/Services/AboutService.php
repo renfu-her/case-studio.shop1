@@ -20,11 +20,13 @@ class AboutService
             TextInput::make('title')
                 ->label('標題')
                 ->required()
+                ->columnSpanFull()
                 ->maxLength(255),
             
             QuillEditor::make('content')
                 ->label('內容')
-                ->required(),
+                ->required()
+                ->columnSpanFull(),
             
             TextInput::make('sort')
                 ->label('排序')

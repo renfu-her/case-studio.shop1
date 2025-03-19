@@ -32,8 +32,7 @@ class AboutService
                 ->label('排序')
                 ->numeric()
                 ->default(0),
-
-            Forms\Components\Toggle::make('是否啟用')
+            Toggle::make('is_active')
                 ->label('啟用')
                 ->inline(false)
                 ->default(true),

@@ -147,7 +147,8 @@ class CouponService extends BaseService
         return Toggle::make('is_active')
             ->label('啟用狀態')
             ->inline(false)
-            ->default(true);
+            ->default(true)
+            ->columnSpanFull();
     }
 
     public function getTableColumns(): array

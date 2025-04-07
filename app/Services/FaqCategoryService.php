@@ -16,7 +16,8 @@ class FaqCategoryService extends BaseService
             Toggle::make('is_active')
                 ->label('啟用狀態')
                 ->inline(false)
-                ->default(true),
+                ->default(true)
+                ->columnSpanFull(),
         ];
     }
 

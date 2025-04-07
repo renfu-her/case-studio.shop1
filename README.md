@@ -1,4 +1,4 @@
-# shop-admin
+# admin-filament-shop
 
 ## 安裝
 

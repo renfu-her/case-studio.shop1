@@ -41,12 +41,12 @@ class AdminPanelProvider extends PanelProvider
                 '系統管理',
             ])
             ->colors([
-                'primary' => '#123456',
-                'danger' => '#FF4444',
-                'gray' => '#808080',
-                'info' => '#3498DB',
-                'success' => '#2ECC71',
-                'warning' => '#F1C40F',
+                'primary' => '#217FCC',    // 亮藍色
+                'danger' => '#CC2078',     // 玫瑰紅
+                'gray' => '#145183',       // 中藍色
+                'info' => '#20CCB2',       // 青色
+                'success' => '#29CC20',    // 綠色
+                'warning' => '#CC6E20',    // 橙色
             ])
             ->homeUrl('/admin/products')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')

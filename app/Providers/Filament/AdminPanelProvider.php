@@ -41,12 +41,12 @@ class AdminPanelProvider extends PanelProvider
                 '系統管理',
             ])
             ->colors([
-                'primary' => Color::Amber,
-                'danger' => Color::Rose,
-                'gray' => Color::Gray,
-                'info' => Color::Blue,
-                'success' => Color::Emerald,
-                'warning' => Color::Orange,
+                'primary' => '#123456',
+                'danger' => '#FF4444',
+                'gray' => '#808080',
+                'info' => '#3498DB',
+                'success' => '#2ECC71',
+                'warning' => '#F1C40F',
             ])
             ->homeUrl('/admin/products')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')

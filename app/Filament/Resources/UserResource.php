@@ -21,9 +21,9 @@ class UserResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
     protected static ?string $navigationGroup = '系統管理';
-    protected static ?string $navigationLabel = '使用者';
-    protected static ?string $modelLabel = '使用者';
-    protected static ?string $pluralModelLabel = '使用者';
+    protected static ?string $navigationLabel = '管理者';
+    protected static ?string $modelLabel = '管理者';
+    protected static ?string $pluralModelLabel = '管理者';
     protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
@@ -44,7 +44,7 @@ class UserResource extends Resource
                 ...$service->getTableActions(),
             ])
             ->bulkActions([])
-            ->emptyStateHeading('尚無使用者');
+            ->emptyStateHeading('尚無管理者');
     }
 
     public static function getPages(): array

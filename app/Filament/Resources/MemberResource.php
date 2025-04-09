@@ -83,9 +83,8 @@ class MemberResource extends Resource
                         'male' => '男',
                         'female' => '女',
                     }),
-                Tables\Columns\IconColumn::make('is_active')
-                    ->label('啟用狀態')
-                    ->boolean(),
+                Tables\Columns\ToggleColumn::make('is_active')
+                    ->label('啟用狀態'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('創建時間')
                     ->dateTime()

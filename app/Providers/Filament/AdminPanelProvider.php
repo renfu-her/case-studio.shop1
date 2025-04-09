@@ -33,6 +33,7 @@ class AdminPanelProvider extends PanelProvider
             ->darkModeBrandLogo(asset('images/purchase.png'))
             ->brandLogoHeight('50px')
             ->favicon(asset('images/purchase.png'))
+            ->darkMode(false)
             ->navigationGroups([
                 '商品管理',
                 '訂單管理',

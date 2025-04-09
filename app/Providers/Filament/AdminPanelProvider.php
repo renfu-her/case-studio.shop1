@@ -26,8 +26,8 @@ class AdminPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
-            ->id('admin')
-            ->path('admin')
+            ->id('backend')
+            ->path('backend')
             ->brandLogo(asset('images/purchase.png'))
             ->brandName('購物網站管理 DEMO')
             ->darkModeBrandLogo(asset('images/purchase.png'))

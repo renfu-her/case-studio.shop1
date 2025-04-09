@@ -152,7 +152,10 @@ class ProductService extends BaseService
 
     private function getStatusColumn()
     {
-        return $this->createBooleanColumn('is_active', '啟用狀態');
+        return $this->createBooleanColumn(
+            'is_active',
+            '啟用狀態'
+        );
     }
 
     private function getHotColumn()

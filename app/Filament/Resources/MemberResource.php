@@ -58,6 +58,8 @@ class MemberResource extends Resource
                     ->required(),
                 Forms\Components\Toggle::make('is_active')
                     ->label('啟用狀態')
+                    ->columnSpanFull()
+                    ->inline(false)
                     ->required(),
             ]);
     }
@@ -77,7 +79,7 @@ class MemberResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('gender')
                     ->label('性別')
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn(string $state): string => match ($state) {
                         'male' => '男',
                         'female' => '女',
                     }),

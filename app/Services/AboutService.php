@@ -34,6 +34,7 @@ class AboutService
                 ->default(0),
             Toggle::make('is_active')
                 ->label('啟用')
+                ->columnSpanFull()
                 ->inline(false)
                 ->default(true),
         ];

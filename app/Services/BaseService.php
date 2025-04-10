@@ -237,7 +237,7 @@ class BaseService extends Service
         $editor = TinyEditor::make($name)
             ->label($label)
             ->columnSpanFull()
-            ->maxHeight('200')
+            ->minHeight('450')
             ->profile($profile);
 
         if ($placeholder) {

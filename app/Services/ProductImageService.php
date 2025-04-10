@@ -36,7 +36,7 @@ class ProductImageService extends BaseService
             $this->createNumberInput(
                 name: 'sort',
                 label: '排序',
-                default: false
+                default: 1
             ),
         ];
     }

@@ -39,6 +39,7 @@ class AdminPanelProvider extends PanelProvider
                 '銷售管理',
                 '使用者管理',
                 '網站管理',
+                '顧客權益管理',
             ])
             ->colors([
                 'primary' => '#217FCC',    // 亮藍色

@@ -77,7 +77,7 @@ class ProductService extends BaseService
 
     private function getDescriptionEditor()
     {
-        return $this->createQuillEditor(name: 'description', label: '商品描述', placeholder: '請輸入商品描述...');
+        return $this->createTinyMceEditor(name: 'description', label: '商品描述', placeholder: '請輸入商品描述...');
     }
 
     private function getPriceInput()

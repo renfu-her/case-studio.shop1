@@ -53,7 +53,7 @@ class FaqService extends BaseService
 
     private function getAnswerEditor()
     {
-        return $this->createQuillEditor(
+        return $this->createTinyMceEditor(
             'answer',
             '回答',
             '請輸入回答內容...'

@@ -8,6 +8,7 @@ use App\Services\Service;
 use Rawilk\FilamentQuill\Filament\Forms\Components\QuillEditor;
 use FilamentTiptapEditor\TiptapEditor;
 use Awcodes\FilamentTiptapEditor\TiptapEditor as AwcodesTiptapEditor;
+use Mohamedsabil83\FilamentFormsTinyeditor\Components\TinyEditor;
 
 class BaseService extends Service
 {
@@ -225,7 +226,7 @@ class BaseService extends Service
     /**
      * 創建基礎的富文本編輯器
      */
-    protected function createQuillEditor(
+    protected function createTinyMceEditor(
         string $name,
         string $label,
         ?string $placeholder = null,
@@ -296,6 +297,36 @@ class BaseService extends Service
 
         if ($columnSpanFull) {
             $editor->columnSpanFull();
+        }
+
+        return $editor;
+    }
+
+    /**
+     * 創建基礎的 TinyMCE 編輯器
+     */
+    protected function createTinyMceEditor(
+        string $name,
+        string $label,
+        bool $required = false,
+        bool $columnSpanFull = true,
+        ?string $placeholder = null,
+        string $profile = 'default',
+        ?array $customConfigs = null
+    ): TinyEditor {
+        $editor = TinyEditor::make($name)
+            ->label($label)
+            ->required($required)
+            ->columnSpanFull()
+            ->maxHeight('200')
+            ->profile($profile);
+
+        if ($placeholder) {
+            $editor->placeholder($placeholder);
+        }
+
+        if ($customConfigs) {
+            $editor->customConfigs($customConfigs);
         }
 
         return $editor;

@@ -53,7 +53,7 @@ class EventService extends BaseService
 
     private function getContentEditor()
     {
-        return $this->createQuillEditor(
+        return $this->createTinyMceEditor(
             'content',
             '活動內容',
             '請輸入活動內容...'

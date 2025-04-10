@@ -230,14 +230,22 @@ class BaseService extends Service
         string $name,
         string $label,
         ?string $placeholder = null,
-        bool $columnSpanFull = true
-    ): QuillEditor {
-        $editor = QuillEditor::make($name)
+        bool $columnSpanFull = true,
+        string $profile = 'default',
+        ?array $customConfigs = null
+    ): TinyEditor {
+        $editor = TinyEditor::make($name)
             ->label($label)
-            ->placeholder($placeholder);
+            ->columnSpanFull()
+            ->maxHeight('200')
+            ->profile($profile);
 
-        if ($columnSpanFull) {
-            $editor->columnSpanFull();
+        if ($placeholder) {
+            $editor->placeholder($placeholder);
+        }
+
+        if ($customConfigs) {
+            $editor->customConfigs($customConfigs);
         }
 
         return $editor;
@@ -297,36 +305,6 @@ class BaseService extends Service
 
         if ($columnSpanFull) {
             $editor->columnSpanFull();
-        }
-
-        return $editor;
-    }
-
-    /**
-     * 創建基礎的 TinyMCE 編輯器
-     */
-    protected function createTinyMceEditor(
-        string $name,
-        string $label,
-        bool $required = false,
-        bool $columnSpanFull = true,
-        ?string $placeholder = null,
-        string $profile = 'default',
-        ?array $customConfigs = null
-    ): TinyEditor {
-        $editor = TinyEditor::make($name)
-            ->label($label)
-            ->required($required)
-            ->columnSpanFull()
-            ->maxHeight('200')
-            ->profile($profile);
-
-        if ($placeholder) {
-            $editor->placeholder($placeholder);
-        }
-
-        if ($customConfigs) {
-            $editor->customConfigs($customConfigs);
         }
 
         return $editor;

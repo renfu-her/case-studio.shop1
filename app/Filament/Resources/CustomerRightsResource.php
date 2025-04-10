@@ -23,6 +23,10 @@ class CustomerRightsResource extends Resource
 
     protected static ?string $navigationLabel = '顧客權益文章';
 
+    protected static ?string $modelLabel = '顧客權益文章';
+
+    protected static ?string $pluralModelLabel = '顧客權益文章';
+
     protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form

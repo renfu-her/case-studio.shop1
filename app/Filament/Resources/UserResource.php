@@ -44,7 +44,10 @@ class UserResource extends Resource
                 ...$service->getTableActions(),
             ])
             ->bulkActions([])
-            ->emptyStateHeading('尚無管理者');
+            ->emptyStateHeading('尚無管理者')
+            ->defaultSort('created_at', 'desc')
+            ->paginated([10,20,30,50,100,'all'])
+            ->defaultPaginationPageOption(20);
     }
 
     public static function getPages(): array
@@ -55,4 +58,5 @@ class UserResource extends Resource
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
+
 }

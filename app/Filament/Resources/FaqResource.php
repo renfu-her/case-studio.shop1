@@ -40,7 +40,9 @@ class FaqResource extends Resource
             ->filters($service->getTableFilters())
             ->actions($service->getTableActions())
             ->bulkActions($service->getTableBulkActions())
-            ->defaultSort('sort', 'asc');
+            ->defaultSort('sort', 'asc')
+            ->paginated([10,20,30,50,100,'all'])
+            ->defaultPaginationPageOption(20);
     }
 
     public static function getPages(): array
@@ -51,4 +53,5 @@ class FaqResource extends Resource
             'edit' => Pages\EditFaq::route('/{record}/edit'),
         ];
     }
+
 }

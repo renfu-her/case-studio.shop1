@@ -36,7 +36,9 @@ class FreeShippingResource extends Resource
             ->columns($service->getTableColumns())
             ->filters($service->getTableFilters())
             ->actions($service->getTableActions())
-            ->bulkActions($service->getTableBulkActions());
+            ->bulkActions($service->getTableBulkActions())
+            ->paginated([10,20,30,50,100,'all'])
+            ->defaultPaginationPageOption(20);
     }
 
     public static function getRelations(): array
@@ -54,4 +56,5 @@ class FreeShippingResource extends Resource
             'edit' => Pages\EditFreeShipping::route('/{record}/edit'),
         ];
     }
+
 }

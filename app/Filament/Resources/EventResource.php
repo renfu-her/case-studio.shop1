@@ -37,7 +37,9 @@ class EventResource extends Resource
             ->filters($service->getTableFilters())
             ->actions($service->getTableActions())
             ->bulkActions($service->getTableBulkActions())
-            ->defaultSort('sort', 'asc');
+            ->defaultSort('sort', 'asc')
+            ->paginated([10,20,30,50,100,'all'])
+            ->defaultPaginationPageOption(20);
     }
 
     public static function getRelations(): array
@@ -55,4 +57,5 @@ class EventResource extends Resource
             'edit' => Pages\EditEvent::route('/{record}/edit'),
         ];
     }
+
 }

@@ -114,7 +114,10 @@ class MemberResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('created_at', 'desc')
+            ->paginated([10,20,30,50,100,'all'])
+            ->defaultPaginationPageOption(20);
     }
 
     public static function getRelations(): array
@@ -140,4 +143,5 @@ class MemberResource extends Resource
                 SoftDeletingScope::class,
             ]);
     }
+
 }

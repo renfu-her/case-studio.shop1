@@ -6,12 +6,76 @@ return [
 
         'actions' => [
 
+            'clone' => [
+                'label' => '複製',
+            ],
+
             'add' => [
+
                 'label' => '加至 :label',
+
+                'modal' => [
+
+                    'heading' => '加至 :label',
+
+                    'actions' => [
+
+                        'add' => [
+                            'label' => '新增',
+                        ],
+
+                    ],
+
+                ],
+
+            ],
+
+            'add_between' => [
+
+                'label' => '在區塊之間插入',
+
+                'modal' => [
+
+                    'heading' => '加至 :label',
+
+                    'actions' => [
+
+                        'add' => [
+                            'label' => '新增',
+                        ],
+
+                    ],
+
+                ],
+
             ],
 
             'delete' => [
                 'label' => '刪除',
+            ],
+
+            'edit' => [
+
+                'label' => '編輯',
+
+                'modal' => [
+
+                    'heading' => '編輯區塊',
+
+                    'actions' => [
+
+                        'save' => [
+                            'label' => '儲存變更',
+                        ],
+
+                    ],
+
+                ],
+
+            ],
+
+            'reorder' => [
+                'label' => '移動',
             ],
 
             'move_down' => [
@@ -42,6 +106,150 @@ return [
 
     ],
 
+    'checkbox_list' => [
+
+        'actions' => [
+
+            'deselect_all' => [
+                'label' => '取消選擇全部',
+            ],
+
+            'select_all' => [
+                'label' => '選擇全部',
+            ],
+
+        ],
+
+    ],
+
+    'file_upload' => [
+
+        'editor' => [
+
+            'actions' => [
+
+                'cancel' => [
+                    'label' => '取消',
+                ],
+
+                'drag_crop' => [
+                    'label' => '拖動模式「裁剪」',
+                ],
+
+                'drag_move' => [
+                    'label' => '拖動模式「移動」',
+                ],
+
+                'flip_horizontal' => [
+                    'label' => '水平翻轉圖片',
+                ],
+
+                'flip_vertical' => [
+                    'label' => '垂直翻轉圖片',
+                ],
+
+                'move_down' => [
+                    'label' => '向下移動圖片',
+                ],
+
+                'move_left' => [
+                    'label' => '向左移動圖片',
+                ],
+
+                'move_right' => [
+                    'label' => '向右移動圖片',
+                ],
+
+                'move_up' => [
+                    'label' => '向上移動圖片',
+                ],
+
+                'reset' => [
+                    'label' => '重置',
+                ],
+
+                'rotate_left' => [
+                    'label' => '向左旋轉圖片',
+                ],
+
+                'rotate_right' => [
+                    'label' => '向右旋轉圖片',
+                ],
+
+                'set_aspect_ratio' => [
+                    'label' => '設定長寬比為 :ratio',
+                ],
+
+                'save' => [
+                    'label' => '保存',
+                ],
+
+                'zoom_100' => [
+                    'label' => '縮放圖片至 100%',
+                ],
+
+                'zoom_in' => [
+                    'label' => '放大',
+                ],
+
+                'zoom_out' => [
+                    'label' => '縮小',
+                ],
+
+            ],
+
+            'fields' => [
+
+                'height' => [
+                    'label' => '高度',
+                    'unit' => 'px',
+                ],
+
+                'rotation' => [
+                    'label' => '旋轉',
+                    'unit' => '度',
+                ],
+
+                'width' => [
+                    'label' => '寬度',
+                    'unit' => 'px',
+                ],
+
+                'x_position' => [
+                    'label' => 'X 位置',
+                    'unit' => 'px',
+                ],
+
+                'y_position' => [
+                    'label' => 'Y 位置',
+                    'unit' => 'px',
+                ],
+
+            ],
+
+            'aspect_ratios' => [
+
+                'label' => '長寬比',
+
+                'no_fixed' => [
+                    'label' => '自由',
+                ],
+
+            ],
+
+            'svg' => [
+
+                'messages' => [
+                    'confirmation' => '不建議編輯 SVG 檔案，因為在縮放時可能會導致品質損失。\n 您確定要繼續嗎？',
+                    'disabled' => '已禁用編輯 SVG 檔案，因為在縮放時可能會導致品質損失。',
+                ],
+
+            ],
+
+        ],
+
+    ],
+
     'key_value' => [
 
         'actions' => [
@@ -52,6 +260,10 @@ return [
 
             'delete' => [
                 'label' => '刪除橫列',
+            ],
+
+            'reorder' => [
+                'label' => '重新排序橫列',
             ],
 
         ],
@@ -74,15 +286,27 @@ return [
 
         'toolbar_buttons' => [
             'attach_files' => '附加檔案',
+            'blockquote' => '引用區塊',
             'bold' => '粗體',
             'bullet_list' => '無序清單',
             'code_block' => '程式碼區塊',
-            'edit' => '編輯',
+            'heading' => '標題',
             'italic' => '斜體',
             'link' => '連結',
             'ordered_list' => '有序清單',
-            'preview' => '預覽',
+            'redo' => '取消復原',
             'strike' => '刪除線',
+            'table' => '表格',
+            'undo' => '復原',
+        ],
+
+    ],
+
+    'radio' => [
+
+        'boolean' => [
+            'true' => '是',
+            'false' => '否',
         ],
 
     ],
@@ -95,8 +319,20 @@ return [
                 'label' => '加至 :label',
             ],
 
+            'add_between' => [
+                'label' => '在項目之間插入',
+            ],
+
             'delete' => [
                 'label' => '刪除',
+            ],
+
+            'clone' => [
+                'label' => '複製',
+            ],
+
+            'reorder' => [
+                'label' => '移動',
             ],
 
             'move_down' => [
@@ -150,7 +386,7 @@ return [
             'attach_files' => '附加檔案',
             'blockquote' => '引用區塊',
             'bold' => '粗體',
-            'bullet_list' => '有序清單',
+            'bullet_list' => '無序清單',
             'code_block' => '程式碼區塊',
             'h1' => '大標題',
             'h2' => '小標題',
@@ -160,6 +396,7 @@ return [
             'ordered_list' => '有序清單',
             'redo' => '取消復原',
             'strike' => '刪除線',
+            'underline' => '底線',
             'undo' => '復原',
         ],
 
@@ -171,6 +408,8 @@ return [
 
             'create_option' => [
 
+                'label' => '建立',
+
                 'modal' => [
 
                     'heading' => '建立',
@@ -179,6 +418,30 @@ return [
 
                         'create' => [
                             'label' => '建立',
+                        ],
+
+                        'create_another' => [
+                            'label' => '建立並再建立一個',
+                        ],
+
+                    ],
+
+                ],
+
+            ],
+
+            'edit_option' => [
+
+                'label' => '編輯',
+
+                'modal' => [
+
+                    'heading' => '編輯',
+
+                    'actions' => [
+
+                        'save' => [
+                            'label' => '儲存',
                         ],
 
                     ],
@@ -196,6 +459,8 @@ return [
 
         'loading_message' => '載入中...',
 
+        'max_items_message' => '只能選擇 :count 個項目。',
+
         'no_search_results_message' => '未有符合該選項的搜尋結果。',
 
         'placeholder' => '選擇選項',
@@ -208,6 +473,31 @@ return [
 
     'tags_input' => [
         'placeholder' => '新增標籤',
+    ],
+
+    'text_input' => [
+
+        'actions' => [
+
+            'hide_password' => [
+                'label' => '隱藏密碼',
+            ],
+
+            'show_password' => [
+                'label' => '顯示密碼',
+            ],
+
+        ],
+
+    ],
+
+    'toggle_buttons' => [
+
+        'boolean' => [
+            'true' => '是',
+            'false' => '否',
+        ],
+
     ],
 
     'wizard' => [
@@ -225,80 +515,5 @@ return [
         ],
 
     ],
-    'file_upload' => [
-        'editor' => [
-            'fields' => [
-                'x_position' => [
-                    'label' => 'X 位置',
-                    'unit' => 'px',
-                ],
-                'y_position' => [
-                    'label' => 'Y 位置',
-                    'unit' => 'px',
-                ],
-                'width' => [
-                    'label' => '寬度',
-                    'unit' => 'px',
-                ],
-                'height' => [
-                    'label' => '高度',
-                    'unit' => 'px',
-                ],
-                'rotation' => [
-                    'label' => '旋轉',
-                    'unit' => '度',
-                ],
-            ],
-            'actions' => [
-                'drag_move' => [
-                    'label' => '拖動移動',
-                ],
-                'drag_crop' => [
-                    'label' => '拖動裁剪',
-                ],
-                'zoom_in' => [
-                    'label' => '放大',
-                ],
-                'zoom_out' => [
-                    'label' => '縮小',
-                ],
-                'zoom_100' => [
-                    'label' => '縮放 100%',
-                ],
-                'move_left' => [
-                    'label' => '向左移動',
-                ],
-                'move_right' => [
-                    'label' => '向右移動',
-                ],
-                'move_up' => [
-                    'label' => '向上移動',
-                ],
-                'move_down' => [
-                    'label' => '向下移動',
-                ],
-                'rotate_left' => [
-                    'label' => '向左旋轉',
-                ],
-                'rotate_right' => [
-                    'label' => '向右旋轉',
-                ],
-                'flip_horizontal' => [
-                    'label' => '水平翻轉',
-                ],
-                'flip_vertical' => [
-                    'label' => '垂直翻轉',
-                ],
-                'cancel' => [
-                    'label' => '取消',
-                ],
-                'reset' => [
-                    'label' => '重置',
-                ],
-                'save' => [
-                    'label' => '保存',
-                ],
-            ],
-        ],
-    ],
+
 ];

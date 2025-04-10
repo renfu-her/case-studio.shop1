@@ -13,7 +13,7 @@ return [
             ],
 
             'mark_all_as_read' => [
-                'label' => '標記為已讀',
+                'label' => '全部標記為已讀',
             ],
 
         ],

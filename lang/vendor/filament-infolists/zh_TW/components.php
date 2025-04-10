@@ -11,7 +11,7 @@ return [
                 'expand_list' => '多顯示 :count 筆',
             ],
 
-            'more_list_items' => '多 :count 筆',
+            'more_list_items' => '以及 :count 筆更多',
 
         ],
 

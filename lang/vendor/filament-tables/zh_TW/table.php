@@ -87,4 +87,8 @@ return [
         'heading' => '顯示欄位',
     ],
 
+    'reorder_indicator' => [
+        'label' => '拖曳以重新排序',
+    ],
+
 ];

@@ -52,6 +52,7 @@ class CustomerRightsResource extends Resource
                     ->label('內容')
                     ->required()
                     ->columnSpanFull()
+                    ->minHeight('500')
                     ->visible(fn ($record) => !$record || $record->type !== 'return_policy'),
                 
                 Forms\Components\Toggle::make('is_active')

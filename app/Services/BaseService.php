@@ -50,7 +50,7 @@ class BaseService extends Service
         ?int $maxValue = null,
         ?string $prefix = null,
         ?string $suffix = null,
-        ?bool $default = false
+        mixed $default = false
     ): Forms\Components\TextInput {
         return Forms\Components\TextInput::make($name)
             ->label($label)

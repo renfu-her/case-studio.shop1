@@ -113,8 +113,8 @@ class CustomerRightsResource extends Resource
                 Tables\Actions\EditAction::make()
                     ->url(fn (CustomerRight $record): string => 
                         $record->type === 'return_policy' 
-                            ? route('filament.resources.customer-rights.edit-return-policy', ['record' => $record])
-                            : route('filament.resources.customer-rights.edit', ['record' => $record])
+                            ? static::getUrl('edit-return-policy', ['record' => $record])
+                            : static::getUrl('edit', ['record' => $record])
                     ),
                 Tables\Actions\DeleteAction::make(),
             ])

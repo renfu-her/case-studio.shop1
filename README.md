@@ -1,4 +1,4 @@
-# admin-filament-shop
+# case-studio-shop1
 
 ## 安裝
 

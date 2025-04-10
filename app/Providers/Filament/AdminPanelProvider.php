@@ -36,10 +36,9 @@ class AdminPanelProvider extends PanelProvider
             ->darkMode(false)
             ->navigationGroups([
                 '商品管理',
-                '訂單管理',
+                '銷售管理',
                 '使用者管理',
                 '網站管理',
-                '系統管理',
             ])
             ->colors([
                 'primary' => '#217FCC',    // 亮藍色

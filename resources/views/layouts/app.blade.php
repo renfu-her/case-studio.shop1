@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="zh-TW">
 <head>
     <!-- Meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Shopwise is Powerful features and You Can Use The Perfect Build this Template For Any eCommerce Website. The template is built for sell Fashion Products, Shoes, Bags, Cosmetics, Clothes, Sunglasses, Furniture, Kids Products, Electronics, Stationery Products and Sporting Goods.">
-    <meta name="keywords" content="ecommerce, electronics store, Fashion store, furniture store, bootstrap 4, clean, minimal, modern, online store, responsive, retail, shopping, ecommerce store">
+    <meta name="description" content="Shopwise 是一個功能強大的電子商務網站模板，適用於任何電子商務網站。該模板專為銷售時尚產品、鞋子、包包、化妝品、服裝、太陽眼鏡、家具、兒童產品、電子產品、文具產品和體育用品而設計。">
+    <meta name="keywords" content="電子商務, 電子商店, 時尚商店, 家具商店, bootstrap 4, 簡潔, 極簡, 現代, 線上商店, 響應式, 零售, 購物, 電子商務商店">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- SITE TITLE -->
@@ -38,6 +38,9 @@
     <!-- Style CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
     
     @stack('styles')
 </head>
@@ -321,7 +324,7 @@
     <!-- END FOOTER -->
     
     <!-- jQuery JS -->
-    <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery-3.7.1.min.js') }}"></script>
     <!-- Popper JS -->
     <script src="{{ asset('assets/js/popper.min.js') }}"></script>
     <!-- Bootstrap JS -->

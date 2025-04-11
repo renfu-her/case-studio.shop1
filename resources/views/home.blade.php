@@ -93,30 +93,16 @@
             </div>
         </div>
         <div class="row">
+            @foreach($featuredCategories as $category)
             <div class="col-lg-4 col-md-6">
                 <div class="categories_box">
                     <a href="#">
-                        <img src="{{ asset('assets/images/cat_img1.jpg') }}" alt="cat_img1">
-                        <span>女裝</span>
+                        <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}">
+                        <span>{{ $category->name }}</span>
                     </a>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="categories_box">
-                    <a href="#">
-                        <img src="{{ asset('assets/images/cat_img2.jpg') }}" alt="cat_img2">
-                        <span>男裝</span>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="categories_box">
-                    <a href="#">
-                        <img src="{{ asset('assets/images/cat_img3.jpg') }}" alt="cat_img3">
-                        <span>兒童</span>
-                    </a>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </section>
@@ -133,11 +119,12 @@
             </div>
         </div>
         <div class="row">
+            @foreach($featuredProducts as $product)
             <div class="col-lg-3 col-md-4 col-6">
                 <div class="product_box">
                     <div class="product_img">
                         <a href="#">
-                            <img src="{{ asset('assets/images/product_img1.jpg') }}" alt="product_img1">
+                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
                         </a>
                         <div class="product_action_box">
                             <ul class="list_none pr_action_btn">
@@ -148,123 +135,31 @@
                         </div>
                     </div>
                     <div class="product_info">
-                        <h6 class="product_title"><a href="#">時尚連身裙</a></h6>
+                        <h6 class="product_title"><a href="#">{{ $product->name }}</a></h6>
                         <div class="product_price">
-                            <span class="price">$45.00</span>
-                            <del>$55.25</del>
+                            <span class="price">${{ number_format($product->price, 2) }}</span>
+                            @if($product->original_price > $product->price)
+                            <del>${{ number_format($product->original_price, 2) }}</del>
                             <div class="on_sale">
-                                <span>25% 折扣</span>
+                                <span>{{ round((($product->original_price - $product->price) / $product->original_price) * 100) }}% 折扣</span>
                             </div>
+                            @endif
                         </div>
                         <div class="rating">
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star-half"></i>
+                            @for($i = 1; $i <= 5; $i++)
+                                @if($i <= $product->rating)
+                                    <i class="ion-ios-star"></i>
+                                @elseif($i - 0.5 <= $product->rating)
+                                    <i class="ion-ios-star-half"></i>
+                                @else
+                                    <i class="ion-ios-star-outline"></i>
+                                @endif
+                            @endfor
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-4 col-6">
-                <div class="product_box">
-                    <div class="product_img">
-                        <a href="#">
-                            <img src="{{ asset('assets/images/product_img2.jpg') }}" alt="product_img2">
-                        </a>
-                        <div class="product_action_box">
-                            <ul class="list_none pr_action_btn">
-                                <li><a href="#" class="popup-ajax"><i class="icon-magnifier-add"></i></a></li>
-                                <li><a href="#"><i class="icon-heart"></i></a></li>
-                                <li><a href="#"><i class="icon-shopping-cart"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="product_info">
-                        <h6 class="product_title"><a href="#">休閒外套</a></h6>
-                        <div class="product_price">
-                            <span class="price">$55.00</span>
-                            <del>$65.25</del>
-                            <div class="on_sale">
-                                <span>25% 折扣</span>
-                            </div>
-                        </div>
-                        <div class="rating">
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-6">
-                <div class="product_box">
-                    <div class="product_img">
-                        <a href="#">
-                            <img src="{{ asset('assets/images/product_img3.jpg') }}" alt="product_img3">
-                        </a>
-                        <div class="product_action_box">
-                            <ul class="list_none pr_action_btn">
-                                <li><a href="#" class="popup-ajax"><i class="icon-magnifier-add"></i></a></li>
-                                <li><a href="#"><i class="icon-heart"></i></a></li>
-                                <li><a href="#"><i class="icon-shopping-cart"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="product_info">
-                        <h6 class="product_title"><a href="#">牛仔褲</a></h6>
-                        <div class="product_price">
-                            <span class="price">$65.00</span>
-                            <del>$75.25</del>
-                            <div class="on_sale">
-                                <span>25% 折扣</span>
-                            </div>
-                        </div>
-                        <div class="rating">
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star-half"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-6">
-                <div class="product_box">
-                    <div class="product_img">
-                        <a href="#">
-                            <img src="{{ asset('assets/images/product_img4.jpg') }}" alt="product_img4">
-                        </a>
-                        <div class="product_action_box">
-                            <ul class="list_none pr_action_btn">
-                                <li><a href="#" class="popup-ajax"><i class="icon-magnifier-add"></i></a></li>
-                                <li><a href="#"><i class="icon-heart"></i></a></li>
-                                <li><a href="#"><i class="icon-shopping-cart"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="product_info">
-                        <h6 class="product_title"><a href="#">運動鞋</a></h6>
-                        <div class="product_price">
-                            <span class="price">$75.00</span>
-                            <del>$85.25</del>
-                            <div class="on_sale">
-                                <span>25% 折扣</span>
-                            </div>
-                        </div>
-                        <div class="rating">
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </section>
@@ -274,16 +169,13 @@
 <section class="section">
     <div class="container">
         <div class="row">
+            @foreach($banners as $banner)
             <div class="col-md-6">
                 <div class="banner_img">
-                    <a href="#"><img src="{{ asset('assets/images/banner_img2.jpg') }}" alt="banner_img2"></a>
+                    <a href="{{ $banner->link }}"><img src="{{ asset('storage/' . $banner->image) }}" alt="{{ $banner->title }}"></a>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="banner_img">
-                    <a href="#"><img src="{{ asset('assets/images/banner_img3.jpg') }}" alt="banner_img3"></a>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </section>
@@ -303,9 +195,10 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <form action="#" method="post">
+                            <form action="{{ route('subscribe') }}" method="post">
+                                @csrf
                                 <div class="newsletter_form">
-                                    <input type="text" class="form-control" placeholder="輸入您的電子郵件">
+                                    <input type="text" name="email" class="form-control" placeholder="輸入您的電子郵件">
                                     <button type="submit" class="btn btn-fill-out">訂閱</button>
                                 </div>
                             </form>

@@ -17,19 +17,17 @@ class HomeController extends Controller
     public function index()
     {
         // 獲取熱門商品
-        $featuredProducts = Product::where('is_featured', true)
-            ->where('status', 'active')
+        $featuredProducts = Product::where('is_active', 1)
             ->take(4)
             ->get();
             
         // 獲取熱門分類
-        $featuredCategories = Category::where('is_featured', true)
-            ->where('status', 'active')
+        $featuredCategories = Category::where('is_active',1)
             ->take(3)
             ->get();
             
         // 獲取橫幅廣告
-        $banners = Banner::where('status', 'active')
+        $banners = Banner::where('is_active',1)
             ->orderBy('sort_order')
             ->get();
             

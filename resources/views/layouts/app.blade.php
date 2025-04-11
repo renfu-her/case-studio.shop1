@@ -25,12 +25,19 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap" rel="stylesheet">
     
     <!-- Icon Font CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/ionicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/themify-icons.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/linearicons.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/flaticon.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/simple-line-icons.css') }}">
     
+    <!--- owl carousel CSS-->
+    <link rel="stylesheet" href="{{ asset('assets/owlcarousel/css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/owlcarousel/css/owl.theme.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/owlcarousel/css/owl.theme.default.min.css') }}">
+    <!-- Magnific Popup CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/css/magnific-popup.css') }}">
     <!-- Slick CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/slick.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/slick-theme.css') }}">
@@ -324,16 +331,34 @@
     <!-- END FOOTER -->
     
     <!-- jQuery JS -->
-    <script src="{{ asset('assets/js/jquery-3.7.1.min.js') }}"></script>
-    <!-- Popper JS -->
+    <script src="{{ asset('assets/js/jquery-3.7.0.min.js') }}"></script>
+    <!-- popper min js -->
     <script src="{{ asset('assets/js/popper.min.js') }}"></script>
-    <!-- Bootstrap JS -->
+    <!-- Latest compiled and minified Bootstrap --> 
     <script src="{{ asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
-    <!-- Plugins JS -->
-    <script src="{{ asset('assets/js/plugins.js') }}"></script>
-    <!-- Custom JS -->
-    <script src="{{ asset('assets/js/custom.js') }}"></script>
-    
+    <!-- owl-carousel min js  --> 
+    <script src="{{ asset('assets/owlcarousel/js/owl.carousel.min.js') }}"></script>
+    <!-- magnific-popup min js  --> 
+    <script src="{{ asset('assets/js/magnific-popup.min.js') }}"></script>
+    <!-- waypoints min js  --> 
+    <script src="{{ asset('assets/js/waypoints.min.js') }}"></script>
+    <!-- parallax js  --> 
+    <script src="{{ asset('assets/js/parallax.js') }}"></script>
+    <!-- countdown js  --> 
+    <script src="{{ asset('assets/js/jquery.countdown.min.js') }}"></script>
+    <!-- imagesloaded js --> 
+    <script src="{{ asset('assets/js/imagesloaded.pkgd.min.js') }}"></script>
+    <!-- isotope min js --> 
+    <script src="{{ asset('assets/js/isotope.min.js') }}"></script>
+    <!-- jquery.dd.min js -->
+    <script src="{{ asset('assets/js/jquery.dd.min.js') }}"></script>
+    <!-- slick js -->
+    <script src="{{ asset('assets/js/slick.min.js') }}"></script>
+    <!-- elevatezoom js -->
+    <script src="{{ asset('assets/js/jquery.elevatezoom.js') }}"></script>
+    <!-- scripts js --> 
+    <script src="{{ asset('assets/js/scripts.js') }}"></script>
+
     @stack('scripts')
 </body>
 </html> 

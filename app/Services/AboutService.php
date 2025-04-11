@@ -10,7 +10,7 @@ use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Columns\IconColumn;
-use Rawilk\FilamentQuill\Filament\Forms\Components\QuillEditor;
+use Mohamedsabil83\FilamentFormsTinyeditor\Components\TinyEditor;
 
 class AboutService
 {
@@ -23,10 +23,11 @@ class AboutService
                 ->columnSpanFull()
                 ->maxLength(255),
 
-            QuillEditor::make('content')
+            TinyEditor::make('content')
                 ->label('內容')
                 ->required()
-                ->columnSpanFull(),
+                ->columnSpanFull()
+                ->minHeight('500'),
 
             TextInput::make('sort')
                 ->label('排序')

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home'  );
+Route::post('/subscribe', [HomeController::class, 'subscribe'])->name('subscribe');
 
 Route::get('/captcha/generate', function () {
     $length = 6;

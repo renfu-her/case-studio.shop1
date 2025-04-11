@@ -28,7 +28,6 @@ class HomeController extends Controller
             
         // 獲取橫幅廣告
         $banners = Banner::where('is_active',1)
-            ->orderBy('sort_order')
             ->get();
             
         return view('home', compact('featuredProducts', 'featuredCategories', 'banners'));

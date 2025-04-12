@@ -6,6 +6,10 @@ use App\Models\Category;
 use Filament\Forms;
 use Filament\Tables;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\FileUpload;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
+use Illuminate\Support\Str;
 
 class CategoryService extends BaseService
 {
@@ -14,6 +18,7 @@ class CategoryService extends BaseService
         return [
             $this->getParentSelect(),
             $this->getNameInput(),
+            $this->getImageUpload('上傳圖片長寬：1024px x 1024px'),
             $this->getSortInput(),
             Toggle::make('is_active')
                 ->label('啟用狀態')
@@ -67,6 +72,19 @@ class CategoryService extends BaseService
         );
     }
 
+    private function getImageUpload(string $placeholder = null)
+    {
+        return $this->createImageUpload(
+            name: 'image',
+            label: '分類圖片',
+            directory: 'categories',
+            columnSpanFull: true,
+            placeholder: $placeholder,
+            acceptedFileTypes: ['image/jpeg', 'image/jpg', 'image/png'],
+            saveUploadedFileUsing: fn($file) => $this->handleImageUpload($file)
+        );
+    }
+
     private function getSortInput()
     {
         return $this->createNumberInput(
@@ -80,10 +98,16 @@ class CategoryService extends BaseService
     public function getTableColumns(): array
     {
         return [
+            $this->getImageColumn(),
             $this->getNameColumn(),
             $this->getSortColumn(),
             $this->getStatusColumn(),
         ];
+    }
+
+    private function getImageColumn()
+    {
+        return $this->createImageColumn('image', '分類圖片');
     }
 
     private function getNameColumn()
@@ -155,5 +179,22 @@ class CategoryService extends BaseService
                     ->label('刪除所選'),
             ]),
         ];
+    }
+
+    public function handleImageUpload($file)
+    {
+        $manager = new ImageManager(new Driver());
+        $image = $manager->read($file);
+        $image->cover(1024, 1024);
+
+        $filename = Str::uuid()->toString() . '.webp';
+
+        if (!file_exists(storage_path('app/public/categories'))) {
+            mkdir(storage_path('app/public/categories'), 0755, true);
+        }
+
+        $image->toWebp(80)->save(storage_path('app/public/categories/' . $filename));
+
+        return 'categories/' . $filename;
     }
 }

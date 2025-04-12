@@ -108,8 +108,7 @@ class CategoryService extends BaseService
     private function getImageColumn()
     {
         return $this->createImageColumn('image', '分類圖片')
-            ->defaultImageUrl(asset('assets/images/no-image.svg'))
-            ->fallbackImageUrl(asset('assets/images/no-image.svg'));
+            ->defaultImageUrl(asset('assets/images/no-image.svg'));
     }
 
     private function getNameColumn()

@@ -23,7 +23,7 @@ class HomeController extends Controller
             
         // 獲取熱門分類
         $featuredCategories = Category::where('is_active',1)
-            ->take(3)
+            ->where('parent_id', 0)
             ->get();
             
         // 獲取橫幅廣告

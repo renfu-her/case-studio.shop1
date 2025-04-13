@@ -39,7 +39,7 @@ class HomeController extends Controller
             
         // 獲取輪播圖 Banner
         $sliderBanners = Banner::where('is_active', true)
-            ->where('type', 'slider')  // 輪播圖類型
+            ->where('type', 'large')  // 輪播圖類型
             ->orderBy('sort')
             ->get();
             

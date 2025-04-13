@@ -118,28 +118,15 @@
                         <ul class="widget_categories">
                             @foreach($rootCategories as $rootCategory)
                                 <li class="{{ $categoryPath->contains('id', $rootCategory->id) ? 'active' : '' }}">
-                                    <div class="category-header">
-                                        <a href="{{ route('categories.show', $rootCategory->id) }}" class="root-category">
-                                            {{ $rootCategory->name }}
-                                        </a>
+                                    <a href="{{ route('categories.show', $rootCategory->id) }}" class="category-link">
+                                        <div class="category-content">
+                                            <i class="fa-solid fa-laptop"></i>
+                                            <span>{{ $rootCategory->name }}</span>
+                                        </div>
                                         @if($subcategories->where('parent_id', $rootCategory->id)->count() > 0)
-                                            <span class="toggle-icon {{ $categoryPath->contains('id', $rootCategory->id) ? 'open' : '' }}">
-                                                <i class="fa-solid fa-chevron-down"></i>
-                                            </span>
+                                            <i class="fa-solid fa-chevron-right"></i>
                                         @endif
-                                    </div>
-                                    @if($subcategories->where('parent_id', $rootCategory->id)->count() > 0)
-                                        <ul class="sub-categories {{ $categoryPath->contains('id', $rootCategory->id) ? 'show' : '' }}">
-                                            @foreach($subcategories->where('parent_id', $rootCategory->id) as $subCategory)
-                                                <li class="{{ $categoryPath->contains('id', $subCategory->id) ? 'active' : '' }}">
-                                                    <a href="{{ route('categories.show', $subCategory->id) }}" class="sub-category">
-                                                        <span class="dot"></span>
-                                                        {{ $subCategory->name }}
-                                                    </a>
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    @endif
+                                    </a>
                                 </li>
                             @endforeach
                         </ul>
@@ -149,51 +136,53 @@
                     .widget_categories {
                         list-style: none;
                         padding: 0;
+                        margin: 0;
+                        background: #fff;
+                        border-radius: 8px;
                     }
                     .widget_categories li {
-                        margin-bottom: 10px;
+                        margin: 0;
+                        border-bottom: 1px solid #eee;
                     }
-                    .category-header {
+                    .widget_categories li:last-child {
+                        border-bottom: none;
+                    }
+                    .category-link {
                         display: flex;
-                        justify-content: space-between;
                         align-items: center;
-                        cursor: pointer;
-                        padding: 8px 0;
-                    }
-                    .root-category {
+                        justify-content: space-between;
+                        padding: 12px 16px;
                         color: #333;
                         text-decoration: none;
-                        font-weight: 500;
+                        transition: all 0.3s ease;
                     }
-                    .sub-categories {
-                        display: none;
-                        list-style: none;
-                        padding-left: 15px;
-                        margin-top: 5px;
+                    .category-link:hover {
+                        background-color: #f8f9fa;
+                        color: #333;
                     }
-                    .sub-categories.show {
-                        display: block;
-                    }
-                    .sub-category {
+                    .category-content {
                         display: flex;
                         align-items: center;
+                        gap: 12px;
+                    }
+                    .category-content i {
+                        font-size: 18px;
+                        width: 24px;
                         color: #666;
-                        text-decoration: none;
-                        padding: 5px 0;
                     }
-                    .dot {
-                        width: 6px;
-                        height: 6px;
-                        background-color: #ffc107;
-                        border-radius: 50%;
-                        margin-right: 10px;
-                    }
-                    .toggle-icon {
+                    .category-content span {
                         font-size: 14px;
-                        color: #666;
                     }
-                    .toggle-icon.open i {
-                        transform: rotate(180deg);
+                    .category-link i.fa-chevron-right {
+                        font-size: 12px;
+                        color: #999;
+                    }
+                    .widget_categories li.active .category-link {
+                        background-color: #f8f9fa;
+                        color: #0066cc;
+                    }
+                    .widget_categories li.active .category-link i {
+                        color: #0066cc;
                     }
                     </style>
                 </div>

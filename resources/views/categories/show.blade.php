@@ -185,7 +185,6 @@
             list-style: none;
             padding: 0;
             margin: 0;
-            background: #fff;
         }
 
         .widget_categories li {
@@ -200,7 +199,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 8px 0;
+            padding: 5px 0;
             color: #333;
             text-decoration: none;
             transition: all 0.3s ease;
@@ -214,6 +213,7 @@
             font-size: 12px;
             color: #999;
             transition: transform 0.3s ease;
+            margin-right: 15px;
         }
 
         .active>.category-link i {
@@ -224,7 +224,6 @@
             display: none;
             list-style: none;
             padding: 0;
-            padding-left: 15px;
             margin: 0;
         }
 
@@ -234,7 +233,8 @@
 
         .subcategory-link {
             display: block;
-            padding: 8px 0;
+            padding: 5px 0;
+            padding-left: 20px;
             color: #666;
             text-decoration: none;
             font-size: 14px;

@@ -189,7 +189,7 @@ class BannerService extends BaseService
         $height = $get('type') === 'large' ? 600 : 400;
 
         // 調整圖片大小
-        $image->cover($width, $height);
+        $image->scale($width);
 
         // 生成唯一的檔案名
         $filename = Str::uuid()->toString() . '.webp';

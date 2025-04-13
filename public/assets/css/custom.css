@@ -1,7 +1,3 @@
-.carousel-item {
-    position: relative;
-}
-
-.carousel-caption {
-    z-index: 1;
+.carousel-item img {
+    z-index: 0;
 }

@@ -16,7 +16,13 @@
                 <ol class="breadcrumb justify-content-md-end">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">首頁</a></li>
                     <li class="breadcrumb-item"><a href="#">商品專區</a></li>
-                    <li class="breadcrumb-item active">{{ $category->name }}</li>
+                    @foreach($categoryPath as $pathItem)
+                        @if($loop->last)
+                            <li class="breadcrumb-item active">{{ $pathItem->name }}</li>
+                        @else
+                            <li class="breadcrumb-item"><a href="{{ route('categories.show', $pathItem->id) }}">{{ $pathItem->name }}</a></li>
+                        @endif
+                    @endforeach
                 </ol>
             </div>
         </div>
@@ -36,7 +42,6 @@
                                 <div class="custom_select">
                                     <select class="form-control form-control-sm">
                                         <option value="order">預設排序</option>
-                                        <option value="popularity">依熱門度排序</option>
                                         <option value="date">依最新排序</option>
                                         <option value="price">依價格：低到高</option>
                                         <option value="price-desc">依價格：高到低</option>
@@ -47,14 +52,6 @@
                                 <div class="products_view">
                                     <a href="javascript:;" class="shorting_icon grid active"><i class="fa-solid fa-th-large"></i></a>
                                     <a href="javascript:;" class="shorting_icon list"><i class="fa-solid fa-list"></i></a>
-                                </div>
-                                <div class="custom_select">
-                                    <select class="form-control form-control-sm">
-                                        <option value="">顯示</option>
-                                        <option value="9">9</option>
-                                        <option value="12">12</option>
-                                        <option value="18">18</option>
-                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -97,14 +94,6 @@
                                 <div class="pr_desc">
                                     <p>{{ Str::limit($product->description, 100) }}</p>
                                 </div>
-                                <div class="list_product_action_box">
-                                    <ul class="list_none pr_action_btn">
-                                        <li class="add-to-cart"><a href="#"><i class="fa-solid fa-cart-shopping"></i> 加入購物車</a></li>
-                                        <li><a href="#" class="popup-ajax"><i class="fa-solid fa-arrows-rotate"></i></a></li>
-                                        <li><a href="#" class="popup-ajax"><i class="fa-solid fa-magnifying-glass"></i></a></li>
-                                        <li><a href="#"><i class="fa-solid fa-heart"></i></a></li>
-                                    </ul>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -131,15 +120,21 @@
                                 <li class="{{ $categoryPath->contains('id', $rootCategory->id) ? 'active' : '' }}">
                                     <a href="{{ route('categories.show', $rootCategory->id) }}">
                                         <span class="categories_name">{{ $rootCategory->name }}</span>
-                                        @if($rootCategory->children->count() > 0)
+                                        @if($subcategories->where('parent_id', $rootCategory->id)->count() > 0)
                                             <span class="toggle-icon {{ $categoryPath->contains('id', $rootCategory->id) ? 'open' : '' }}">
                                                 <i class="fa-solid fa-chevron-down"></i>
                                             </span>
                                         @endif
                                     </a>
-                                    @if($rootCategory->children->count() > 0)
+                                    @if($subcategories->where('parent_id', $rootCategory->id)->count() > 0)
                                         <ul class="sub-categories {{ $categoryPath->contains('id', $rootCategory->id) ? 'show' : '' }}">
-                                            @include('categories.partials.subcategories', ['categories' => $rootCategory->children, 'categoryPath' => $categoryPath])
+                                            @foreach($subcategories->where('parent_id', $rootCategory->id) as $subCategory)
+                                                <li class="{{ $categoryPath->contains('id', $subCategory->id) ? 'active' : '' }}">
+                                                    <a href="{{ route('categories.show', $subCategory->id) }}">
+                                                        <span class="categories_name">{{ $subCategory->name }}</span>
+                                                    </a>
+                                                </li>
+                                            @endforeach
                                         </ul>
                                     @endif
                                 </li>

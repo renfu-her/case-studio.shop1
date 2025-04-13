@@ -119,10 +119,10 @@
                             @foreach($rootCategories as $rootCategory)
                                 <li class="{{ $categoryPath->contains('id', $rootCategory->id) ? 'active' : '' }}">
                                     <a href="{{ route('categories.show', $rootCategory->id) }}" class="root-category">
-                                        <span class="categories_name">{{ $rootCategory->name }}</span>
+                                        {{ $rootCategory->name }}
                                         @if($subcategories->where('parent_id', $rootCategory->id)->count() > 0)
                                             <span class="toggle-icon {{ $categoryPath->contains('id', $rootCategory->id) ? 'open' : '' }}">
-                                                <i class="fa-solid fa-chevron-down"></i>
+                                                <i class="fa-solid fa-chevron-up"></i>
                                             </span>
                                         @endif
                                     </a>
@@ -131,9 +131,27 @@
                                             @foreach($subcategories->where('parent_id', $rootCategory->id) as $subCategory)
                                                 <li class="{{ $categoryPath->contains('id', $subCategory->id) ? 'active' : '' }}">
                                                     <a href="{{ route('categories.show', $subCategory->id) }}" class="sub-category">
-                                                        <i class="fa-solid fa-chevron-right"></i>
-                                                        <span class="categories_name">{{ $subCategory->name }}</span>
+                                                        <span style="margin-left: 20px;">
+                                                            <i class="fa-solid fa-chevron-right"></i>
+                                                            {{ $subCategory->name }}
+                                                            @if($subcategories->where('parent_id', $subCategory->id)->count() > 0)
+                                                                <span class="toggle-icon {{ $categoryPath->contains('id', $subCategory->id) ? 'open' : '' }}">
+                                                                    <i class="fa-solid {{ $categoryPath->contains('id', $subCategory->id) ? 'fa-chevron-up' : 'fa-chevron-right' }}"></i>
+                                                                </span>
+                                                            @endif
+                                                        </span>
                                                     </a>
+                                                    @if($subcategories->where('parent_id', $subCategory->id)->count() > 0)
+                                                        <ul class="sub-sub-categories {{ $categoryPath->contains('id', $subCategory->id) ? 'show' : '' }}">
+                                                            @foreach($subcategories->where('parent_id', $subCategory->id) as $subSubCategory)
+                                                                <li class="{{ $categoryPath->contains('id', $subSubCategory->id) ? 'active' : '' }}">
+                                                                    <a href="{{ route('categories.show', $subSubCategory->id) }}" class="sub-sub-category">
+                                                                        <span style="margin-left: 40px;">{{ $subSubCategory->name }}</span>
+                                                                    </a>
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
+                                                    @endif
                                                 </li>
                                             @endforeach
                                         </ul>

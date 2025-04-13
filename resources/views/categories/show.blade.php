@@ -129,18 +129,12 @@
                                     <li class="{{ $categoryPath->contains('id', $rootCategory->id) ? 'active' : '' }}">
                                         <a href="{{ route('categories.show', $rootCategory->id) }}" class="category-link">
                                             {{ $rootCategory->name }}
-                                            @if ($subcategories->where('parent_id', $rootCategory->id)->count() > 0)
-                                                <i class="fa-solid fa-chevron-down"></i>
-                                            @endif
                                         </a>
                                         @if ($subcategories->where('parent_id', $rootCategory->id)->count() > 0)
-                                            <ul
-                                                class="subcategories {{ $categoryPath->contains('id', $rootCategory->id) ? 'show' : '' }}">
+                                            <ul class="subcategories {{ $categoryPath->contains('id', $rootCategory->id) ? 'show' : '' }}">
                                                 @foreach ($subcategories->where('parent_id', $rootCategory->id) as $subCategory)
-                                                    <li
-                                                        class="{{ $categoryPath->contains('id', $subCategory->id) ? 'active' : '' }}">
-                                                        <a href="{{ route('categories.show', $subCategory->id) }}"
-                                                            class="subcategory-link">
+                                                    <li class="{{ $categoryPath->contains('id', $subCategory->id) ? 'active' : '' }}">
+                                                        <a href="{{ route('categories.show', $subCategory->id) }}" class="subcategory-link">
                                                             {{ $subCategory->name }}
                                                         </a>
                                                     </li>
@@ -151,25 +145,6 @@
                                 @endforeach
                             </ul>
                         </div>
-
-                        <script>
-                            document.addEventListener('DOMContentLoaded', function() {
-                                const categoryLinks = document.querySelectorAll('.category-link');
-                                categoryLinks.forEach(link => {
-                                    link.addEventListener('click', function(e) {
-                                        if (this.querySelector('i')) {
-                                            e.preventDefault();
-                                            const parent = this.parentElement;
-                                            const subMenu = parent.querySelector('.subcategories');
-                                            if (subMenu) {
-                                                subMenu.classList.toggle('show');
-                                                parent.classList.toggle('active');
-                                            }
-                                        }
-                                    });
-                                });
-                            });
-                        </script>
                     </div>
                 </div>
             </div>
@@ -185,22 +160,23 @@
             list-style: none;
             padding: 0;
             margin: 0;
+            background: #fff;
         }
 
         .widget_categories li {
             margin: 0;
-            background: #f8f9fa;
+            border-bottom: 1px solid #f1f1f1;
         }
 
-        .widget_categories li a::before {
-            content: "";
+        .widget_categories li:last-child {
+            border-bottom: none;
         }
 
         .category-link {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            padding: 8px 15px;
+            align-items: center;
+            padding: 12px 15px;
             color: #333;
             text-decoration: none;
             transition: all 0.3s ease;
@@ -208,58 +184,72 @@
         }
 
         .category-link:hover {
-            color: #0066cc;
+            color: #333;
+            background: #f8f9fa;
         }
 
-        .category-link i {
-            font-size: 12px;
+        .category-link::after {
+            content: "›";
+            font-size: 18px;
             color: #999;
-            transition: transform 0.3s ease;
+            margin-left: 8px;
         }
 
-        .active>.category-link i {
-            transform: rotate(180deg);
+        .active > .category-link::after {
+            transform: rotate(90deg);
         }
 
         .subcategories {
             display: none;
             list-style: none;
-            padding: 0;
+            padding: 15px;
             margin: 0;
+            background: #fff;
+            border-top: 1px solid #f1f1f1;
         }
 
         .subcategories.show {
-            display: block;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
         }
 
         .subcategory-link {
             display: block;
-            padding: 8px 15px 8px 30px;
+            padding: 8px 0;
             color: #666;
             text-decoration: none;
             font-size: 14px;
             transition: all 0.3s ease;
-            background: #fff;
         }
 
         .subcategory-link:hover {
             color: #0066cc;
         }
 
-        .widget_categories li.active>.category-link {
-            color: #0066cc;
+        .widget_categories li.active > .category-link {
+            background: #f8f9fa;
         }
 
         .subcategories li.active .subcategory-link {
             color: #0066cc;
         }
-
-        .widget_categories > li {
-            margin-bottom: 1px;
-        }
-
-        .subcategories > li {
-            margin-bottom: 1px;
-        }
     </style>
 @endpush
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const categoryLinks = document.querySelectorAll('.category-link');
+    categoryLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            const parent = this.parentElement;
+            const subMenu = parent.querySelector('.subcategories');
+            if (subMenu) {
+                e.preventDefault();
+                subMenu.classList.toggle('show');
+                parent.classList.toggle('active');
+            }
+        });
+    });
+});
+</script>

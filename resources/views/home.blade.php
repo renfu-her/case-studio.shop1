@@ -8,22 +8,37 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <div class="banner_slider carousel_slider owl-carousel owl-theme nav_style1" data-loop="true" data-dots="false" data-nav="true" data-margin="20" data-responsive='{"0":{"items": "1"}, "767":{"items": "1"}, "991":{"items": "1"}, "1199":{"items": "1"}}'>
-                    @foreach($sliderBanners as $banner)
-                    <div class="item">
-                        <div class="banner_slide_content banner_content_inner">
-                            <div class="col-lg-7 col-10">
-                                <div class="banner_content overflow-hidden">
-                                    @if($banner->title)
-                                    <h5 class="mb-3 staggered-animation" data-animation="slideInLeft" data-animation-delay="0.5s">{{ $banner->title }}</h5>
-                                    @endif
-                                    <a class="btn btn-fill-out rounded-0 staggered-animation text-uppercase" href="{{ $banner->link }}" data-animation="slideInLeft" data-animation-delay="1s">立即購買</a>
+                <div id="mainBanner" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        @foreach($sliderBanners as $key => $banner)
+                        <button type="button" data-bs-target="#mainBanner" data-bs-slide-to="{{ $key }}" @if($loop->first) class="active" aria-current="true" @endif aria-label="Slide {{ $key + 1 }}"></button>
+                        @endforeach
+                    </div>
+                    <div class="carousel-inner">
+                        @foreach($sliderBanners as $key => $banner)
+                        <div class="carousel-item @if($loop->first) active @endif">
+                            <img src="{{ asset('storage/' . $banner->image) }}" class="d-block w-100" alt="slider_banner">
+                            <div class="carousel-caption">
+                                <div class="col-lg-7 col-10">
+                                    <div class="banner_content">
+                                        @if($banner->title)
+                                        <h5 class="mb-3 animate__animated animate__slideInLeft animate__delay-1s">{{ $banner->title }}</h5>
+                                        @endif
+                                        <a class="btn btn-fill-out rounded-0 animate__animated animate__slideInLeft animate__delay-2s text-uppercase" href="{{ $banner->link }}">立即購買</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <img src="{{ asset('storage/' . $banner->image) }}" alt="slider_banner"/>
+                        @endforeach
                     </div>
-                    @endforeach
+                    <button class="carousel-control-prev" type="button" data-bs-target="#mainBanner" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">上一張</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#mainBanner" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">下一張</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -185,30 +200,22 @@
 </section>
 <!-- END SECTION NEWSLETTER -->
 
+@push('styles')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+@endpush
+
 @push('scripts')
 <script>
-$(document).ready(function() {
-    $('.banner_slider.carousel_slider').each(function() {
-        var $carousel = $(this);
-        $carousel.owlCarousel({
-            dots: $carousel.data("dots"),
-            loop: $carousel.data("loop"),
-            margin: $carousel.data("margin"),
-            nav: $carousel.data("nav"),
-            responsive: {
-                0: {
-                    items: 1
-                },
-                767: {
-                    items: 1
-                },
-                991: {
-                    items: 1
-                },
-                1199: {
-                    items: 1
-                }
-            }
+document.addEventListener('DOMContentLoaded', function() {
+    // 監聽輪播圖切換事件
+    document.querySelector('#mainBanner').addEventListener('slide.bs.carousel', function () {
+        // 重置動畫
+        const animations = this.querySelectorAll('.animate__animated');
+        animations.forEach(function(element) {
+            element.style.opacity = 0;
+            setTimeout(() => {
+                element.style.opacity = 1;
+            }, 50);
         });
     });
 });

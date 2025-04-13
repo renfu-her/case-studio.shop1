@@ -189,6 +189,7 @@
 
         .widget_categories li {
             margin: 0;
+            background: #f8f9fa;
         }
 
         .widget_categories li a::before {
@@ -199,10 +200,11 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 5px 0;
+            padding: 8px 15px;
             color: #333;
             text-decoration: none;
             transition: all 0.3s ease;
+            background: #fff;
         }
 
         .category-link:hover {
@@ -213,7 +215,6 @@
             font-size: 12px;
             color: #999;
             transition: transform 0.3s ease;
-            margin-right: 15px;
         }
 
         .active>.category-link i {
@@ -233,12 +234,12 @@
 
         .subcategory-link {
             display: block;
-            padding: 5px 0;
-            padding-left: 20px;
+            padding: 8px 15px 8px 30px;
             color: #666;
             text-decoration: none;
             font-size: 14px;
             transition: all 0.3s ease;
+            background: #fff;
         }
 
         .subcategory-link:hover {
@@ -251,6 +252,14 @@
 
         .subcategories li.active .subcategory-link {
             color: #0066cc;
+        }
+
+        .widget_categories > li {
+            margin-bottom: 1px;
+        }
+
+        .subcategories > li {
+            margin-bottom: 1px;
         }
     </style>
 @endpush

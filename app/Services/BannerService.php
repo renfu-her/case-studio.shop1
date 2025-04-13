@@ -185,7 +185,7 @@ class BannerService extends BaseService
         $image = $manager->read($file);
 
         // 根據廣告類型設置尺寸
-        $width = $get('type') === 'large' ? 3840 : 960;
+        $width = $get('type') === 'large' ? 3840 : 1920;
 
         // 調整圖片大小
         $image->scale($width);

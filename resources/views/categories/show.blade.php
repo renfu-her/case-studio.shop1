@@ -240,6 +240,42 @@
         .subcategories li.active .subcategory-link {
             color: #0066cc;
         }
+
+        /* 新增產品視圖切換按鈕的樣式 */
+        .products_view {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .shorting_icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .shorting_icon.active {
+            background-color: #FF324D;
+            border-color: #FF324D;
+            color: #fff;
+        }
+
+        .shorting_icon i {
+            font-size: 18px;
+        }
+
+        .shorting_icon:hover {
+            background-color: #FF324D;
+            border-color: #FF324D;
+            color: #fff;
+        }
     </style>
 @endpush
 

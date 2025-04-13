@@ -118,40 +118,24 @@
                         <ul class="widget_categories">
                             @foreach($rootCategories as $rootCategory)
                                 <li class="{{ $categoryPath->contains('id', $rootCategory->id) ? 'active' : '' }}">
-                                    <a href="{{ route('categories.show', $rootCategory->id) }}" class="root-category">
-                                        {{ $rootCategory->name }}
+                                    <div class="category-header">
+                                        <a href="{{ route('categories.show', $rootCategory->id) }}" class="root-category">
+                                            {{ $rootCategory->name }}
+                                        </a>
                                         @if($subcategories->where('parent_id', $rootCategory->id)->count() > 0)
                                             <span class="toggle-icon {{ $categoryPath->contains('id', $rootCategory->id) ? 'open' : '' }}">
-                                                <i class="fa-solid fa-chevron-up"></i>
+                                                <i class="fa-solid fa-chevron-down"></i>
                                             </span>
                                         @endif
-                                    </a>
+                                    </div>
                                     @if($subcategories->where('parent_id', $rootCategory->id)->count() > 0)
                                         <ul class="sub-categories {{ $categoryPath->contains('id', $rootCategory->id) ? 'show' : '' }}">
                                             @foreach($subcategories->where('parent_id', $rootCategory->id) as $subCategory)
                                                 <li class="{{ $categoryPath->contains('id', $subCategory->id) ? 'active' : '' }}">
                                                     <a href="{{ route('categories.show', $subCategory->id) }}" class="sub-category">
-                                                        <span style="margin-left: 20px;">
-                                                            <i class="fa-solid fa-chevron-right"></i>
-                                                            {{ $subCategory->name }}
-                                                            @if($subcategories->where('parent_id', $subCategory->id)->count() > 0)
-                                                                <span class="toggle-icon {{ $categoryPath->contains('id', $subCategory->id) ? 'open' : '' }}">
-                                                                    <i class="fa-solid {{ $categoryPath->contains('id', $subCategory->id) ? 'fa-chevron-up' : 'fa-chevron-right' }}"></i>
-                                                                </span>
-                                                            @endif
-                                                        </span>
+                                                        <span class="dot"></span>
+                                                        {{ $subCategory->name }}
                                                     </a>
-                                                    @if($subcategories->where('parent_id', $subCategory->id)->count() > 0)
-                                                        <ul class="sub-sub-categories {{ $categoryPath->contains('id', $subCategory->id) ? 'show' : '' }}">
-                                                            @foreach($subcategories->where('parent_id', $subCategory->id) as $subSubCategory)
-                                                                <li class="{{ $categoryPath->contains('id', $subSubCategory->id) ? 'active' : '' }}">
-                                                                    <a href="{{ route('categories.show', $subSubCategory->id) }}" class="sub-sub-category">
-                                                                        <span style="margin-left: 40px;">{{ $subSubCategory->name }}</span>
-                                                                    </a>
-                                                                </li>
-                                                            @endforeach
-                                                        </ul>
-                                                    @endif
                                                 </li>
                                             @endforeach
                                         </ul>
@@ -160,6 +144,58 @@
                             @endforeach
                         </ul>
                     </div>
+
+                    <style>
+                    .widget_categories {
+                        list-style: none;
+                        padding: 0;
+                    }
+                    .widget_categories li {
+                        margin-bottom: 10px;
+                    }
+                    .category-header {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        cursor: pointer;
+                        padding: 8px 0;
+                    }
+                    .root-category {
+                        color: #333;
+                        text-decoration: none;
+                        font-weight: 500;
+                    }
+                    .sub-categories {
+                        display: none;
+                        list-style: none;
+                        padding-left: 15px;
+                        margin-top: 5px;
+                    }
+                    .sub-categories.show {
+                        display: block;
+                    }
+                    .sub-category {
+                        display: flex;
+                        align-items: center;
+                        color: #666;
+                        text-decoration: none;
+                        padding: 5px 0;
+                    }
+                    .dot {
+                        width: 6px;
+                        height: 6px;
+                        background-color: #ffc107;
+                        border-radius: 50%;
+                        margin-right: 10px;
+                    }
+                    .toggle-icon {
+                        font-size: 14px;
+                        color: #666;
+                    }
+                    .toggle-icon.open i {
+                        transform: rotate(180deg);
+                    }
+                    </style>
                 </div>
             </div>
         </div>

@@ -5,35 +5,73 @@ namespace App\Services;
 use App\Models\Category;
 use Filament\Forms;
 use Filament\Tables;
-// use Filament\Forms\Components\FileUpload;
-// use Rawilk\FilamentQuill\Filament\Forms\Components\QuillEditor;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\FileUpload;
+use Rawilk\FilamentQuill\Filament\Forms\Components\QuillEditor;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Support\Str;
-use Filament\Forms\Components\Toggle;
 
 class ProductService extends BaseService
 {
     public function getFormSchema(): array
     {
         return [
-            $this->getCategorySelect(),
-            $this->getImageUpload('上傳圖片長寬：1024px x 1024px'),
-            $this->getNameInput(),
-            $this->getDescriptionEditor(),
-            $this->getPriceInput(),
-            $this->getStockInput(),
-            Forms\Components\Section::make('商品狀態')
+            Forms\Components\Section::make('基本資料')
                 ->schema([
-                    $this->getStatusToggle(),
-                    $this->getHotToggle(),
-                    $this->getNewToggle(),
-                ]),
-            Toggle::make('is_active')
-                ->label('啟用狀態')
-                ->inline(false)
-                ->default(true)
-                ->columnSpanFull(),
+                    Select::make('category_id')
+                        ->relationship('category', 'name')
+                        ->required()
+                        ->label('分類'),
+                    TextInput::make('name')
+                        ->required()
+                        ->label('商品名稱'),
+                    QuillEditor::make('sub_title')
+                        ->label('副標題')
+                        ->toolbarButtons([
+                            'bold',
+                            'italic',
+                            'underline',
+                            'strike',
+                            'link',
+                        ])
+                        ->fileAttachmentsDisk('public')
+                        ->fileAttachmentsDirectory('products')
+                        ->fileAttachmentsVisibility('public'),
+                    QuillEditor::make('description')
+                        ->label('商品描述')
+                        ->required()
+                        ->fileAttachmentsDisk('public')
+                        ->fileAttachmentsDirectory('products')
+                        ->fileAttachmentsVisibility('public'),
+                    FileUpload::make('image')
+                        ->label('主要圖片')
+                        ->required()
+                        ->image()
+                        ->imageEditor()
+                        ->directory('products'),
+                    TextInput::make('price')
+                        ->numeric()
+                        ->required()
+                        ->label('售價'),
+                    TextInput::make('stock')
+                        ->numeric()
+                        ->required()
+                        ->default(0)
+                        ->label('庫存'),
+                    Toggle::make('is_active')
+                        ->label('啟用')
+                        ->default(true),
+                    Toggle::make('is_hot')
+                        ->label('熱門商品')
+                        ->default(false),
+                    Toggle::make('is_new')
+                        ->label('新品')
+                        ->default(false),
+                ])
+                ->columns(2),
         ];
     }
 

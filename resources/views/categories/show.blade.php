@@ -186,16 +186,10 @@
             padding: 0;
             margin: 0;
             background: #fff;
-            border-radius: 8px;
         }
 
         .widget_categories li {
             margin: 0;
-            border-bottom: 1px solid #eee;
-        }
-
-        .widget_categories li:last-child {
-            border-bottom: none;
         }
 
         .widget_categories li a::before {
@@ -206,16 +200,14 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 12px 16px;
+            padding: 8px 0;
             color: #333;
             text-decoration: none;
             transition: all 0.3s ease;
-            font-weight: 500;
         }
 
         .category-link:hover {
-            background-color: #f8f9fa;
-            color: #333;
+            color: #0066cc;
         }
 
         .category-link i {
@@ -232,7 +224,8 @@
             display: none;
             list-style: none;
             padding: 0;
-            background: #f8f9fa;
+            padding-left: 15px;
+            margin: 0;
         }
 
         .subcategories.show {
@@ -241,29 +234,15 @@
 
         .subcategory-link {
             display: block;
-            padding: 8px 16px;
-            padding-left: 32px;
+            padding: 8px 0;
             color: #666;
             text-decoration: none;
             font-size: 14px;
             transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .subcategory-link::before {
-            content: "";
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 8px;
-            height: 1px;
-            background-color: #666;
         }
 
         .subcategory-link:hover {
             color: #0066cc;
-            background-color: #f0f0f0;
         }
 
         .widget_categories li.active>.category-link {
@@ -272,7 +251,6 @@
 
         .subcategories li.active .subcategory-link {
             color: #0066cc;
-            background-color: #f0f0f0;
         }
     </style>
 @endpush

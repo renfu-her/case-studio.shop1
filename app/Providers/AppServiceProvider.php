@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Filament\Http\Responses\Auth\Contracts\LoginResponse;
+use App\Models\Event;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // 共享 events 變數到所有視圖
+        view()->share('events', Event::where('is_active', true)->get());
     }
 }

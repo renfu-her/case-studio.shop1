@@ -34,7 +34,7 @@
             <div class="col-lg-6 col-md-6 mb-4 mb-lg-0">
                 <div class="product_image">
                     <div class="product_img">
-                        <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" class="img-fixed">
+                        <img src="{{ Storage::url($product->image) }}" alt="{{ $product->name }}" class="img-fixed">
                     </div>
                 </div>
             </div>

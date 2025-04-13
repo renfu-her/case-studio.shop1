@@ -9,6 +9,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\RichEditor;
 use Rawilk\FilamentQuill\Filament\Forms\Components\QuillEditor;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
@@ -28,30 +29,20 @@ class ProductService extends BaseService
                     TextInput::make('name')
                         ->required()
                         ->label('商品名稱'),
-                    QuillEditor::make('sub_title')
+                    RichEditor::make('sub_title')
                         ->label('副標題')
-                        ->toolbarButtons([
-                            'bold',
-                            'italic',
-                            'underline',
-                            'strike',
-                            'link',
-                        ])
-                        ->fileAttachmentsDisk('public')
-                        ->fileAttachmentsDirectory('products')
-                        ->fileAttachmentsVisibility('public'),
-                    QuillEditor::make('description')
-                        ->label('商品描述')
+                        ->columnSpanFull(),
+                    $this->createTinyMceEditor('description', '商品描述')
                         ->required()
-                        ->fileAttachmentsDisk('public')
-                        ->fileAttachmentsDirectory('products')
-                        ->fileAttachmentsVisibility('public'),
-                    FileUpload::make('image')
-                        ->label('主要圖片')
-                        ->required()
-                        ->image()
-                        ->imageEditor()
-                        ->directory('products'),
+                        ->columnSpanFull(),
+                    $this->createImageUpload(
+                        name: 'image',
+                        label: '主要圖片',
+                        directory: 'products',
+                        placeholder: '上傳圖片長寬：1024px x 1024px',
+                        required: true,
+                        saveUploadedFileUsing: fn($file, $get) => $this->handleImageUpload($file, $get)
+                    ),
                     TextInput::make('price')
                         ->numeric()
                         ->required()
@@ -270,18 +261,23 @@ class ProductService extends BaseService
         return $options;
     }
 
-    public function handleImageUpload($file)
+    public function handleImageUpload($file, $get)
     {
         $manager = new ImageManager(new Driver());
         $image = $manager->read($file);
+
+        // 調整圖片大小
         $image->cover(1024, 1024);
 
+        // 生成唯一的檔案名
         $filename = Str::uuid()->toString() . '.webp';
 
+        // 確保目錄存在
         if (!file_exists(storage_path('app/public/products'))) {
             mkdir(storage_path('app/public/products'), 0755, true);
         }
 
+        // 轉換並保存為 WebP
         $image->toWebp(80)->save(storage_path('app/public/products/' . $filename));
 
         return 'products/' . $filename;

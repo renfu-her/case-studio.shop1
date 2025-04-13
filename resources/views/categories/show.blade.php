@@ -118,7 +118,7 @@
                         <ul class="widget_categories">
                             @foreach($rootCategories as $rootCategory)
                                 <li class="{{ $categoryPath->contains('id', $rootCategory->id) ? 'active' : '' }}">
-                                    <a href="{{ route('categories.show', $rootCategory->id) }}">
+                                    <a href="{{ route('categories.show', $rootCategory->id) }}" class="root-category">
                                         <span class="categories_name">{{ $rootCategory->name }}</span>
                                         @if($subcategories->where('parent_id', $rootCategory->id)->count() > 0)
                                             <span class="toggle-icon {{ $categoryPath->contains('id', $rootCategory->id) ? 'open' : '' }}">
@@ -130,7 +130,8 @@
                                         <ul class="sub-categories {{ $categoryPath->contains('id', $rootCategory->id) ? 'show' : '' }}">
                                             @foreach($subcategories->where('parent_id', $rootCategory->id) as $subCategory)
                                                 <li class="{{ $categoryPath->contains('id', $subCategory->id) ? 'active' : '' }}">
-                                                    <a href="{{ route('categories.show', $subCategory->id) }}">
+                                                    <a href="{{ route('categories.show', $subCategory->id) }}" class="sub-category">
+                                                        <i class="fa-solid fa-chevron-right"></i>
                                                         <span class="categories_name">{{ $subCategory->name }}</span>
                                                     </a>
                                                 </li>

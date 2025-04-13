@@ -241,11 +241,24 @@
 
         .subcategory-link {
             display: block;
-            padding: 8px 16px 8px 32px;
+            padding: 8px 16px;
+            padding-left: 32px;
             color: #666;
             text-decoration: none;
             font-size: 14px;
             transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .subcategory-link::before {
+            content: "";
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 1px;
+            background-color: #666;
         }
 
         .subcategory-link:hover {

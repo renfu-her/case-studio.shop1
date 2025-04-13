@@ -12,26 +12,59 @@ class Category extends Model
     use HasRecursiveRelationships;
 
     protected $fillable = [
-        'parent_id',
         'name',
-        'image',
+        'parent_id',
         'sort',
         'is_active',
+        'description'
     ];
 
-    public function products(): HasMany
-    {
-        return $this->hasMany(Product::class);
-    }
+    protected $casts = [
+        'is_active' => 'boolean',
+    ];
 
-    public function parent(): BelongsTo
-    {
-        return $this->belongsTo(static::class, 'parent_id');
-    }
-
+    /**
+     * 獲取子分類
+     */
     public function children(): HasMany
     {
-        return $this->hasMany(static::class, 'parent_id')->orderBy('sort');
+        return $this->hasMany(Category::class, 'parent_id')
+                    ->where('is_active', true)
+                    ->orderBy('sort');
+    }
+
+    /**
+     * 獲取父分類
+     */
+    public function parent(): BelongsTo
+    {
+        return $this->belongsTo(Category::class, 'parent_id')
+                    ->where('is_active', true);
+    }
+
+    /**
+     * 獲取該分類的所有商品
+     */
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class)
+                    ->where('is_active', true);
+    }
+
+    /**
+     * 獲取分類的完整路徑名稱
+     */
+    public function getFullPathAttribute()
+    {
+        $path = collect([$this->name]);
+        $currentCategory = $this;
+        
+        while ($currentCategory->parent) {
+            $path->prepend($currentCategory->parent->name);
+            $currentCategory = $currentCategory->parent;
+        }
+        
+        return $path->join(' > ');
     }
 
     public function ancestors()

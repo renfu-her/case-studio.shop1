@@ -27,27 +27,40 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        $category = Category::where('is_active', true)->findOrFail($id);
+        // 獲取當前分類
+        $category = Category::where('is_active', true)
+            ->with(['children', 'ancestors'])
+            ->findOrFail($id);
         
-        // 使用 Service 獲取所有頂層分類
-        $rootCategories = $this->categoryService->getRootCategories();
-        
-        // 獲取當前分類的所有子分類
-        $subcategories = Category::where('parent_id', $id)
-            ->where('is_active', true)
+        // 獲取所有頂層分類
+        $rootCategories = Category::where('is_active', true)
+            ->whereNull('parent_id')
+            ->with('children')
+            ->orderBy('sort')
             ->get();
         
-        // 使用 Service 獲取當前分類及其所有子分類的ID
-        $categoryIds = $this->categoryService->getCategoryAndChildrenIds($category);
+        // 獲取當前分類的所有子分類
+        $subcategories = $category->children;
         
-        // 使用 ProductService 獲取商品
-        $products = $this->productService->getByCategoryIds($categoryIds);
+        // 獲取當前分類及其所有子分類的ID
+        $categoryIds = $category->descendants()
+            ->pluck('id')
+            ->push($category->id);
         
-        // 使用 Service 獲取當前分類的完整路徑
-        $categoryPath = $this->categoryService->getCategoryPath($category);
-
-        dd($rootCategories, $categoryPath);
+        // 獲取當前分類及其子分類下的所有產品
+        $products = Product::whereIn('category_id', $categoryIds)
+            ->where('is_active', true)
+            ->paginate(9);
         
-        return view('categories.show', compact('category', 'subcategories', 'products', 'rootCategories', 'categoryPath'));
+        // 獲取當前分類的完整路徑
+        $categoryPath = $category->ancestors->push($category);
+        
+        return view('categories.show', compact(
+            'category',
+            'subcategories',
+            'products',
+            'rootCategories',
+            'categoryPath'
+        ));
     }
 }

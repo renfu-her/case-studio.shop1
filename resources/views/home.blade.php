@@ -4,29 +4,31 @@
 
 @section('content')
 <!-- START SECTION BANNER -->
-<section class="home_banner_section">
-    <div class="banner_section">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6 col-md-6">
-                    <div class="banner_content">
-                        <h1 class="animation" data-animation="fadeInUp" data-delay="0.2s">時尚新品上市</h1>
-                        <p class="animation" data-animation="fadeInUp" data-delay="0.4s">精選最新時尚單品，為您的衣櫃增添新風采</p>
-                        <div class="btn_group animation" data-animation="fadeInUp" data-delay="0.6s">
-                            <a class="btn btn-default btn-radius" href="#">立即購買</a>
-                            <a class="btn btn-border btn-radius" href="#">了解更多</a>
+<div class="banner_section slide_medium shop_banner_slider staggered-animation-wrap">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="banner_slider carousel_slider owl-carousel owl-theme nav_style1" data-loop="true" data-dots="false" data-nav="true" data-margin="20" data-responsive='{"0":{"items": "1"}, "767":{"items": "1"}, "991":{"items": "1"}, "1199":{"items": "1"}}'>
+                    @foreach($sliderBanners as $banner)
+                    <div class="item">
+                        <div class="banner_slide_content banner_content_inner">
+                            <div class="col-lg-7 col-10">
+                                <div class="banner_content overflow-hidden">
+                                    @if($banner->title)
+                                    <h5 class="mb-3 staggered-animation" data-animation="slideInLeft" data-animation-delay="0.5s">{{ $banner->title }}</h5>
+                                    @endif
+                                    <a class="btn btn-fill-out rounded-0 staggered-animation text-uppercase" href="{{ $banner->link }}" data-animation="slideInLeft" data-animation-delay="1s">立即購買</a>
+                                </div>
+                            </div>
                         </div>
+                        <img src="{{ asset('storage/' . $banner->image) }}" alt="slider_banner"/>
                     </div>
-                </div>
-                <div class="col-lg-6 col-md-6">
-                    <div class="banner_image">
-                        <img class="animation" data-animation="zoomIn" data-delay="0.4s" src="{{ asset('assets/images/banner_img1.png') }}" alt="banner_img1">
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
     </div>
-</section>
+</div>
 <!-- END SECTION BANNER -->
 
 <!-- START SECTION FEATURES -->
@@ -83,21 +85,21 @@
 <!-- END SECTION FEATURES -->
 
 <!-- START SECTION CATEGORIES -->
-<section class="section">
+<div class="section">
     <div class="container">
-        <div class="row">
-            <div class="col-12">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
                 <div class="heading_s1">
                     <h2>熱門分類</h2>
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row align-items-center">
             @foreach($featuredCategories as $category)
             <div class="col-lg-4 col-md-6">
                 <div class="categories_box">
                     <a href="#">
-                        <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}">
+                        <img src="{{ $category->image ? asset('storage/' . $category->image) : asset('assets/images/no-image.svg') }}" alt="cat_img1"/>
                         <span>{{ $category->name }}</span>
                     </a>
                 </div>
@@ -105,14 +107,14 @@
             @endforeach
         </div>
     </div>
-</section>
+</div>
 <!-- END SECTION CATEGORIES -->
 
-<!-- START SECTION PRODUCTS -->
-<section class="section">
+<!-- START SECTION SHOP -->
+<div class="section small_pt pb_70">
     <div class="container">
-        <div class="row">
-            <div class="col-12">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
                 <div class="heading_s1">
                     <h2>熱門商品</h2>
                 </div>
@@ -121,16 +123,16 @@
         <div class="row">
             @foreach($featuredProducts as $product)
             <div class="col-lg-3 col-md-4 col-6">
-                <div class="product_box">
+                <div class="product">
                     <div class="product_img">
                         <a href="#">
-                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
+                            <img src="{{ $product->image ? asset('storage/' . $product->image) : asset('assets/images/no-image.svg') }}" alt="product_img1"/>
                         </a>
                         <div class="product_action_box">
                             <ul class="list_none pr_action_btn">
+                                <li class="add-to-cart"><a href="#"><i class="icon-basket-loaded"></i> 加入購物車</a></li>
                                 <li><a href="#" class="popup-ajax"><i class="icon-magnifier-add"></i></a></li>
                                 <li><a href="#"><i class="icon-heart"></i></a></li>
-                                <li><a href="#"><i class="icon-shopping-cart"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -138,23 +140,11 @@
                         <h6 class="product_title"><a href="#">{{ $product->name }}</a></h6>
                         <div class="product_price">
                             <span class="price">${{ number_format($product->price, 2) }}</span>
-                            @if($product->original_price > $product->price)
-                            <del>${{ number_format($product->original_price, 2) }}</del>
-                            <div class="on_sale">
-                                <span>{{ round((($product->original_price - $product->price) / $product->original_price) * 100) }}% 折扣</span>
-                            </div>
-                            @endif
                         </div>
-                        <div class="rating">
-                            @for($i = 1; $i <= 5; $i++)
-                                @if($i <= $product->rating)
-                                    <i class="ion-ios-star"></i>
-                                @elseif($i - 0.5 <= $product->rating)
-                                    <i class="ion-ios-star-half"></i>
-                                @else
-                                    <i class="ion-ios-star-outline"></i>
-                                @endif
-                            @endfor
+                        <div class="rating_wrap">
+                            <div class="rating">
+                                <div class="product_rate" style="width:80%"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -162,24 +152,8 @@
             @endforeach
         </div>
     </div>
-</section>
-<!-- END SECTION PRODUCTS -->
-
-<!-- START SECTION BANNER -->
-<section class="section">
-    <div class="container">
-        <div class="row">
-            @foreach($banners as $banner)
-            <div class="col-md-6">
-                <div class="banner_img">
-                    <a href="{{ $banner->link }}"><img src="{{ asset('storage/' . $banner->image) }}" alt="{{ $banner->title }}"></a>
-                </div>
-            </div>
-            @endforeach
-        </div>
-    </div>
-</section>
-<!-- END SECTION BANNER -->
+</div>
+<!-- END SECTION SHOP -->
 
 <!-- START SECTION NEWSLETTER -->
 <section class="section bg_light_blue2">
@@ -210,4 +184,34 @@
     </div>
 </section>
 <!-- END SECTION NEWSLETTER -->
+
+@push('scripts')
+<script>
+$(document).ready(function() {
+    $('.banner_slider.carousel_slider').each(function() {
+        var $carousel = $(this);
+        $carousel.owlCarousel({
+            dots: $carousel.data("dots"),
+            loop: $carousel.data("loop"),
+            margin: $carousel.data("margin"),
+            nav: $carousel.data("nav"),
+            responsive: {
+                0: {
+                    items: 1
+                },
+                767: {
+                    items: 1
+                },
+                991: {
+                    items: 1
+                },
+                1199: {
+                    items: 1
+                }
+            }
+        });
+    });
+});
+</script>
+@endpush
 @endsection 

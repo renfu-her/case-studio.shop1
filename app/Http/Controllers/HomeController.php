@@ -37,12 +37,13 @@ class HomeController extends Controller
             ->take(3)
             ->get();
             
-        // 獲取橫幅廣告
-        $banners = Banner::where('is_active', true)  // Banner model 使用 is_active
-            ->orderBy('sort')  // Banner model 使用 sort
+        // 獲取輪播圖 Banner
+        $sliderBanners = Banner::where('is_active', true)
+            ->where('type', 'slider')  // 輪播圖類型
+            ->orderBy('sort')
             ->get();
             
-        return view('home', compact('featuredProducts', 'featuredCategories', 'banners'));
+        return view('home', compact('featuredProducts', 'featuredCategories', 'sliderBanners'));
     }
     
     /**

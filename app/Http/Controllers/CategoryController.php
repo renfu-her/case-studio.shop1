@@ -29,7 +29,7 @@ class CategoryController extends Controller
     {
         // 獲取當前分類
         $category = Category::where('is_active', true)
-            ->with(['children', 'ancestors'])
+            ->with('children')
             ->findOrFail($id);
         
         // 獲取所有頂層分類
@@ -44,6 +44,7 @@ class CategoryController extends Controller
         
         // 獲取當前分類及其所有子分類的ID
         $categoryIds = $category->descendants()
+            ->where('is_active', true)
             ->pluck('id')
             ->push($category->id);
         
@@ -53,7 +54,9 @@ class CategoryController extends Controller
             ->paginate(9);
         
         // 獲取當前分類的完整路徑
-        $categoryPath = $category->ancestors->push($category);
+        $categoryPath = $category->ancestorsAndSelf()
+            ->where('is_active', true)
+            ->get();
         
         return view('categories.show', compact(
             'category',

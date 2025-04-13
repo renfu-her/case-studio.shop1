@@ -24,11 +24,19 @@ class Category extends Model
     ];
 
     /**
+     * 獲取父分類的外鍵名稱
+     */
+    public function getParentKeyName(): string
+    {
+        return 'parent_id';
+    }
+
+    /**
      * 獲取子分類
      */
     public function children(): HasMany
     {
-        return $this->hasMany(Category::class, 'parent_id')
+        return $this->hasMany(static::class, $this->getParentKeyName())
                     ->where('is_active', true)
                     ->orderBy('sort');
     }
@@ -38,7 +46,7 @@ class Category extends Model
      */
     public function parent(): BelongsTo
     {
-        return $this->belongsTo(Category::class, 'parent_id')
+        return $this->belongsTo(static::class, $this->getParentKeyName())
                     ->where('is_active', true);
     }
 

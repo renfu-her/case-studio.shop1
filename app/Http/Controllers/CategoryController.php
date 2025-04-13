@@ -45,6 +45,8 @@ class CategoryController extends Controller
         
         // 使用 Service 獲取當前分類的完整路徑
         $categoryPath = $this->categoryService->getCategoryPath($category);
+
+        dd($rootCategories, $categoryPath);
         
         return view('categories.show', compact('category', 'subcategories', 'products', 'rootCategories', 'categoryPath'));
     }

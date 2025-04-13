@@ -17,17 +17,29 @@ class HomeController extends Controller
     public function index()
     {
         // 獲取熱門商品
-        $featuredProducts = Product::where('is_active', 1)
+        $featuredProducts = Product::where('is_active', true)
+            ->where('is_hot', true)  // 改用 is_hot 作為熱門商品的標誌
+            ->with(['category', 'images'])  // 預加載關聯
             ->take(4)
             ->get();
             
-        // 獲取熱門分類
-        $featuredCategories = Category::where('is_active',1)
-            ->where('parent_id', 0)
+        // 獲取熱門分類（只取頂層分類）
+        $featuredCategories = Category::where('is_active', true)
+            ->where(function($query) {
+                $query->whereNull('parent_id')
+                      ->orWhere('parent_id', 0);
+            })
+            ->with(['children' => function($query) {
+                $query->where('is_active', true)
+                      ->orderBy('sort');
+            }])  // 預加載子分類
+            ->orderBy('sort')  // 根據排序順序
+            ->take(3)
             ->get();
             
         // 獲取橫幅廣告
-        $banners = Banner::where('is_active',1)
+        $banners = Banner::where('is_active', true)  // Banner model 使用 is_active
+            ->orderBy('sort')  // Banner model 使用 sort
             ->get();
             
         return view('home', compact('featuredProducts', 'featuredCategories', 'banners'));

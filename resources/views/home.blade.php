@@ -5,8 +5,8 @@
 @section('content')
 <!-- START SECTION BANNER -->
 <div class="banner_section slide_medium shop_banner_slider staggered-animation-wrap">
-    <div class="container">
-        <div class="row">
+    <div class="container-fluid px-0">
+        <div class="row g-0">
             <div class="col-12">
                 <div id="mainBanner" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-indicators">
@@ -16,8 +16,8 @@
                     </div>
                     <div class="carousel-inner">
                         @foreach($sliderBanners as $key => $banner)
-                        <div class="carousel-item @if($loop->first) active @endif">
-                            <img src="{{ asset('storage/' . $banner->image) }}" class="d-block w-100" alt="slider_banner">
+                        <div class="carousel-item @if($loop->first) active @endif banner-item">
+                            <img src="{{ asset('storage/' . $banner->image) }}" class="banner-img" alt="slider_banner">
                             @if($banner->title)
                             <div class="carousel-caption d-flex align-items-end justify-content-center pb-4">
                                 <div class="banner_content text-center w-100">
@@ -202,6 +202,24 @@
 @push('styles')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 <style>
+.banner_section {
+    position: relative;
+    height: 600px;
+    overflow: hidden;
+}
+
+.banner-item {
+    height: 600px;
+    background-color: #f8f9fa;
+}
+
+.banner-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
 .carousel-caption {
     background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
     left: 0;
@@ -221,6 +239,11 @@
 }
 
 @media (max-width: 768px) {
+    .banner_section,
+    .banner-item {
+        height: 400px;
+    }
+    
     .banner_title_wrap h5 {
         font-size: 1.2rem;
     }

@@ -17,7 +17,7 @@
                     <div class="carousel-inner">
                         @foreach($sliderBanners as $key => $banner)
                         <div class="carousel-item @if($loop->first) active @endif banner-item">
-                            <img src="{{ asset('storage/' . $banner->image) }}" class="banner-img" alt="slider_banner">
+                            <img src="{{ Storage::url($banner->image) }}" class="banner-img" alt="{{ $banner->title }}">
                             @if($banner->title)
                             <div class="carousel-caption d-flex align-items-end justify-content-center pb-4">
                                 <div class="banner_content text-center w-100">

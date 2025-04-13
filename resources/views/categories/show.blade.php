@@ -156,6 +156,12 @@
 
 @push('styles')
     <style>
+        .widget_categories li a::before,
+        .widget_categories li a:before {
+            content: "" !important;
+            display: none !important;
+        }
+
         .widget_categories {
             list-style: none;
             padding: 0;
@@ -215,7 +221,7 @@
         }
 
         .subcategory-link {
-            display: block;
+            display: flex;
             padding: 8px 0;
             color: #666;
             text-decoration: none;

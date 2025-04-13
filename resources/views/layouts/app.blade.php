@@ -69,26 +69,6 @@
 
     <!-- HEADER -->
     <header class="header_wrap dark_skin fixed-top">
-        <div class="top_header">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-md-6">
-                        <ul class="contact_info text-center text-md-start">
-                            <li><i class="fa-solid fa-phone"></i>+01 123 456 7890</li>
-                            <li><i class="fa-solid fa-envelope"></i>info@example.com</li>
-                        </ul>
-                    </div>
-                    <div class="col-md-6">
-                        <ul class="list_header_social text-center text-md-end">
-                            <li><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
-                            <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
-                            <li><a href="#"><i class="fa-brands fa-google-plus-g"></i></a></li>
-                            <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="bottom_header dark_skin main_menu_uppercase">
             <div class="container">
                 <nav class="navbar navbar-expand-lg">

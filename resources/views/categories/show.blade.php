@@ -66,7 +66,7 @@
                                 <div class="product">
                                     <div class="product_img">
                                         <a href="{{ route('products.show', $product->id) }}">
-                                            <img src="{{ asset($product->image) }}" alt="{{ $product->name }}">
+                                            <img src="{{ Storage::url($product->image) }}" alt="{{ $product->name }}">
                                         </a>
                                         <div class="product_action_box">
                                             <ul class="list_none pr_action_btn">

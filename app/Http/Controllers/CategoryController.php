@@ -43,11 +43,15 @@ class CategoryController extends Controller
         $subcategories = $category->children;
         
         // 獲取當前分類及其所有子分類的ID
-        $descendants = Category::where('is_active', true)
-            ->treeOf($category)
-            ->get()
+        $categoryIds = Category::where('is_active', true)
+            ->whereIn('id', [$id])
+            ->orWhere(function($query) use ($id) {
+                $query->where('parent_id', $id)
+                      ->orWhereHas('parent', function($q) use ($id) {
+                          $q->where('parent_id', $id);
+                      });
+            })
             ->pluck('id');
-        $categoryIds = $descendants->push($category->id);
         
         // 獲取當前分類及其子分類下的所有產品
         $products = Product::whereIn('category_id', $categoryIds)
@@ -55,9 +59,12 @@ class CategoryController extends Controller
             ->paginate(9);
         
         // 獲取當前分類的完整路徑
-        $categoryPath = Category::where('is_active', true)
-            ->treeOf($category, true)
-            ->get();
+        $categoryPath = collect();
+        $currentCategory = $category;
+        while ($currentCategory) {
+            $categoryPath->prepend($currentCategory);
+            $currentCategory = $currentCategory->parent;
+        }
         
         return view('categories.show', compact(
             'category',

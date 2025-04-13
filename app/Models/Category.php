@@ -59,32 +59,6 @@ class Category extends Model
                     ->where('is_active', true);
     }
 
-    /**
-     * 獲取分類的完整路徑名稱
-     */
-    public function getFullPathAttribute()
-    {
-        $path = collect([$this->name]);
-        $currentCategory = $this;
-        
-        while ($currentCategory->parent) {
-            $path->prepend($currentCategory->parent->name);
-            $currentCategory = $currentCategory->parent;
-        }
-        
-        return $path->join(' > ');
-    }
-
-    public function ancestors()
-    {
-        return $this->morphToAncestors();
-    }
-
-    public function descendants()
-    {
-        return $this->morphToDescendants()->orderBy('sort');
-    }
-
     protected static function booted()
     {
         static::saving(function ($category) {

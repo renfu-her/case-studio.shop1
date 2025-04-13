@@ -18,16 +18,15 @@
                         @foreach($sliderBanners as $key => $banner)
                         <div class="carousel-item @if($loop->first) active @endif">
                             <img src="{{ asset('storage/' . $banner->image) }}" class="d-block w-100" alt="slider_banner">
-                            <div class="carousel-caption">
-                                <div class="col-lg-7 col-10">
-                                    <div class="banner_content">
-                                        @if($banner->title)
-                                        <h5 class="mb-3 animate__animated animate__slideInLeft animate__delay-1s">{{ $banner->title }}</h5>
-                                        @endif
-                                        <a class="btn btn-fill-out rounded-0 animate__animated animate__slideInLeft animate__delay-2s text-uppercase" href="{{ $banner->link }}">立即購買</a>
+                            @if($banner->title)
+                            <div class="carousel-caption d-flex align-items-end justify-content-center pb-4">
+                                <div class="banner_content text-center w-100">
+                                    <div class="banner_title_wrap">
+                                        <h5 class="mb-0 text-white animate__animated animate__fadeInUp">{{ $banner->title }}</h5>
                                     </div>
                                 </div>
                             </div>
+                            @endif
                         </div>
                         @endforeach
                     </div>
@@ -202,6 +201,31 @@
 
 @push('styles')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+<style>
+.carousel-caption {
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 2rem 1rem;
+}
+
+.banner_title_wrap {
+    padding: 0.5rem;
+}
+
+.banner_title_wrap h5 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+@media (max-width: 768px) {
+    .banner_title_wrap h5 {
+        font-size: 1.2rem;
+    }
+}
+</style>
 @endpush
 
 @push('scripts')

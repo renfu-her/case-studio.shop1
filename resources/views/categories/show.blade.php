@@ -125,13 +125,25 @@
             <div class="col-lg-3 order-lg-first mt-4 pt-2 mt-lg-0 pt-lg-0">
                 <div class="sidebar">
                     <div class="widget">
-                        <h5 class="widget_title">子類別</h5>
+                        <h5 class="widget_title">商品分類</h5>
                         <ul class="widget_categories">
-                            @forelse($subcategories as $subcategory)
-                            <li><a href="{{ route('categories.show', $subcategory->id) }}"><span class="categories_name">{{ $subcategory->name }}</span></a></li>
-                            @empty
-                            <li><span class="categories_name">沒有子類別</span></li>
-                            @endforelse
+                            @foreach($rootCategories as $rootCategory)
+                                <li class="{{ $categoryPath->contains('id', $rootCategory->id) ? 'active' : '' }}">
+                                    <a href="{{ route('categories.show', $rootCategory->id) }}">
+                                        <span class="categories_name">{{ $rootCategory->name }}</span>
+                                        @if($rootCategory->children->count() > 0)
+                                            <span class="toggle-icon {{ $categoryPath->contains('id', $rootCategory->id) ? 'open' : '' }}">
+                                                <i class="fa-solid fa-chevron-down"></i>
+                                            </span>
+                                        @endif
+                                    </a>
+                                    @if($rootCategory->children->count() > 0)
+                                        <ul class="sub-categories {{ $categoryPath->contains('id', $rootCategory->id) ? 'show' : '' }}">
+                                            @include('categories.partials.subcategories', ['categories' => $rootCategory->children, 'categoryPath' => $categoryPath])
+                                        </ul>
+                                    @endif
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>

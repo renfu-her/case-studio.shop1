@@ -1,0 +1,62 @@
+.carousel-item img {
+    z-index: 0;
+}
+
+/* 目錄結構樣式 */
+.widget_categories {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.widget_categories li {
+    position: relative;
+    margin-bottom: 5px;
+}
+
+.widget_categories li a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 15px;
+    color: #333;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.widget_categories li.active > a {
+    background-color: #f8f9fa;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.widget_categories .toggle-icon {
+    transition: transform 0.3s ease;
+}
+
+.widget_categories .toggle-icon.open {
+    transform: rotate(180deg);
+}
+
+.widget_categories .sub-categories {
+    display: none;
+    list-style: none;
+    padding-left: 20px;
+    margin: 5px 0;
+}
+
+.widget_categories .sub-categories.show {
+    display: block;
+}
+
+.widget_categories .categories_name {
+    flex-grow: 1;
+}
+
+/* 響應式調整 */
+@media (max-width: 991px) {
+    .widget_categories .sub-categories {
+        padding-left: 15px;
+    }
+} 

@@ -82,141 +82,45 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                         <ul class="navbar-nav">
+                            <li><a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">首頁</a></li>
+                            <li><a class="nav-link {{ request()->routeIs('news.*') ? 'active' : '' }}" href="{{ route('news.index') }}">活動訊息</a></li>
                             <li class="dropdown">
-                                <a data-bs-toggle="dropdown"
-                                    class="nav-link dropdown-toggle {{ request()->routeIs('home') ? 'active' : '' }}"
-                                    href="#">首頁</a>
+                                <a class="dropdown-toggle nav-link {{ request()->routeIs('products.*') ? 'active' : '' }}" href="#" data-bs-toggle="dropdown">商品專區</a>
                                 <div class="dropdown-menu">
                                     <ul>
-                                        <li><a class="dropdown-item nav-link nav_item {{ request()->routeIs('home') ? 'active' : '' }}"
-                                                href="{{ route('home') }}">時尚 1</a></li>
-                                        <li><a class="dropdown-item nav-link nav_item" href="#">時尚 2</a></li>
-                                        <li><a class="dropdown-item nav-link nav_item" href="#">家具 1</a></li>
-                                        <li><a class="dropdown-item nav-link nav_item" href="#">家具 2</a></li>
-                                        <li><a class="dropdown-item nav-link nav_item" href="#">電子產品 1</a></li>
-                                        <li><a class="dropdown-item nav-link nav_item" href="#">電子產品 2</a></li>
+                                        @foreach($categories as $category)
+                                        <li><a class="dropdown-item nav-link nav_item" href="{{ route('products.category', $category->slug) }}">{{ $category->name }}</a></li>
+                                        @endforeach
                                     </ul>
                                 </div>
                             </li>
                             <li class="dropdown">
-                                <a class="dropdown-toggle nav-link" href="#" data-bs-toggle="dropdown">頁面</a>
+                                <a class="dropdown-toggle nav-link {{ request()->routeIs('member.*') ? 'active' : '' }}" href="#" data-bs-toggle="dropdown">會員專區</a>
                                 <div class="dropdown-menu">
                                     <ul>
-                                        <li><a class="dropdown-item nav-link nav_item" href="#">關於我們</a></li>
-                                        <li><a class="dropdown-item nav-link nav_item" href="#">聯絡我們</a></li>
-                                        <li><a class="dropdown-item nav-link nav_item" href="#">常見問題</a></li>
-                                        <li><a class="dropdown-item nav-link nav_item" href="#">404 錯誤頁面</a>
-                                        </li>
-                                        <li><a class="dropdown-item nav-link nav_item" href="#">登入</a></li>
-                                        <li><a class="dropdown-item nav-link nav_item" href="#">註冊</a></li>
-                                        <li><a class="dropdown-item nav-link nav_item" href="#">條款和條件</a></li>
+                                        @if(!Auth::guard('member')->check())
+                                            <li><a class="dropdown-item nav-link nav_item" href="{{ route('login') }}">登入</a></li>
+                                            <li><a class="dropdown-item nav-link nav_item" href="{{ route('register') }}">加入會員</a></li>
+                                            <li><a class="dropdown-item nav-link nav_item" href="{{ route('password.request') }}">忘記密碼</a></li>
+                                        @else
+                                            <li><a class="dropdown-item nav-link nav_item" href="{{ route('member.index') }}">會員中心</a></li>
+                                            <li><a class="dropdown-item nav-link nav_item" href="{{ route('member.orders') }}">訂單查詢</a></li>
+                                            <li><a class="dropdown-item nav-link nav_item" href="{{ route('member.edit') }}">會員資料</a></li>
+                                            <li><a class="dropdown-item nav-link nav_item" href="{{ route('member.change-password') }}">修改密碼</a></li>
+                                            <li>
+                                                <form action="{{ route('logout') }}" method="POST" class="d-none" id="logout-form">
+                                                    @csrf
+                                                </form>
+                                                <a class="dropdown-item nav-link nav_item" href="#" 
+                                                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                                    登出
+                                                </a>
+                                            </li>
+                                        @endif
                                     </ul>
                                 </div>
                             </li>
-                            <li class="dropdown dropdown-mega-menu">
-                                <a class="dropdown-toggle nav-link" href="#" data-bs-toggle="dropdown">產品</a>
-                                <div class="dropdown-menu">
-                                    <ul class="mega-menu d-lg-flex">
-                                        <li class="mega-menu-col col-lg-3">
-                                            <ul>
-                                                <li class="dropdown-header">女裝</li>
-                                                <li><a class="dropdown-item nav-link nav_item" href="#">上衣</a>
-                                                </li>
-                                                <li><a class="dropdown-item nav-link nav_item" href="#">褲子</a>
-                                                </li>
-                                                <li><a class="dropdown-item nav-link nav_item" href="#">裙子</a>
-                                                </li>
-                                                <li><a class="dropdown-item nav-link nav_item" href="#">鞋子</a>
-                                                </li>
-                                                <li><a class="dropdown-item nav-link nav_item" href="#">配飾</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li class="mega-menu-col col-lg-3">
-                                            <ul>
-                                                <li class="dropdown-header">男裝</li>
-                                                <li><a class="dropdown-item nav-link nav_item" href="#">上衣</a>
-                                                </li>
-                                                <li><a class="dropdown-item nav-link nav_item" href="#">褲子</a>
-                                                </li>
-                                                <li><a class="dropdown-item nav-link nav_item" href="#">鞋子</a>
-                                                </li>
-                                                <li><a class="dropdown-item nav-link nav_item" href="#">配飾</a>
-                                                </li>
-                                                <li><a class="dropdown-item nav-link nav_item" href="#">手錶</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li class="mega-menu-col col-lg-3">
-                                            <ul>
-                                                <li class="dropdown-header">兒童</li>
-                                                <li><a class="dropdown-item nav-link nav_item" href="#">上衣</a>
-                                                </li>
-                                                <li><a class="dropdown-item nav-link nav_item" href="#">褲子</a>
-                                                </li>
-                                                <li><a class="dropdown-item nav-link nav_item" href="#">鞋子</a>
-                                                </li>
-                                                <li><a class="dropdown-item nav-link nav_item" href="#">玩具</a>
-                                                </li>
-                                                <li><a class="dropdown-item nav-link nav_item" href="#">配飾</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li class="mega-menu-col col-lg-3">
-                                            <ul>
-                                                <li class="dropdown-header">配飾</li>
-                                                <li><a class="dropdown-item nav-link nav_item" href="#">包包</a>
-                                                </li>
-                                                <li><a class="dropdown-item nav-link nav_item" href="#">手錶</a>
-                                                </li>
-                                                <li><a class="dropdown-item nav-link nav_item" href="#">眼鏡</a>
-                                                </li>
-                                                <li><a class="dropdown-item nav-link nav_item" href="#">珠寶</a>
-                                                </li>
-                                                <li><a class="dropdown-item nav-link nav_item" href="#">帽子</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                    <div class="d-lg-flex menu_banners row g-3 px-3">
-                                        <div class="col-sm-4">
-                                            <div class="header-banner">
-                                                <img src="{{ asset('assets/images/menu_banner1.jpg') }}"
-                                                    alt="menu_banner1">
-                                                <div class="banne_info">
-                                                    <h6>10% 折扣</h6>
-                                                    <h4>新品上市</h4>
-                                                    <a href="#">立即購買</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <div class="header-banner">
-                                                <img src="{{ asset('assets/images/menu_banner2.jpg') }}"
-                                                    alt="menu_banner2">
-                                                <div class="banne_info">
-                                                    <h6>15% 折扣</h6>
-                                                    <h4>特價商品</h4>
-                                                    <a href="#">立即購買</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <div class="header-banner">
-                                                <img src="{{ asset('assets/images/menu_banner3.jpg') }}"
-                                                    alt="menu_banner3">
-                                                <div class="banne_info">
-                                                    <h6>20% 折扣</h6>
-                                                    <h4>限時特惠</h4>
-                                                    <a href="#">立即購買</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li><a class="nav-link nav_item" href="#">關於我們</a></li>
-                            <li><a class="nav-link nav_item" href="#">聯絡我們</a></li>
+                            <li><a class="nav-link {{ request()->routeIs('faq') ? 'active' : '' }}" href="{{ route('faq') }}">常見問答</a></li>
                         </ul>
                     </div>
                     <ul class="navbar-nav attr-nav align-items-center">
@@ -271,65 +175,58 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="widget widget_about">
-                            <div class="logo_footer">
-                                <img src="{{ asset('assets/images/logo_light.png') }}" alt="logo">
+                        <div class="widget">
+                            <div class="footer_logo">
+                                <a href="{{ route('home') }}">
+                                    <img src="{{ asset('assets/images/logo_light.png') }}" alt="logo">
+                                </a>
                             </div>
                             <p>我們提供最好的產品和服務，讓您的購物體驗更加愉快。</p>
-                            <ul class="social_icons social_white social_style1 rounded_social">
-                                <li><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
-                                <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa-brands fa-google-plus-g"></i></a></li>
-                                <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-6">
+                        <div class="widget">
+                            <h6 class="widget_title">快速連結</h6>
+                            <ul class="widget_links">
+                                <li><a href="{{ route('home') }}">首頁</a></li>
+                                <li><a href="{{ route('news.index') }}">活動訊息</a></li>
+                                <li><a href="{{ route('products.index') }}">商品專區</a></li>
+                                <li><a href="{{ route('member.index') }}">會員專區</a></li>
+                                <li><a href="{{ route('faq') }}">常見問答</a></li>
                             </ul>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-md-4 col-sm-6">
-                        <div class="widget widget_links">
-                            <h4 class="widget-title">快速連結</h4>
-                            <ul>
-                                <li><a href="#">關於我們</a></li>
-                                <li><a href="#">聯絡我們</a></li>
-                                <li><a href="#">常見問題</a></li>
-                                <li><a href="#">條款和條件</a></li>
-                                <li><a href="#">隱私權政策</a></li>
+                    <div class="col-lg-2 col-md-3 col-sm-6">
+                        <div class="widget">
+                            <h6 class="widget_title">顧客權益</h6>
+                            <ul class="widget_links">
+                                <li><a href="{{ route('terms') }}">服務條款</a></li>
+                                <li><a href="{{ route('privacy') }}">隱私權政策</a></li>
+                                <li><a href="{{ route('returns') }}">退換貨說明</a></li>
                             </ul>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-md-4 col-sm-6">
-                        <div class="widget widget_links">
-                            <h4 class="widget-title">購物</h4>
-                            <ul>
-                                <li><a href="#">購物車</a></li>
-                                <li><a href="#">結帳</a></li>
-                                <li><a href="#">我的帳戶</a></li>
-                                <li><a href="#">願望清單</a></li>
-                                <li><a href="#">訂單追蹤</a></li>
+                    <div class="col-lg-5 col-md-12 col-sm-12">
+                        <div class="widget">
+                            <h6 class="widget_title">聯絡我們</h6>
+                            <ul class="contact_info contact_info_light">
+                                <li>
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    <p>台北市信義區信義路五段7號</p>
+                                </li>
+                                <li>
+                                    <i class="fa-solid fa-envelope"></i>
+                                    <a href="mailto:info@example.com">info@example.com</a>
+                                </li>
+                                <li>
+                                    <i class="fa-solid fa-phone"></i>
+                                    <p>02-1234-5678</p>
+                                </li>
+                                <li>
+                                    <i class="fa-regular fa-clock"></i>
+                                    <p>週一至週五 09:00 - 18:00</p>
+                                </li>
                             </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-4 col-sm-6">
-                        <div class="widget widget_links">
-                            <h4 class="widget-title">客戶服務</h4>
-                            <ul>
-                                <li><a href="#">退換貨政策</a></li>
-                                <li><a href="#">運送政策</a></li>
-                                <li><a href="#">付款方式</a></li>
-                                <li><a href="#">常見問題</a></li>
-                                <li><a href="#">聯絡我們</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="widget widget_address_cover">
-                            <h4 class="widget-title">聯絡我們</h4>
-                            <div class="widget_address">
-                                <ul>
-                                    <li><i class="fa-solid fa-location-dot"></i> 台北市信義區信義路五段7號</li>
-                                    <li><i class="fa-solid fa-envelope"></i> info@example.com</li>
-                                    <li><i class="fa-solid fa-phone"></i> +886 2 1234 5678</li>
-                                </ul>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -337,17 +234,9 @@
         </div>
         <div class="bottom_footer border-top-tran">
             <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-md-6">
-                        <p class="mb-md-0 text-center text-md-start">© {{ date('Y') }} {{ config('app.name') }}.
-                            版權所有.</p>
-                    </div>
-                    <div class="col-md-6">
-                        <ul class="list_none footer_link text-center text-md-end">
-                            <li><a href="#">隱私權政策</a></li>
-                            <li><a href="#">條款和條件</a></li>
-                            <li><a href="#">退換貨說明</a></li>
-                        </ul>
+                <div class="row">
+                    <div class="col-12">
+                        <p class="mb-0 text-center">© {{ date('Y') }} {{ config('app.name') }}. 版權所有.</p>
                     </div>
                 </div>
             </div>

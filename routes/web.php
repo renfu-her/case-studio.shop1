@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Member\MemberController;
+use App\Http\Controllers\Auth\AuthController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home'  );
 Route::post('/subscribe', [HomeController::class, 'subscribe'])->name('subscribe');
@@ -45,3 +47,30 @@ Route::get('/captcha/generate', function () {
 
     return response($imageData)->header('Content-Type', 'image/png');
 })->name('captcha.generate');
+
+// 會員認證路由
+Route::middleware('guest:member')->group(function () {
+    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
+    
+    Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
+    Route::post('/register', [AuthController::class, 'register']);
+    
+    Route::get('/forgot-password', [AuthController::class, 'showForgotPasswordForm'])->name('password.request');
+    Route::post('/forgot-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
+});
+
+// 會員專區路由
+Route::prefix('member')->name('member.')->middleware('auth:member')->group(function () {
+    Route::get('/', [MemberController::class, 'index'])->name('index');
+    Route::get('/edit', [MemberController::class, 'edit'])->name('edit');
+    Route::post('/update', [MemberController::class, 'update'])->name('update');
+    Route::get('/orders', [MemberController::class, 'orders'])->name('orders');
+    Route::get('/orders/{orderNumber}', [MemberController::class, 'orderDetail'])->name('order.detail');
+    Route::get('/change-password', [MemberController::class, 'changePassword'])->name('change-password');
+    Route::post('/update-password', [MemberController::class, 'updatePassword'])->name('update-password');
+});
+
+Route::post('/logout', [AuthController::class, 'logout'])
+    ->name('logout')
+    ->middleware('auth:member');

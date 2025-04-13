@@ -38,7 +38,7 @@
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="icon_box icon_box_style1">
                     <div class="icon">
-                        <i class="linearicons-truck"></i>
+                        <i class="fa-solid fa-truck"></i>
                     </div>
                     <div class="icon_box_content">
                         <h5>免費運送</h5>
@@ -49,7 +49,7 @@
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="icon_box icon_box_style1">
                     <div class="icon">
-                        <i class="linearicons-credit-card"></i>
+                        <i class="fa-solid fa-credit-card"></i>
                     </div>
                     <div class="icon_box_content">
                         <h5>安全付款</h5>
@@ -60,7 +60,7 @@
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="icon_box icon_box_style1">
                     <div class="icon">
-                        <i class="linearicons-rotate-left"></i>
+                        <i class="fa-solid fa-rotate-left"></i>
                     </div>
                     <div class="icon_box_content">
                         <h5>輕鬆退換</h5>
@@ -71,7 +71,7 @@
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="icon_box icon_box_style1">
                     <div class="icon">
-                        <i class="linearicons-headset"></i>
+                        <i class="fa-solid fa-headset"></i>
                     </div>
                     <div class="icon_box_content">
                         <h5>24/7 支援</h5>
@@ -130,9 +130,9 @@
                         </a>
                         <div class="product_action_box">
                             <ul class="list_none pr_action_btn">
-                                <li class="add-to-cart"><a href="#"><i class="icon-basket-loaded"></i> 加入購物車</a></li>
-                                <li><a href="#" class="popup-ajax"><i class="icon-magnifier-add"></i></a></li>
-                                <li><a href="#"><i class="icon-heart"></i></a></li>
+                                <li class="add-to-cart"><a href="#"><i class="fa-solid fa-basket-shopping"></i> 加入購物車</a></li>
+                                <li><a href="#" class="popup-ajax"><i class="fa-solid fa-magnifying-glass-plus"></i></a></li>
+                                <li><a href="#"><i class="fa-regular fa-heart"></i></a></li>
                             </ul>
                         </div>
                     </div>

@@ -82,20 +82,20 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                         <ul class="navbar-nav">
-                            <li><a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">首頁</a></li>
-                            <li><a class="nav-link {{ request()->routeIs('news.*') ? 'active' : '' }}" href="{{ route('news.index') }}">活動訊息</a></li>
+                            <li><a class="nav-link" href="{{ route('home') }}">首頁</a></li>
+                            <li><a class="nav-link" href="#">活動訊息</a></li>
                             <li class="dropdown">
-                                <a class="dropdown-toggle nav-link {{ request()->routeIs('products.*') ? 'active' : '' }}" href="#" data-bs-toggle="dropdown">商品專區</a>
+                                <a class="dropdown-toggle nav-link" href="#" data-bs-toggle="dropdown">商品專區</a>
                                 <div class="dropdown-menu">
                                     <ul>
                                         @foreach($categories as $category)
-                                        <li><a class="dropdown-item nav-link nav_item" href="{{ route('products.category', $category->slug) }}">{{ $category->name }}</a></li>
+                                        <li><a class="dropdown-item nav-link nav_item" href="#">{{ $category->name }}</a></li>
                                         @endforeach
                                     </ul>
                                 </div>
                             </li>
                             <li class="dropdown">
-                                <a class="dropdown-toggle nav-link {{ request()->routeIs('member.*') ? 'active' : '' }}" href="#" data-bs-toggle="dropdown">會員專區</a>
+                                <a class="dropdown-toggle nav-link" href="#" data-bs-toggle="dropdown">會員專區</a>
                                 <div class="dropdown-menu">
                                     <ul>
                                         @if(!Auth::guard('member')->check())
@@ -120,7 +120,7 @@
                                     </ul>
                                 </div>
                             </li>
-                            <li><a class="nav-link {{ request()->routeIs('faq') ? 'active' : '' }}" href="{{ route('faq') }}">常見問答</a></li>
+                            <li><a class="nav-link" href="#">常見問答</a></li>
                         </ul>
                     </div>
                     <ul class="navbar-nav attr-nav align-items-center">
@@ -189,10 +189,10 @@
                             <h6 class="widget_title">快速連結</h6>
                             <ul class="widget_links">
                                 <li><a href="{{ route('home') }}">首頁</a></li>
-                                <li><a href="{{ route('news.index') }}">活動訊息</a></li>
-                                <li><a href="{{ route('products.index') }}">商品專區</a></li>
+                                <li><a href="#">活動訊息</a></li>
+                                <li><a href="#">商品專區</a></li>
                                 <li><a href="{{ route('member.index') }}">會員專區</a></li>
-                                <li><a href="{{ route('faq') }}">常見問答</a></li>
+                                <li><a href="#">常見問答</a></li>
                             </ul>
                         </div>
                     </div>
@@ -200,9 +200,9 @@
                         <div class="widget">
                             <h6 class="widget_title">顧客權益</h6>
                             <ul class="widget_links">
-                                <li><a href="{{ route('terms') }}">服務條款</a></li>
-                                <li><a href="{{ route('privacy') }}">隱私權政策</a></li>
-                                <li><a href="{{ route('returns') }}">退換貨說明</a></li>
+                                <li><a href="#">服務條款</a></li>
+                                <li><a href="#">隱私權政策</a></li>
+                                <li><a href="#">退換貨說明</a></li>
                             </ul>
                         </div>
                     </div>

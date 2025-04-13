@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Filament\Http\Responses\Auth\Contracts\LoginResponse;
 use App\Models\Event;
+use App\Models\Category;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,5 +27,10 @@ class AppServiceProvider extends ServiceProvider
     {
         // 共享 events 變數到所有視圖
         view()->share('events', Event::where('is_active', true)->get());
+        
+        // 分享類別數據到所有視圖
+        view()->composer('*', function ($view) {
+            $view->with('categories', Category::where('is_active', true)->get());
+        });
     }
 }

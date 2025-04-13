@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Member\MemberController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\CategoryController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home'  );
 Route::post('/subscribe', [HomeController::class, 'subscribe'])->name('subscribe');
@@ -74,3 +75,5 @@ Route::prefix('member')->name('member.')->middleware('auth:member')->group(funct
 Route::post('/logout', [AuthController::class, 'logout'])
     ->name('logout')
     ->middleware('auth:member');
+
+Route::get('/categories/{id}', [CategoryController::class, 'show'])->name('categories.show');

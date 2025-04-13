@@ -88,8 +88,8 @@
                                 <a class="dropdown-toggle nav-link" href="#" data-bs-toggle="dropdown">商品專區</a>
                                 <div class="dropdown-menu">
                                     <ul>
-                                        @foreach($events as $event)
-                                        <li><a class="dropdown-item nav-link nav_item" href="#">{{ $event->name }}</a></li>
+                                        @foreach($categories->where('parent_id', 0) as $category)
+                                        <li><a class="dropdown-item nav-link nav_item" href="{{ route('categories.show', $category->id) }}">{{ $category->name }}</a></li>
                                         @endforeach
                                     </ul>
                                 </div>

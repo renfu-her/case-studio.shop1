@@ -13,10 +13,23 @@ class ProductService extends Service
         //
     }
 
+    /**
+     * 獲取所有啟用的商品
+     */
     public function index()
     {
-        $products = Product::with('category')->get();
+        return Product::with('category')
+            ->where('is_active', true)
+            ->get();
+    }
 
-        return $products;
+    /**
+     * 獲取指定分類ID列表下的商品
+     */
+    public function getByCategoryIds($categoryIds, $perPage = 9)
+    {
+        return Product::whereIn('category_id', $categoryIds)
+            ->where('is_active', true)
+            ->paginate($perPage);
     }
 } 

@@ -66,4 +66,66 @@ class CategoryService extends Service
 
         return $result;
     }
+
+    /**
+     * 獲取根分類列表
+     */
+    public function getRootCategories()
+    {
+        return Category::where('is_active', true)
+            ->where(function($query) {
+                $query->where('parent_id', 0)
+                      ->orWhereNull('parent_id');
+            })
+            ->orderBy('sort')
+            ->get();
+    }
+
+    /**
+     * 獲取分類及其所有子分類的ID
+     */
+    public function getCategoryAndChildrenIds($category)
+    {
+        $categoryIds = collect([$category->id]);
+        $this->getAllSubcategoryIds($category, $categoryIds);
+        return $categoryIds;
+    }
+
+    /**
+     * 遞迴獲取所有子分類ID
+     */
+    private function getAllSubcategoryIds($category, &$categoryIds)
+    {
+        $subcategories = Category::where('parent_id', $category->id)
+            ->where('is_active', true)
+            ->get();
+        
+        foreach ($subcategories as $subcategory) {
+            $categoryIds->push($subcategory->id);
+            $this->getAllSubcategoryIds($subcategory, $categoryIds);
+        }
+    }
+
+    /**
+     * 獲取分類的完整路徑
+     */
+    public function getCategoryPath($category)
+    {
+        $path = collect([$category]);
+        $currentCategory = $category;
+        
+        while ($currentCategory->parent_id != 0 && $currentCategory->parent_id !== null) {
+            $parentCategory = Category::where('is_active', true)
+                ->find($currentCategory->parent_id);
+            
+            if ($parentCategory) {
+                $path->prepend($parentCategory);
+                $currentCategory = $parentCategory;
+            } else {
+                break;
+            }
+        }
+        
+        return $path;
+    }
 }

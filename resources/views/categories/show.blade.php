@@ -119,14 +119,22 @@
                             @foreach($rootCategories as $rootCategory)
                                 <li class="{{ $categoryPath->contains('id', $rootCategory->id) ? 'active' : '' }}">
                                     <a href="{{ route('categories.show', $rootCategory->id) }}" class="category-link">
-                                        <div class="category-content">
-                                            <i class="fa-solid fa-laptop"></i>
-                                            <span>{{ $rootCategory->name }}</span>
-                                        </div>
+                                        {{ $rootCategory->name }}
                                         @if($subcategories->where('parent_id', $rootCategory->id)->count() > 0)
-                                            <i class="fa-solid fa-chevron-right"></i>
+                                            <i class="fa-solid fa-chevron-down"></i>
                                         @endif
                                     </a>
+                                    @if($subcategories->where('parent_id', $rootCategory->id)->count() > 0)
+                                        <ul class="subcategories {{ $categoryPath->contains('id', $rootCategory->id) ? 'show' : '' }}">
+                                            @foreach($subcategories->where('parent_id', $rootCategory->id) as $subCategory)
+                                                <li class="{{ $categoryPath->contains('id', $subCategory->id) ? 'active' : '' }}">
+                                                    <a href="{{ route('categories.show', $subCategory->id) }}" class="subcategory-link">
+                                                        {{ $subCategory->name }}
+                                                    </a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @endif
                                 </li>
                             @endforeach
                         </ul>
@@ -155,36 +163,68 @@
                         color: #333;
                         text-decoration: none;
                         transition: all 0.3s ease;
+                        font-weight: 500;
                     }
                     .category-link:hover {
                         background-color: #f8f9fa;
                         color: #333;
                     }
-                    .category-content {
-                        display: flex;
-                        align-items: center;
-                        gap: 12px;
-                    }
-                    .category-content i {
-                        font-size: 18px;
-                        width: 24px;
-                        color: #666;
-                    }
-                    .category-content span {
-                        font-size: 14px;
-                    }
-                    .category-link i.fa-chevron-right {
+                    .category-link i {
                         font-size: 12px;
                         color: #999;
+                        transition: transform 0.3s ease;
                     }
-                    .widget_categories li.active .category-link {
-                        background-color: #f8f9fa;
+                    .active > .category-link i {
+                        transform: rotate(180deg);
+                    }
+                    .subcategories {
+                        display: none;
+                        list-style: none;
+                        padding: 0;
+                        background: #f8f9fa;
+                    }
+                    .subcategories.show {
+                        display: block;
+                    }
+                    .subcategory-link {
+                        display: block;
+                        padding: 8px 16px 8px 32px;
+                        color: #666;
+                        text-decoration: none;
+                        font-size: 14px;
+                        transition: all 0.3s ease;
+                    }
+                    .subcategory-link:hover {
+                        color: #0066cc;
+                        background-color: #f0f0f0;
+                    }
+                    .widget_categories li.active > .category-link {
                         color: #0066cc;
                     }
-                    .widget_categories li.active .category-link i {
+                    .subcategories li.active .subcategory-link {
                         color: #0066cc;
+                        background-color: #f0f0f0;
                     }
                     </style>
+
+                    <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const categoryLinks = document.querySelectorAll('.category-link');
+                        categoryLinks.forEach(link => {
+                            link.addEventListener('click', function(e) {
+                                if (this.querySelector('i')) {
+                                    e.preventDefault();
+                                    const parent = this.parentElement;
+                                    const subMenu = parent.querySelector('.subcategories');
+                                    if (subMenu) {
+                                        subMenu.classList.toggle('show');
+                                        parent.classList.toggle('active');
+                                    }
+                                }
+                            });
+                        });
+                    });
+                    </script>
                 </div>
             </div>
         </div>

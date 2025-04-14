@@ -42,7 +42,7 @@
                 <div class="pr_detail">
                     <div class="product_description">
                         <h4 class="product_title">{{ $product->name }}</h4>
-                        <div class="product_price">
+                        <div class="product_price mb-2">
                             <span class="price">${{ number_format($product->price, 2) }}</span>
                             @if($product->original_price)
                             <del>${{ number_format($product->original_price, 2) }}</del>
@@ -51,18 +51,18 @@
                             </div>
                             @endif
                         </div>
-                        <div class="rating_wrap">
+                        <div class="rating_wrap mb-3">
                             <div class="rating">
                                 <div class="product_rate" style="width:80%"></div>
                             </div>
                             <span class="rating_num">({{ rand(10, 50) }})</span>
                         </div>
                         @if($product->sub_title)
-                        <div class="sub_title">
+                        <div class="sub_title mb-3">
                             {!! $product->sub_title !!}
                         </div>
                         @endif
-                        <div class="product_sort_info">
+                        <div class="product_sort_info mb-4">
                             <ul>
                                 <li><i class="fa-solid fa-check"></i> 庫存: <span class="text-success">有貨</span></li>
                                 <li><i class="fa-solid fa-check"></i> 商品編號: <span>{{ $product->id }}</span></li>
@@ -211,17 +211,51 @@
     margin: 0;
 }
 
+.product_title {
+    margin-bottom: 1rem;
+}
+
+.product_price {
+    margin-bottom: 0.5rem;
+}
+
+.rating_wrap {
+    margin-bottom: 1rem;
+}
+
 .sub_title {
-    margin: 15px 0;
+    margin-bottom: 1rem;
     font-size: 14pt;
 }
 
-.product_description {
-    margin-top: 30px;
+.product_sort_info {
+    margin-bottom: 1.5rem;
 }
 
-.heading_s1 {
-    margin-bottom: 20px;
+.product_sort_info ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.product_sort_info ul li {
+    margin-bottom: 0.5rem;
+}
+
+.product_sort_info ul li:last-child {
+    margin-bottom: 0;
+}
+
+.mb-2 {
+    margin-bottom: 0.5rem !important;
+}
+
+.mb-3 {
+    margin-bottom: 1rem !important;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem !important;
 }
 
 .img-fixed {

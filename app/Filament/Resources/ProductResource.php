@@ -56,9 +56,8 @@ class ProductResource extends Resource
             ->filtersTriggerAction(
                 fn($action) => $action->label('篩選')
             )
-            ->paginated([10,20,30,50,100,'all'])
+            ->paginated([10, 20, 30, 50, 100, 'all'])
             ->defaultPaginationPageOption(20);
-            
     }
 
     public static function getPages(): array
@@ -77,5 +76,4 @@ class ProductResource extends Resource
             ProductSpecsRelationManager::class,
         ];
     }
-
 }

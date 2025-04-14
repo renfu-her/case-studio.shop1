@@ -144,7 +144,7 @@ class OrderResource extends Resource
                 ]),
             ])
             ->defaultSort('created_at', 'desc')
-            ->paginated([10,20,30,50,100,'all'])
+            ->paginated([10, 20, 30, 50, 100, 'all'])
             ->defaultPaginationPageOption(20);
     }
 
@@ -163,5 +163,4 @@ class OrderResource extends Resource
             'edit' => Pages\EditOrder::route('/{record}/edit'),
         ];
     }
-
 }

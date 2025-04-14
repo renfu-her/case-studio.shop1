@@ -118,7 +118,7 @@ class MemberResource extends Resource
                 ]),
             ])
             ->defaultSort('created_at', 'desc')
-            ->paginated([10,20,30,50,100,'all'])
+            ->paginated([10, 20, 30, 50, 100, 'all'])
             ->defaultPaginationPageOption(20);
     }
 
@@ -145,5 +145,4 @@ class MemberResource extends Resource
                 SoftDeletingScope::class,
             ]);
     }
-
 }

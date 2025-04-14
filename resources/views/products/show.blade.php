@@ -92,6 +92,8 @@
                                             <span class="text-danger">無庫存</span>
                                         @elseif ($product->stock <= 10)     
                                             <span class="text-warning">剩餘{{ $product->stock }}件</span>
+                                        @else
+                                            <span class="text-success">有庫存</span>
                                         @endif
                                     </li>
                                     <li><i class="fa-solid fa-check"></i> 類別:

@@ -41,24 +41,24 @@ class CustomerRightsResource extends Resource
                         'return_policy' => '退換貨說明',
                     ])
                     ->required()
-                    ->disabled(fn ($record) => $record && $record->type === 'return_policy'),
-                
+                    ->disabled(fn($record) => $record && $record->type === 'return_policy'),
+
                 Forms\Components\TextInput::make('title')
                     ->label('標題')
                     ->required()
                     ->maxLength(255),
-                
+
                 TinyEditor::make('content')
                     ->label('內容')
                     ->required()
                     ->columnSpanFull()
                     ->minHeight('500')
-                    ->visible(fn ($record) => !$record || $record->type !== 'return_policy'),
-                
+                    ->visible(fn($record) => !$record || $record->type !== 'return_policy'),
+
                 Forms\Components\Toggle::make('is_active')
                     ->label('啟用')
                     ->default(true),
-                
+
                 Forms\Components\DateTimePicker::make('published_at')
                     ->label('發布時間')
                     ->default(now()),
@@ -71,26 +71,26 @@ class CustomerRightsResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('type')
                     ->label('文章類型')
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn(string $state): string => match ($state) {
                         'privacy_policy' => '隱私權政策',
                         'terms_of_service' => '服務條款',
                         'return_policy' => '退換貨說明',
                         default => $state,
                     }),
-                
+
                 Tables\Columns\TextColumn::make('title')
                     ->label('標題')
                     ->searchable(),
-                
+
                 Tables\Columns\IconColumn::make('is_active')
                     ->label('啟用')
                     ->boolean(),
-                
+
                 Tables\Columns\TextColumn::make('published_at')
                     ->label('發布時間')
                     ->dateTime()
                     ->sortable(),
-                
+
                 Tables\Columns\TextColumn::make('updated_at')
                     ->label('更新時間')
                     ->dateTime()
@@ -105,14 +105,15 @@ class CustomerRightsResource extends Resource
                         'terms_of_service' => '服務條款',
                         'return_policy' => '退換貨說明',
                     ]),
-                
+
                 Tables\Filters\TernaryFilter::make('is_active')
                     ->label('啟用狀態'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make()
-                    ->url(fn (CustomerRight $record): string => 
-                        $record->type === 'return_policy' 
+                    ->url(
+                        fn(CustomerRight $record): string =>
+                        $record->type === 'return_policy'
                             ? static::getUrl('edit-return-policy', ['record' => $record])
                             : static::getUrl('edit', ['record' => $record])
                     ),
@@ -141,4 +142,4 @@ class CustomerRightsResource extends Resource
             'edit-return-policy' => Pages\EditReturnPolicy::route('/{record}/edit-return-policy'),
         ];
     }
-} 
+}

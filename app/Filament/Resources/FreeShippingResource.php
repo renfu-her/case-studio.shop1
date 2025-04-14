@@ -37,7 +37,7 @@ class FreeShippingResource extends Resource
             ->filters($service->getTableFilters())
             ->actions($service->getTableActions())
             ->bulkActions($service->getTableBulkActions())
-            ->paginated([10,20,30,50,100,'all'])
+            ->paginated([10, 20, 30, 50, 100, 'all'])
             ->defaultPaginationPageOption(20);
     }
 
@@ -56,5 +56,4 @@ class FreeShippingResource extends Resource
             'edit' => Pages\EditFreeShipping::route('/{record}/edit'),
         ];
     }
-
 }

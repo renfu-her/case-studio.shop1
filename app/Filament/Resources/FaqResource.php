@@ -41,7 +41,7 @@ class FaqResource extends Resource
             ->actions($service->getTableActions())
             ->bulkActions($service->getTableBulkActions())
             ->defaultSort('sort', 'asc')
-            ->paginated([10,20,30,50,100,'all'])
+            ->paginated([10, 20, 30, 50, 100, 'all'])
             ->defaultPaginationPageOption(20);
     }
 
@@ -53,5 +53,4 @@ class FaqResource extends Resource
             'edit' => Pages\EditFaq::route('/{record}/edit'),
         ];
     }
-
 }

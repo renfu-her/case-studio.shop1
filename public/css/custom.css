@@ -55,14 +55,11 @@
 }
 
 .rating_wrap .rating {
-    overflow: hidden;
+    /* overflow: hidden; */
     position: unset;
-    height: 20px;
-    font-size: 12px;
-    width: 100px;
-    font-family: "Font Awesome 5 Free";
-    display: inline-block;
-    vertical-align: middle;
+    /* height: 20px;
+    font-size: 12px; */
+    width: 100px;]
 }
 
 /* 響應式調整 */

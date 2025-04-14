@@ -87,21 +87,28 @@
                             @endif
                             <div class="product_sort_info mb-4">
                                 <ul>
-                                    <li><i class="fa-solid fa-check"></i> 庫存: <span class="text-success">有貨</span></li>
-                                    <li><i class="fa-solid fa-check"></i> 商品編號: <span>{{ $product->id }}</span></li>
+                                    <li><i class="fa-solid fa-check"></i> 庫存: 
+                                        @if($product->stock <= 0)
+                                            <span class="text-danger">無庫存</span>
+                                        @else
+                                            <span class="text-success">有貨</span>
+                                        @endif
+                                    </li>
                                     <li><i class="fa-solid fa-check"></i> 類別:
                                         <span>{{ $category ? $category->name : '未分類' }}</span>
                                     </li>
                                 </ul>
                             </div>
                             <div class="pr_switch_wrap">
-                                <span class="switch_lable">數量</span>
-                                <div class="quantity">
-                                    <select class="form-select" id="product_quantity" name="quantity">
-                                        @for ($i = 1; $i <= 20; $i++)
-                                            <option value="{{ $i }}">{{ $i }}</option>
-                                        @endfor
-                                    </select>
+                                <div class="d-flex align-items-center">
+                                    <span class="switch_lable mb-0 me-3">數量</span>
+                                    <div class="quantity">
+                                        <select class="form-select" id="product_quantity" name="quantity">
+                                            @for ($i = 1; $i <= 20; $i++)
+                                                <option value="{{ $i }}">{{ $i }}</option>
+                                            @endfor
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                             <div class="product_action">
@@ -420,10 +427,9 @@
         }
 
         .switch_lable {
-            display: block;
             font-size: 1rem;
-            margin-bottom: 0.5rem;
             color: #333;
+            min-width: 60px;
         }
 
         .quantity .form-select {
@@ -438,6 +444,14 @@
             border-color: #80bdff;
             outline: 0;
             box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+        }
+
+        .mb-0 {
+            margin-bottom: 0 !important;
+        }
+
+        .me-3 {
+            margin-right: 1rem !important;
         }
     </style>
 @endpush

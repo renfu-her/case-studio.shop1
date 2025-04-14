@@ -23,7 +23,7 @@ class ProductController extends Controller
             ->where('is_active', true)
             ->take(4)
             ->get();
-            
+
         return view('products.show', compact('product', 'category', 'relatedProducts'));
     }
 }

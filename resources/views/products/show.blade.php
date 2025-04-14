@@ -57,13 +57,29 @@
                             <div class="product_price_wrap bg-light p-3 rounded mb-4">
                                 <div class="d-flex align-items-center">
                                     <div class="special_price">
-                                        <span class="current_price text-danger fs-3 fw-bold">${{ number_format($product->price, 0) }}</span>
-                                        @if($product->original_price)
-                                        <del class="old_price ms-2 text-muted">${{ number_format($product->original_price, 0) }}</del>
+                                        <span
+                                            class="current_price text-danger fs-3 fw-bold">${{ number_format($product->price, 0) }}</span>
+                                        @if ($product->original_price)
+                                            <del
+                                                class="old_price ms-2 text-muted">${{ number_format($product->original_price, 0) }}</del>
                                         @endif
                                     </div>
                                 </div>
                             </div>
+                            @if ($product->specs->count() > 0)
+                                <div class="product_specs mb-4">
+                                    <div class="form-group">
+                                        <label for="product_spec" class="form-label">規格</label>
+                                        <select class="form-select" id="product_spec" name="spec_id">
+                                            <option value="">請選擇規格</option>
+                                            @foreach ($product->specs as $spec)
+                                                <option value="{{ $spec->id }}" data-price="{{ $spec->price }}">
+                                                    {{ $spec->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            @endif
                             @if ($product->sub_title)
                                 <div class="sub_title mb-3">
                                     {!! $product->sub_title !!}
@@ -74,7 +90,8 @@
                                     <li><i class="fa-solid fa-check"></i> 庫存: <span class="text-success">有貨</span></li>
                                     <li><i class="fa-solid fa-check"></i> 商品編號: <span>{{ $product->id }}</span></li>
                                     <li><i class="fa-solid fa-check"></i> 類別:
-                                        <span>{{ $category ? $category->name : '未分類' }}</span></li>
+                                        <span>{{ $category ? $category->name : '未分類' }}</span>
+                                    </li>
                                 </ul>
                             </div>
                             <div class="pr_switch_wrap">
@@ -370,5 +387,50 @@
         .text-primary {
             color: #0d6efd !important;
         }
+
+        .product_specs {
+            margin-bottom: 1.5rem;
+        }
+
+        .product_specs .form-label {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .product_specs .form-select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .product_specs .form-select:focus {
+            border-color: #80bdff;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+        }
     </style>
+@endpush
+
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const specSelect = document.getElementById('product_spec');
+            const priceElement = document.querySelector('.current_price');
+
+            if (specSelect) {
+                specSelect.addEventListener('change', function() {
+                    const selectedOption = this.options[this.selectedIndex];
+                    if (selectedOption.value) {
+                        const price = selectedOption.dataset.price;
+                        if (price) {
+                            priceElement.textContent = '$' + Number(price).toLocaleString();
+                        }
+                    }
+                });
+            }
+        });
+    </script>
 @endpush

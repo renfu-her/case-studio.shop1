@@ -74,7 +74,7 @@
                                                             class="fa-solid fa-cart-shopping"></i> 加入購物車</a></li>
                                                 <li><a href="#" class="popup-ajax"><i
                                                             class="fa-solid fa-arrows-rotate"></i></a></li>
-                                                <li><a href="#" class="popup-ajax"><i
+                                                <li><a href="{{ route('products.show', $product->id) }}"><i
                                                             class="fa-solid fa-magnifying-glass"></i></a></li>
                                                 <li><a href="#"><i class="fa-solid fa-heart"></i></a></li>
                                             </ul>

@@ -42,22 +42,27 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="pr_detail">
                         <div class="product_description">
-                            <h4 class="product_title">{{ $product->name }}</h4>
-                            <div class="product_price mb-2">
-                                <span class="price">${{ number_format($product->price, 2) }}</span>
-                                @if ($product->original_price)
-                                    <del>${{ number_format($product->original_price, 2) }}</del>
-                                    <div class="on_sale">
-                                        <span>{{ round((($product->original_price - $product->price) / $product->original_price) * 100) }}%
-                                            Off</span>
-                                    </div>
-                                @endif
-                            </div>
-                            <div class="rating_wrap mb-3">
-                                <div class="rating">
-                                    <div class="product_rate" style="width:80%"></div>
+                            <h1 class="product_title">
+                                {{ $product->name }}
+                            </h1>
+                            <div class="rating_wrap d-flex align-items-center mb-3">
+                                <div class="rating me-2">
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        <i class="fa-solid fa-star text-warning"></i>
+                                    @endfor
                                 </div>
-                                <span class="rating_num">({{ rand(10, 50) }})</span>
+                                <span class="rating_num">5.0</span>
+                                <a href="#reviews" class="rating_link ms-2">({{ rand(1, 5) }} 則評價)</a>
+                            </div>
+                            <div class="product_price_wrap bg-light p-3 rounded mb-4">
+                                <div class="d-flex align-items-center">
+                                    <div class="special_price">
+                                        <span class="current_price text-danger fs-3 fw-bold">${{ number_format($product->price, 0) }}</span>
+                                        @if($product->original_price)
+                                        <del class="old_price ms-2 text-muted">${{ number_format($product->original_price, 0) }}</del>
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
                             @if ($product->sub_title)
                                 <div class="sub_title mb-3">
@@ -271,6 +276,99 @@
             width: 100%;
             height: auto;
             object-fit: contain;
+        }
+
+        .promotion_text {
+            font-size: 1.2rem;
+            color: #ff0000;
+        }
+
+        .product_title {
+            font-size: 1.5rem;
+            line-height: 1.4;
+            margin-bottom: 1rem;
+        }
+
+        .rating_wrap {
+            font-size: 1.1rem;
+        }
+
+        .rating_wrap .fa-star {
+            color: #ffc107;
+        }
+
+        .rating_num {
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .rating_link {
+            color: #666;
+            text-decoration: none;
+        }
+
+        .rating_link:hover {
+            text-decoration: underline;
+        }
+
+        .product_price_wrap {
+            background-color: #f8f9fa;
+        }
+
+        .current_price {
+            font-size: 2rem;
+            color: #ff0000;
+        }
+
+        .old_price {
+            font-size: 1.2rem;
+            text-decoration: line-through;
+            color: #6c757d;
+        }
+
+        .special_price {
+            display: flex;
+            align-items: center;
+        }
+
+        .bg-light {
+            background-color: #f8f9fa !important;
+        }
+
+        .rounded {
+            border-radius: 0.375rem !important;
+        }
+
+        .p-3 {
+            padding: 1rem !important;
+        }
+
+        .ms-2 {
+            margin-left: 0.5rem !important;
+        }
+
+        .me-2 {
+            margin-right: 0.5rem !important;
+        }
+
+        .fs-3 {
+            font-size: 1.75rem !important;
+        }
+
+        .fw-bold {
+            font-weight: bold !important;
+        }
+
+        .text-danger {
+            color: #dc3545 !important;
+        }
+
+        .text-muted {
+            color: #6c757d !important;
+        }
+
+        .text-primary {
+            color: #0d6efd !important;
         }
     </style>
 @endpush

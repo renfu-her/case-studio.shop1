@@ -73,7 +73,7 @@
             <div class="container">
                 <nav class="navbar navbar-expand-lg">
                     <a class="navbar-brand" href="{{ route('home') }}">
-                        <img class="logo_dark" src="{{ asset('assets/images/logo.png') }}" alt="logo">
+                        <img class="logo_dark" src="{{ asset('assets/images/logo.png') }}" alt="logo" style="height: 60px;">
                     </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-expanded="false">

@@ -57,9 +57,11 @@
                             </div>
                             <span class="rating_num">({{ rand(10, 50) }})</span>
                         </div>
-                        <div class="pr_desc">
-                            <p>{{ $product->description }}</p>
+                        @if($product->sub_title)
+                        <div class="sub_title">
+                            {!! $product->sub_title !!}
                         </div>
+                        @endif
                         <div class="product_sort_info">
                             <ul>
                                 <li><i class="fa-solid fa-check"></i> 庫存: <span class="text-success">有貨</span></li>
@@ -74,11 +76,14 @@
                             </div>
                         </div>
                         <div class="product_action">
-                            <ul class="list_none pr_action_btn">
-                                <li class="add-to-cart"><a href="#" class="btn btn-fill-out btn-addtocart"><i class="fa-solid fa-cart-shopping"></i> 加入購物車</a></li>
-                                <li><a href="#" class="btn btn-fill-out btn-addtocart"><i class="fa-solid fa-heart"></i> 加入願望清單</a></li>
-                                <li><a href="#" class="btn btn-fill-out btn-addtocart"><i class="fa-solid fa-arrows-rotate"></i> 加入比較</a></li>
-                            </ul>
+                            <div class="d-flex gap-3 align-items-center">
+                                <button type="button" class="btn btn-outline-danger d-flex align-items-center gap-2">
+                                    <i class="fa-solid fa-heart"></i>
+                                    <span>追蹤</span>
+                                </button>
+                                <button type="button" class="btn btn-outline-primary flex-grow-1">加入購物車</button>
+                                <button type="button" class="btn btn-danger flex-grow-1">立即購買</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -89,6 +94,16 @@
                 <div class="small_divider"></div>
                 <div class="divider"></div>
                 <div class="medium_divider"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="heading_s1">
+                    <h3>商品詳情</h3>
+                </div>
+                <div class="product_description">
+                    {!! $product->description !!}
+                </div>
             </div>
         </div>
         <div class="row">
@@ -106,16 +121,8 @@
                         <div class="product">
                             <div class="product_img">
                                 <a href="{{ route('products.show', $relatedProduct->id) }}">
-                                    <img src="{{ asset($relatedProduct->image) }}" alt="{{ $relatedProduct->name }}">
+                                    <img src="{{ Storage::url($relatedProduct->image) }}" alt="{{ $relatedProduct->name }}">
                                 </a>
-                                <div class="product_action_box">
-                                    <ul class="list_none pr_action_btn">
-                                        <li class="add-to-cart"><a href="#"><i class="fa-solid fa-cart-shopping"></i> 加入購物車</a></li>
-                                        <li><a href="#" class="popup-ajax"><i class="fa-solid fa-arrows-rotate"></i></a></li>
-                                        <li><a href="#" class="popup-ajax"><i class="fa-solid fa-magnifying-glass"></i></a></li>
-                                        <li><a href="#"><i class="fa-solid fa-heart"></i></a></li>
-                                    </ul>
-                                </div>
                             </div>
                             <div class="product_info">
                                 <h6 class="product_title"><a href="{{ route('products.show', $relatedProduct->id) }}">{{ $relatedProduct->name }}</a></h6>
@@ -147,4 +154,80 @@
     </div>
 </div>
 <!-- END SECTION SHOP -->
-@endsection 
+@endsection
+
+@push('styles')
+<style>
+.product_action {
+    margin-top: 20px;
+}
+
+.product_action .btn {
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.product_action .btn-outline-danger {
+    min-width: 100px;
+}
+
+.product_action .btn-outline-primary,
+.product_action .btn-danger {
+    min-width: 150px;
+}
+
+.gap-3 {
+    gap: 1rem !important;
+}
+
+.d-flex {
+    display: flex !important;
+}
+
+.align-items-center {
+    align-items: center !important;
+}
+
+.flex-grow-1 {
+    flex-grow: 1 !important;
+}
+
+.product_action .pr_action_btn {
+    display: flex;
+    gap: 10px;
+}
+
+.product_action .pr_action_btn li a {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product_action .pr_action_btn li a i {
+    margin: 0;
+}
+
+.sub_title {
+    margin: 15px 0;
+    font-size: 14pt;
+}
+
+.product_description {
+    margin-top: 30px;
+}
+
+.heading_s1 {
+    margin-bottom: 20px;
+}
+
+.img-fixed {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+</style>
+@endpush 

@@ -20,4 +20,4 @@ class About extends Model
         'is_active' => 'boolean',
         'sort' => 'integer',
     ];
-} 
+}

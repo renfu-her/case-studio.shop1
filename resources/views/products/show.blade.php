@@ -87,11 +87,11 @@
                             @endif
                             <div class="product_sort_info mb-4">
                                 <ul>
-                                    <li><i class="fa-solid fa-check"></i> 庫存: 
-                                        @if($product->stock <= 0)
+                                    <li><i class="fa-solid fa-check"></i> 庫存:
+                                        @if ($product->stock <= 0)
                                             <span class="text-danger">無庫存</span>
-                                        @else
-                                            <span class="text-success">有貨</span>
+                                        @elseif ($product->stock <= 10)     
+                                            <span class="text-warning">剩餘{{ $product->stock }}件</span>
                                         @endif
                                     </li>
                                     <li><i class="fa-solid fa-check"></i> 類別:

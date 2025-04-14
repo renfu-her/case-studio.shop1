@@ -97,8 +97,11 @@
                             <div class="pr_switch_wrap">
                                 <span class="switch_lable">數量</span>
                                 <div class="quantity">
-                                    <input type="number" class="form-control input-qty" value="1" min="1"
-                                        max="10">
+                                    <select class="form-select" id="product_quantity" name="quantity">
+                                        @for ($i = 1; $i <= 20; $i++)
+                                            <option value="{{ $i }}">{{ $i }}</option>
+                                        @endfor
+                                    </select>
                                 </div>
                             </div>
                             <div class="product_action">
@@ -407,6 +410,31 @@
         }
 
         .product_specs .form-select:focus {
+            border-color: #80bdff;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+        }
+
+        .pr_switch_wrap {
+            margin-bottom: 1.5rem;
+        }
+
+        .switch_lable {
+            display: block;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .quantity .form-select {
+            width: 100px;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .quantity .form-select:focus {
             border-color: #80bdff;
             outline: 0;
             box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);

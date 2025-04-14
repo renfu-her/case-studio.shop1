@@ -54,6 +54,17 @@
     flex-grow: 1;
 }
 
+.rating_wrap .rating {
+    overflow: hidden;
+    position: unset;
+    height: 20px;
+    font-size: 12px;
+    width: 100px;
+    font-family: "Font Awesome 5 Free";
+    display: inline-block;
+    vertical-align: middle;
+}
+
 /* 響應式調整 */
 @media (max-width: 991px) {
     .widget_categories .sub-categories {
